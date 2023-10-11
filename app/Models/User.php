@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function landings()
+    {
+        return $this->hasMany(Landing::class, 'created_by');
+    }
 }
