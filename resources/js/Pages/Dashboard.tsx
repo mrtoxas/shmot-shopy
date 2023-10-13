@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { NewLandingModal } from '@/Components/Modals/NewLandingModal';
+import { NewLanding } from '@/Components/NewLanding';
 import { PageHead } from '@/Components/ui/PageHead';
 
 export default function Dashboard({ auth }: PageProps) {
@@ -12,7 +12,7 @@ export default function Dashboard({ auth }: PageProps) {
 				<div className="flex justify-between align-center">
 					
 					<PageHead message="Мої сайти" />
-					<NewLandingModal />
+					<NewLanding />
 				</div>
 			}
 		>

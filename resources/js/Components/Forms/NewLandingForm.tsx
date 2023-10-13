@@ -15,8 +15,8 @@ export const NewLandingForm = () => {
 
 	const submit: FormEventHandler = (e) => {
 		e.preventDefault();
-
-		post(route('password.confirm'));
+		console.log(data)
+		//post(route('landing.new'));
 	};
 
 	return (

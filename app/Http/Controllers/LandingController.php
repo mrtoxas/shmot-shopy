@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Landing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LandingController2 extends Controller
 {
@@ -18,9 +19,29 @@ class LandingController2 extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:landings|min:3|max:50',
+            'clone' => 'nullable|string',
+        ],
+        [
+            'name.required' => 'Поле "Назва" обов\'язкове!',
+            'name.unique' => 'Сайт с такою назвою вже існує!',
+            'name.min' => 'Занадто коротка назва! Мiнiмум 3 символи.',
+            'name.max' => 'Занадто довга назва! Максимум 50 символiв.',
+        ]);
+
+        try {
+            $landing = Landing::create([
+                'name' => $request->input('name'),
+                'created_by' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('landings.index')->with('success', 'Лэндинг успешно создан');
+        } catch (Exception $e) {
+            return back()->with('error', 'Произошла ошибка при создании лэндинга: ' . $e->getMessage());
+        }
     }
 
     /**
