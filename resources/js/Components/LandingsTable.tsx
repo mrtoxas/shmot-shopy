@@ -1,6 +1,9 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./shadcn/ui/table"
 
 export const LandingsTable = () => {
+
+  
+
   return (
     <Table>     
       <TableHeader>

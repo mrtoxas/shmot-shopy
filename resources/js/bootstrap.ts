@@ -5,9 +5,22 @@
  */
 
 import axios from 'axios';
+import { toast } from './Components/shadcn/ui/use-toast';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+axios.interceptors.response.use(   
+    error => {        
+        // toast({
+        //     title: "Помилка!",
+        //     variant: "destructive",
+        //     description: error,
+        // })
+        console.log(error);
+        return Promise.reject(error);
+    }
+);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

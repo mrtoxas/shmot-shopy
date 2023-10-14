@@ -1,14 +1,24 @@
 
 import { Head } from '@inertiajs/react';
-import { PageProps, User } from '@/types';
+import { PageProps } from '@/types';
 import { NewLanding } from '@/Components/NewLanding';
 import { PageHead } from '@/Components/ui/PageHead';
 import { useFlashToasts } from '@/Hooks/useFlashToasts';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { LandingsTable } from '@/Components/LandingsTable';
+import { useEffect } from 'react';
+import useStore from '@/store';
+import { useLandings } from '@/Hooks/useLandings';
 
 export default function Dashboard({ auth, flash }: PageProps) {
+  
   useFlashToasts(flash);
+
+  const { getLandings } = useLandings();
+
+  useEffect(()=>{
+    getLandings();
+  },[])
   
   return (
     <AuthenticatedLayout

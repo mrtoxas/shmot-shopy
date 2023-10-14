@@ -20,7 +20,7 @@ class LandingController extends Controller
         ->get();
 
       return Inertia::render('Dashboard', [
-        'landings' => $landings
+        'data' => $landings
       ]);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Не удалось загрузить сайт';

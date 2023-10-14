@@ -13,7 +13,7 @@ interface LandingState {
   addThemes: (data: Theme) => void  
 }
 
-const useLandingStore = create<LandingState>()((set) => ({
+const useStore = create<LandingState>()((set) => ({
   isPending: false,
 
   landings: [],
@@ -42,4 +42,4 @@ const useLandingStore = create<LandingState>()((set) => ({
 
 }));
 
-export default useLandingStore;
+export default useStore;
