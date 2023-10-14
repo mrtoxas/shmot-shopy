@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,7 +26,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post('/api/lands', [LandingController::class, 'create']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/landings', [LandingController::class, 'index'])->name('landings.index');
+    Route::post('/landings/create', [LandingController::class, 'store'])->name('landings.store');    
 });
 
 require __DIR__.'/auth.php';
