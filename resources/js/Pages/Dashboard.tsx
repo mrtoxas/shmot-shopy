@@ -7,19 +7,18 @@ import { useFlashToasts } from '@/Hooks/useFlashToasts';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { LandingsTable } from '@/Components/LandingsTable';
 import { useEffect } from 'react';
-import useStore from '@/store';
 import { useLandings } from '@/Hooks/useLandings';
 
 export default function Dashboard({ auth, flash }: PageProps) {
-  
+
   useFlashToasts(flash);
 
   const { getLandings } = useLandings();
 
-  useEffect(()=>{
+  useEffect(() => {
     getLandings();
-  },[])
-  
+  }, [])
+
   return (
     <AuthenticatedLayout
       user={auth.user}

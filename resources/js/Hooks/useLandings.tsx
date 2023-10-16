@@ -6,8 +6,8 @@ export const useLandings = () => {
     const { addLandings } = useStore()
 
     const getLandings = async () => {
-        const data = await window.axios.get(route('landings.index'));
-        //addLandings(data);
+        const { data } = await window.axios.get(route('landings.index'));        
+        addLandings(data);
     }
 
     return { getLandings }
