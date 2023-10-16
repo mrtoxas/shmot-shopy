@@ -19,13 +19,13 @@ class LandingController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-      return Inertia::render('Dashboard', [
-        'data' => $landings
-      ]);
+      return response()->json($landings, 201);
+
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Не удалось загрузить сайт';
-      $errorMessageWithCode = $errorMessage . ' (Код ошибки: ' . $e->getCode() . ')';
-      return redirect()->back()->with('error', $errorMessageWithCode);
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні списку сайтів, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage,
+      ], 500);
     }
   }
 
