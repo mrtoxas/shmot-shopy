@@ -1,10 +1,10 @@
 import { useEffect, FormEventHandler } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import GuestLayout from '@/layouts/guestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Label } from '@/Components/shadcn/ui/label';
-import { Button } from '@/Components/shadcn/ui/button';
-import { Input } from '@/Components/shadcn/ui/input';
-import { FormError } from '@/Components/ui/FormError';
+import { Label } from '@/components/shadcn/ui/label';
+import { Button } from '@/components/shadcn/ui/button';
+import { Input } from '@/components/shadcn/ui/input';
+import { FormError } from '@/components/ui/formError';
 
 export default function Register() {
   const { data, setData, post, processing, errors, reset } = useForm({

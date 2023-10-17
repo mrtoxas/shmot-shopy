@@ -1,19 +1,18 @@
-
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { NewLanding } from '@/Components/NewLanding';
-import { PageHead } from '@/Components/ui/PageHead';
-import { useFlashToasts } from '@/Hooks/useFlashToasts';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { LandingsTable } from '@/Components/LandingsTable';
+import { NewLanding } from '@/components/newLanding';
+import { PageHead } from '@/components/ui/pageHead';
+import { useFlashToasts } from '@/hooks/useFlashToasts';
+import AuthenticatedLayout from '@/layouts/authenticatedLayout';
+import { LandingsTable } from '@/components/landingsTable';
 import { useEffect } from 'react';
-import { useLandings } from '@/Hooks/useLandings';
+import useStore from '@/store';
 
 export default function Dashboard({ auth, flash }: PageProps) {
 
   useFlashToasts(flash);
 
-  const { getLandings } = useLandings();
+  const { getLandings } = useStore();
 
   useEffect(() => {
     getLandings();
@@ -29,7 +28,7 @@ export default function Dashboard({ auth, flash }: PageProps) {
           <NewLanding />
         </div>
       }
-    >
+    >      
       <Head title="Мої сайти" />
 
       <div className="py-12">

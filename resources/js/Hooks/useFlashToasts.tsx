@@ -1,4 +1,4 @@
-import { toast } from "@/Components/shadcn/ui/use-toast";
+import { toast } from "@/components/shadcn/ui/use-toast";
 import { FlashProps } from "@/types";
 import { useEffect } from "react";
 
@@ -11,7 +11,7 @@ export const useFlashToasts = (flash: FlashProps) => {
   
         if (description) {
           toast({
-            title: error ? "Помилка!" : "Успіх",
+            title: error ? "Помилка!" : "Успіх!",
             description,
             variant: error ? "destructive" : "default",
           });

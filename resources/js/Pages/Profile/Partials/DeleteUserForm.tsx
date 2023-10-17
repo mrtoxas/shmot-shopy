@@ -1,6 +1,6 @@
 import { useRef, FormEventHandler } from 'react';
 import { useForm } from '@inertiajs/react';
-import { Button } from '@/Components/shadcn/ui/button';
+import { Button } from '@/components/shadcn/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/Components/shadcn/ui/dialog';
-import { Label } from '@/Components/shadcn/ui/label';
-import { Input } from '@/Components/shadcn/ui/input';
-import { FormError } from '@/Components/ui/FormError';
+} from '@/components/shadcn/ui/dialog';
+import { Label } from '@/components/shadcn/ui/label';
+import { Input } from '@/components/shadcn/ui/input';
+import { FormError } from '@/components/ui/formError';
 import { DialogClose } from '@radix-ui/react-dialog';
 
 export default function DeleteUserForm({ className = '' }: { className?: string }) {

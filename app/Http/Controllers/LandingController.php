@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Landing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class LandingController extends Controller
 {
@@ -19,7 +19,7 @@ class LandingController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-      return response()->json($landings, 201);
+      return response()->json($landings, 200);
 
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні списку сайтів, зверніться до адміністратора.';
@@ -84,8 +84,29 @@ class LandingController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(Landing $landing)
+  public function destroy($id)
   {
-    //
+    try {
+      DB::beginTransaction();
+      $landing = Landing::find($id);
+
+      if (!$landing || $landing->created_by != Auth::user()->id) {
+        DB::rollBack();
+        throw new \Exception('Ви не можете видалити цей сайт', 403);
+      }
+      
+      $landing->delete();
+
+      DB::commit();
+
+      return response()->json([
+        'message' => 'Сайт успішно видалено!'
+      ], 200);
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені лендингу, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage
+      ], 200);     
+    }
   }
 }

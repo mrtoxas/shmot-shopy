@@ -1,11 +1,11 @@
 import { useEffect, FormEventHandler } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import GuestLayout from '@/layouts/guestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Label } from '@/Components/shadcn/ui/label';
-import { Input } from '@/Components/shadcn/ui/input';
-import { Button } from '@/Components/shadcn/ui/button';
-import { Checkbox } from '@/Components/shadcn/ui/checkbox';
-import { FormError } from '@/Components/ui/FormError';
+import { Label } from '@/components/shadcn/ui/label';
+import { Input } from '@/components/shadcn/ui/input';
+import { Button } from '@/components/shadcn/ui/button';
+import { Checkbox } from '@/components/shadcn/ui/checkbox';
+import { FormError } from '@/components/ui/formError';
 
 export default function Login({ status, canResetPassword }: { status?: string, canResetPassword: boolean }) {
   const { data, setData, post, processing, errors, reset } = useForm({

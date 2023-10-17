@@ -5,7 +5,7 @@
  */
 
 import axios from 'axios';
-import { toast } from './Components/shadcn/ui/use-toast';
+import { toast } from './components/shadcn/ui/use-toast';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

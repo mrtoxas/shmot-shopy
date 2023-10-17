@@ -2,10 +2,10 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { FormEventHandler } from 'react';
 import { PageProps } from '@/types';
-import { Label } from '@/Components/shadcn/ui/label';
-import { Input } from '@/Components/shadcn/ui/input';
-import { FormError } from '@/Components/ui/FormError';
-import { Button } from '@/Components/shadcn/ui/button';
+import { Label } from '@/components/shadcn/ui/label';
+import { Input } from '@/components/shadcn/ui/input';
+import { FormError } from '@/components/ui/formError';
+import { Button } from '@/components/shadcn/ui/button';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }: { mustVerifyEmail: boolean, status?: string, className?: string }) {
     const user = usePage<PageProps>().props.auth.user;

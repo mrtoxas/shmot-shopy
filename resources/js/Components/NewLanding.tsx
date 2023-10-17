@@ -8,19 +8,20 @@ import {
   DialogHeader, 
   DialogTitle, 
   DialogTrigger 
-} from '@/Components/shadcn/ui/dialog';
-import { Button } from '@/Components/shadcn/ui/button';
-import { Label } from '@/Components/shadcn/ui/label'
-import { Input } from '@/Components/shadcn/ui/input'
+} from '@/components/shadcn/ui/dialog';
+import { Button } from '@/components/shadcn/ui/button';
+import { Label } from '@/components/shadcn/ui/label'
+import { Input } from '@/components/shadcn/ui/input'
 import { 
   Select, 
   SelectContent, 
   SelectItem, 
   SelectTrigger, 
   SelectValue 
-} from '@/Components/shadcn/ui/select';
-import { FormError } from './ui/FormError';
+} from '@/components/shadcn/ui/select';
+import { FormError } from './ui/formError';
 import { DialogClose } from "@radix-ui/react-dialog";
+import { CreateLandingForm } from "./forms/createLandingForm";
 
 export const NewLanding = () => {
   const [open, setOpen] = useState(false);
@@ -57,10 +58,11 @@ export const NewLanding = () => {
         <DialogHeader>
           <DialogTitle>Додати сайт</DialogTitle>
           <DialogDescription>
-            За допомогою цієї форми ви можете створити новий сайт або клонувати вже існуючий
+           Cтворюйте новий сайт або клонуйте вже існуючий
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={submit}>
+        <CreateLandingForm />
+        {/* <form onSubmit={submit}>
           <div className="grid gap-4 py-4">
             <div>
               <Label htmlFor="name" className="text-right">
@@ -101,7 +103,7 @@ export const NewLanding = () => {
             </DialogClose>
             <Button disabled={processing}>Додати</Button>
           </DialogFooter>
-        </form>
+        </form> */}
       </DialogContent>
     </Dialog>
   )

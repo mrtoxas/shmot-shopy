@@ -1,14 +1,14 @@
 import { useState, PropsWithChildren, ReactNode } from 'react';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ResponsiveNavLink from '@/components/responsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
-
 import { 
   Home as HomeIcon, 
   Menu as MenuIcon 
 } from "lucide-react"
-import { Toaster } from '@/Components/shadcn/ui/toaster';
-import { ProfileDropdown } from '@/Components/ui/profileDropdown';
+import { Toaster } from '@/components/shadcn/ui/toaster';
+import { ProfileDropdown } from '@/components/ui/profileDropdown';
+import { ModeToggle } from '@/components/theme/modeToggle';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -25,6 +25,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
             </div>
             <div className="hidden sm:flex sm:items-center sm:ml-6">
               <div className="ml-3 relative">
+                <ModeToggle />
                 <ProfileDropdown user={user} />
               </div>
             </div>
@@ -64,7 +65,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
       </nav>
 
       {header && (
-        <header className="bg-white shadow">
+        <header className="shadow">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
         </header>
       )}

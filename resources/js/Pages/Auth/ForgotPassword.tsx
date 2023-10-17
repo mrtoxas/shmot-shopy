@@ -1,9 +1,9 @@
-import GuestLayout from '@/Layouts/GuestLayout';
+import GuestLayout from '@/layouts/guestLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { Input } from '@/Components/shadcn/ui/input';
-import { FormError } from '@/Components/ui/FormError';
-import { Button } from '@/Components/shadcn/ui/button';
+import { Input } from '@/components/shadcn/ui/input';
+import { FormError } from '@/components/ui/formError';
+import { Button } from '@/components/shadcn/ui/button';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({

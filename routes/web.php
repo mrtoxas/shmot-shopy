@@ -37,7 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/landings', [LandingController::class, 'index'])->name('landings.index');
-    Route::post('/landings/create', [LandingController::class, 'store'])->name('landings.store');    
+    Route::post('/landings', [LandingController::class, 'store'])->name('landings.store');    
+    Route::delete('/landings/{id}', [LandingController::class, 'destroy'])->name('landings.destroy');    
 });
 
 require __DIR__.'/auth.php';

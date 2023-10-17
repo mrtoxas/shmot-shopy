@@ -1,14 +1,14 @@
 import { useEffect, FormEventHandler } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import GuestLayout from '@/layouts/guestLayout';
+import InputError from '@/components/InputError';
+import InputLabel from '@/components/InputLabel';
+import PrimaryButton from '@/components/PrimaryButton';
+import TextInput from '@/components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
-import { Input } from '@/Components/shadcn/ui/input';
-import { FormError } from '@/Components/ui/FormError';
-import { Label } from '@/Components/shadcn/ui/label';
-import { Button } from '@/Components/shadcn/ui/button';
+import { Input } from '@/components/shadcn/ui/input';
+import { FormError } from '@/components/ui/formError';
+import { Label } from '@/components/shadcn/ui/label';
+import { Button } from '@/components/shadcn/ui/button';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({

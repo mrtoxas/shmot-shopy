@@ -1,4 +1,9 @@
 import useStore from "@/store";
+import { useMemo, useState } from "react";
+import { Button, buttonVariants } from "./shadcn/ui/button";
+import { formatDate } from "@/utils/formatDate";
+import { useLandings } from "@/hooks/useLandings";
+import { Loader2Icon, PencilIcon, Trach2Icon } from "./ui/icons";
 import {
   Table,
   TableBody,
@@ -6,33 +11,31 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "./shadcn/ui/table"
-import { useMemo } from "react";
+} from "./shadcn/ui/table";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from "./shadcn/ui/dropdown-menu";
-import {
-  MoreHorizontal as MoreHorizontalIcon,
-  Trash2 as Trach2Icon,
-  Pencil as PencilIcon
-} from "lucide-react";
-import { Button, buttonVariants } from "./shadcn/ui/button";
-import { formatDate } from "@/Utils/formatDate";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./shadcn/ui/alert-dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "./shadcn/ui/alert-dialog";
+import { Landing } from "@/types";
+
 
 export const LandingsTable = () => {
+  const { landings, removeLanding } = useStore();
 
-  const { landings } = useStore();
-
+  const deleteLandingHandler = async (id: Landing["id"]) => {
+    removeLanding(id).then(() => {
+      console.log('weeeeeee')
+    });
+  }
 
   const preparedData = useMemo(() => {
-
-
     return (
       landings.map((el) => {
         const link = `${window.location.protocol}//${el.name}.${window.location.hostname}`;
@@ -63,7 +66,7 @@ export const LandingsTable = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                      <AlertDialogAction>Так, видалити</AlertDialogAction>
+                      <AlertDialogAction onClick={() => deleteLandingHandler(el.id)}>Так, видалити</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -77,18 +80,23 @@ export const LandingsTable = () => {
 
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="whitespace-nowrap">Назва</TableHead>
-          <TableHead>Адреса</TableHead>
-          <TableHead>Дата</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {preparedData}
-      </TableBody>
-    </Table>
+    <div className="relative">
+      {/* <div className="absolute flex justify-center items-center w-full h-full bg-background opacity-80 z-10">
+        <Loader2Icon className="h-8 w-8 animate-spin stroke-red" />
+      </div> */}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="whitespace-nowrap">Назва</TableHead>
+            <TableHead>Адреса</TableHead>
+            <TableHead>Дата</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {preparedData}
+        </TableBody>
+      </Table>
+    </div>
   )
 }
