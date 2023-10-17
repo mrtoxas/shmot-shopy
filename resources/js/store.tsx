@@ -2,6 +2,11 @@ import { create } from 'zustand';
 import { Landing, Theme } from './types';
 import { AxiosResponse } from 'axios';
 
+interface CreateLandingProps {
+  name: Landing["name"],
+  clone?: Landing["name"]
+}
+
 interface LandingState {
   isPending: boolean,
   landings: Landing[],
@@ -10,7 +15,7 @@ interface LandingState {
   setPending: (isPending: LandingState["isPending"]) => void,
   addCurrentLanding: (data: Landing) => void,
   removeLanding: (id: Landing["id"]) => Promise<AxiosResponse>,
-  createLanding: (name: Landing["name"], clone: Landing["name"]) => Promise<AxiosResponse>,
+  createLanding: (props: CreateLandingProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
   addThemes: (data: Theme) => void
 }
@@ -47,11 +52,12 @@ const useStore = create<LandingState>()((set) => ({
     return response;
   },
 
-  createLanding: async (name, clone) => {
-    const response = await window.axios.post(route('landings.store', { name, clone }));
+  createLanding: async ({ name, clone }) => {
+    const response = await window.axios.post(route('landings.store', { name, ...(clone && { clone }) }));
     const { data } = response;
+    const responseData = Array.isArray(data.data) ? data.data : [data.data];
     set((state) => ({
-      landings: Array.isArray(data) ? data : [data, ...state.landings],
+        landings: [...responseData, ...state.landings],
     }));
     return response;
   }

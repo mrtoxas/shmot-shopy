@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { NewLanding } from '@/components/newLanding';
+import { NewLanding } from '@/components/modals/newLandingModal';
 import { PageHead } from '@/components/ui/pageHead';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';

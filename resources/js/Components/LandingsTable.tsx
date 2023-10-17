@@ -1,8 +1,7 @@
 import useStore from "@/store";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Button, buttonVariants } from "./shadcn/ui/button";
 import { formatDate } from "@/utils/formatDate";
-import { useLandings } from "@/hooks/useLandings";
 import { Loader2Icon, PencilIcon, Trach2Icon } from "./ui/icons";
 import {
   Table,
@@ -30,9 +29,7 @@ export const LandingsTable = () => {
   const { landings, removeLanding } = useStore();
 
   const deleteLandingHandler = async (id: Landing["id"]) => {
-    removeLanding(id).then(() => {
-      console.log('weeeeeee')
-    });
+    removeLanding(id);
   }
 
   const preparedData = useMemo(() => {

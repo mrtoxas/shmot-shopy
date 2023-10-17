@@ -45,15 +45,22 @@ class LandingController extends Controller
     ]);
 
     try {
-      Landing::create([
-        'name' => $request->input('name'),
-        'created_by' => Auth::user()->id,
-      ]);
-
-      return redirect()->route('dashboard')->with('success', 'Лендінг успішно створенно!');
+      if (!$request->clone){
+        $landing = Landing::create([
+          'name' => $request->input('name'),
+          'created_by' => Auth::user()->id,
+        ]);  
+      }
+         
+      return response()->json([
+        'data' => $landing,
+        'message' => 'Сайт успішно створено!'
+      ], 200);
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при створенні лендингу, зверніться до адміністратора.';
-      return redirect()->back()->with('error', $errorMessage);
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при створені лендингу, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage
+      ], 500);
     }
   }
 
@@ -106,7 +113,7 @@ class LandingController extends Controller
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені лендингу, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage
-      ], 200);     
+      ], 500);     
     }
   }
 }
