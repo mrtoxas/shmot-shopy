@@ -5,6 +5,14 @@ import { Label } from '@/components/shadcn/ui/label';
 import { Input } from '@/components/shadcn/ui/input';
 import { FormError } from '@/components/ui/formError';
 import { Button } from '@/components/shadcn/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcn/ui/card";
 
 export default function UpdatePasswordForm({ className = '' }: { className?: string }) {
     const passwordInput = useRef<HTMLInputElement>(null);
@@ -37,18 +45,15 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
     };
 
     return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
-
-                <p className="mt-1 text-sm text-gray-600">
-                    Ensure your account is using a long, random password to stay secure.
-                </p>
-            </header>
-
+        <Card>
+          <CardHeader>
+            <CardTitle>Оновити пароль</CardTitle>
+            <CardDescription>Переконайтеся, що ваш обліковий запис використовує довгий довільний пароль, щоб залишатися в безпеці.</CardDescription>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={updatePassword} className="mt-6 space-y-6">
                 <div>
-                    <Label htmlFor="current_password">Current Password</Label>
+                    <Label htmlFor="current_password">Поточний пароль</Label>
 
                     <Input
                         id="current_password"
@@ -64,7 +69,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
                 </div>
 
                 <div>
-                    <Label htmlFor="password">New Password</Label>
+                    <Label htmlFor="password">Новий пароль</Label>
 
                     <Input
                         id="password"
@@ -80,7 +85,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
                 </div>
 
                 <div>
-                    <Label htmlFor="password_confirmation">Confirm Password</Label>
+                    <Label htmlFor="password_confirmation">Підтвердьте пароль</Label>
 
                     <Input
                         id="password_confirmation"
@@ -95,7 +100,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button disabled={processing}>Save</Button>
+                    <Button disabled={processing}>Зберегти</Button>
 
                     <Transition
                         show={recentlySuccessful}
@@ -104,10 +109,11 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">Збережено.</p>
                     </Transition>
                 </div>
             </form>
-        </section>
+          </CardContent>
+        </Card>
     );
 }

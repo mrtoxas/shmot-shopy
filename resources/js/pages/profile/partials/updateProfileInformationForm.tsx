@@ -6,6 +6,14 @@ import { Label } from '@/components/shadcn/ui/label';
 import { Input } from '@/components/shadcn/ui/input';
 import { FormError } from '@/components/ui/formError';
 import { Button } from '@/components/shadcn/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcn/ui/card";
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }: { mustVerifyEmail: boolean, status?: string, className?: string }) {
     const user = usePage<PageProps>().props.auth.user;
@@ -22,18 +30,15 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     };
 
     return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
-
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p>
-            </header>
-
+        <Card>
+          <CardHeader>
+            <CardTitle>Інформація профілю</CardTitle>
+            <CardDescription>Оновіть дані профілю та електронну адресу свого облікового запису.</CardDescription>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">Ім'я</Label>
 
                     <Input
                         id="name"
@@ -67,27 +72,27 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
-                            Your email address is unverified.
+                            Ваша електронна адреса не підтверджена.
                             <Link
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Click here to re-send the verification email.
+                                Натисніть тут, щоб повторно надіслати електронний лист для підтвердження.
                             </Link>
                         </p>
 
                         {status === 'verification-link-sent' && (
                             <div className="mt-2 font-medium text-sm text-green-600">
-                                A new verification link has been sent to your email address.
+                                На вашу електронну адресу надіслано нове посилання для підтвердження.
                             </div>
                         )}
                     </div>
                 )}
 
                 <div className="flex items-center gap-4">
-                    <Button disabled={processing}>Save</Button>
+                    <Button disabled={processing}>Зберегти</Button>
 
                     <Transition
                         show={recentlySuccessful}
@@ -96,10 +101,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">Збережено.</p>
                     </Transition>
                 </div>
             </form>
-        </section>
+          </CardContent>
+        </Card>
     );
 }

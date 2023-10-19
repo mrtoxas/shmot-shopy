@@ -2,8 +2,10 @@ import {
     Trash2Icon,
     PencilIcon,
     Loader2Icon,
+    User2Icon,
     CopyIcon,
-    PlusIcon
+    PlusIcon,
+    ChevronDownIcon,
 } from "lucide-react";
 
 export { 
@@ -11,5 +13,7 @@ export {
     PencilIcon, 
     Loader2Icon,
     CopyIcon,
-    PlusIcon
+    PlusIcon,
+    User2Icon,
+    ChevronDownIcon,
 };

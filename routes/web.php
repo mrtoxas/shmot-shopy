@@ -22,7 +22,7 @@ Route::domain('{landingName}.' . env('APP_URL'))->group(function () {
 });
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

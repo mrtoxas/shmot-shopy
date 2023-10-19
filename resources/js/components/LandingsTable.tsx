@@ -24,6 +24,7 @@ import {
 import { Landing } from "@/types";
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
+import { toast } from "@/components/shadcn/ui/use-toast"
 
 
 export const LandingsTable = () => {
@@ -31,7 +32,13 @@ export const LandingsTable = () => {
   const { setIsOpenNewLandingDialog } = useAppStore();
 
   const deleteLandingHandler = async (id: Landing["id"]) => {
-    removeLanding(id);
+    removeLanding(id).then((res)=>{
+      toast({
+        className: "bg-green-600 text-white",
+        title: "Успіх!",
+        description: res.data.message,
+      })
+    });
   }
 
   const showNewLandingDialog = (cloneName: Landing["name"]) => {    
@@ -72,7 +79,7 @@ export const LandingsTable = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => deleteLandingHandler(el.id)}>Так, видалити</AlertDialogAction>
+                      <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>

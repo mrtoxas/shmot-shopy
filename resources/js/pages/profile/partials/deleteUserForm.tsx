@@ -9,6 +9,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/shadcn/ui/card";
 import { Label } from '@/components/shadcn/ui/label';
 import { Input } from '@/components/shadcn/ui/input';
 import { FormError } from '@/components/ui/formError';
@@ -44,36 +52,33 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
 
 
   return (
-    <section className={`space-y-6 ${className}`}>
-      <header>
-        <h2 className="text-lg font-medium text-gray-900">Delete Account</h2>
-
-        <p className="mt-1 text-sm text-gray-600">
-          Once your account is deleted, all of its resources and data will be permanently deleted. Before
-          deleting your account, please download any data or information that you wish to retain.
-        </p>
-      </header>
-
+    <Card>
+    <CardHeader>
+      <CardTitle>Видалити аккаунт</CardTitle>
+      <CardDescription>Після видалення вашого облікового запису всі його ресурси та дані буде остаточно видалено. 
+      Перш ніж видаляти свій обліковий запис, завантажте будь-які дані чи інформацію, які ви хочете зберегти.</CardDescription>
+    </CardHeader>
+    <CardContent>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="destructive">Delete Account</Button>
+          <Button variant="destructive">Видалити аккаунт</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Delete account</DialogTitle>
+            <DialogTitle>Видалити аккаунт</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete your account?
+              Ви впевнені, що хочете видалити свій обліковий запис?
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form onSubmit={deleteUser}>
               <p className="mt-1 text-sm text-gray-600">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                enter your password to confirm you would like to permanently delete your account.
+                Once your account is deleted, all of its resources and data will be permanently deleted. 
+                Please enter your password to confirm you would like to permanently delete your account.
               </p>
 
               <div className="mt-6">
-                <Label htmlFor="password" className="sr-only">Password</Label>
+                <Label htmlFor="password" className="sr-only">Пароль</Label>
 
                 <Input
                   id="password"
@@ -95,7 +100,7 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
                 </DialogClose>
 
                 <Button className="ml-3" disabled={processing} variant="destructive">
-                  Delete Account
+                  Видалити аккаунт
                 </Button>
               </div>
             </form>
@@ -103,6 +108,8 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
 
         </DialogContent>
       </Dialog>
-    </section>
+    </CardContent>
+  </Card>
+    
   );
 }
