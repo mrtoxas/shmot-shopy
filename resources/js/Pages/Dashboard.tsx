@@ -16,7 +16,6 @@ export default function Dashboard({ auth, flash }: PageProps) {
   useFlashToasts(flash);
 
   const { getLandings } = useStore();
-
   const { setIsOpenNewLandingDialog } = useAppStore();
 
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function Dashboard({ auth, flash }: PageProps) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between align-center">
+        <div className="flex justify-between items-center">
           <PageHead message="Мої сайти" />
           <Button onClick={showNewLandingDialog}>
             <PlusIcon className="mr-2 h-4 w-4" />Додати сайт

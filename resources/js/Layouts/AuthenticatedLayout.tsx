@@ -2,9 +2,9 @@ import { useState, PropsWithChildren, ReactNode } from 'react';
 import ResponsiveNavLink from '@/components/responsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
-import { 
-  Home as HomeIcon, 
-  Menu as MenuIcon 
+import {
+  Home as HomeIcon,
+  Menu as MenuIcon
 } from "lucide-react"
 import { Toaster } from '@/components/shadcn/ui/toaster';
 import { ProfileDropdown } from '@/components/ui/profileDropdown';
@@ -15,12 +15,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
   return (
     <div className="min-h-screen">
-      <nav className="bg-gray-100 border-b border-gray-100">
+      <nav className="border-b bg-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between ">
+          <div className="flex justify-between h-12 ">
             <div className="flex gap-2 items-center text-gray-500 hover:text-gray-700">
               <Link href={route('dashboard')}>
-                <HomeIcon className="h-4 w-4" />
+                <HomeIcon className="h-[1.2rem] w-[1.2rem]" />
               </Link>
             </div>
             <div className="hidden sm:flex sm:items-center sm:ml-6">
@@ -35,7 +35,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
               >
-                 <MenuIcon className="h-4 w-4" />
+                <MenuIcon className="h-4 w-4" />
               </button>
             </div>
           </div>
