@@ -1,39 +1,27 @@
 import { create } from 'zustand';
-import { Landing, Theme } from './types';
+import { Landing, Theme } from '../types';
 import { AxiosResponse } from 'axios';
 
-interface CreateLandingProps {
+interface CreateLandingsProps {
   name: Landing["name"],
   clone?: Landing["name"]
 }
 
-interface LandingState {
-  isPending: boolean,
+interface LandingsState {
   landings: Landing[],
   currentLanding: Landing | null;
-  themes: Theme[],
-  setPending: (isPending: LandingState["isPending"]) => void,
   addCurrentLanding: (data: Landing) => void,
   removeLanding: (id: Landing["id"]) => Promise<AxiosResponse>,
-  createLanding: (props: CreateLandingProps) => Promise<AxiosResponse>,
+  createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  addThemes: (data: Theme) => void
 }
 
-const useStore = create<LandingState>()((set) => ({
-  isPending: false,
-
-  landings: [],
-
-  themes: [],
+const useLandingsStore = create<LandingsState>()((set) => ({  
+  landings: [],  
 
   currentLanding: null,
 
-  setPending: (isPending) => set({ isPending }),
-
   addCurrentLanding: (data) => set({ currentLanding: data }),
-
-  addThemes: (data) => set((state) => ({ themes: [...state.themes, data] })),
 
   removeLanding: async (id) => {
     const response = await window.axios.delete(route('landings.destroy', { id }));
@@ -57,11 +45,11 @@ const useStore = create<LandingState>()((set) => ({
     const { data } = response;
     const responseData = Array.isArray(data.data) ? data.data : [data.data];
     set((state) => ({
-        landings: [...responseData, ...state.landings],
+      landings: [...responseData, ...state.landings],
     }));
     return response;
   }
 
 }));
 
-export default useStore;
+export default useLandingsStore;

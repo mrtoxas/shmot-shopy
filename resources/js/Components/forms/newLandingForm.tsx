@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import useStore from "@/store"
+import useStore from "@/store/landingsStore"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -22,10 +22,10 @@ import {
 } from "../shadcn/ui/select"
 import { Loader2Icon } from "../ui/icons"
 import { toast } from "../shadcn/ui/use-toast"
+import useAppStore from "@/store/appStore"
 
 interface CreateLandingFormProps {
-  finallyAction: () => void;
-  defaultClone?: string;
+  finallyAction: () => void;  
 }
 
 const FormSchema = z.object({
@@ -44,14 +44,16 @@ const FormSchema = z.object({
     .optional(),
 })
 
-export const CreateLandingForm = (props: CreateLandingFormProps) => {
+export const NewLandingForm = (props: CreateLandingFormProps) => {
   const { landings, createLanding } = useStore();
+
+  const { newLandingCloneName } = useAppStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
-      clone: props.defaultClone
+      clone: newLandingCloneName || ""
     }    
   })
 

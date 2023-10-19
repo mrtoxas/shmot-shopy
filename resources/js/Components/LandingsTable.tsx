@@ -1,8 +1,7 @@
-import useStore from "@/store";
 import { useMemo } from "react";
 import { Button, buttonVariants } from "./shadcn/ui/button";
 import { formatDate } from "@/utils/formatDate";
-import { CopyIcon, Loader2Icon, PencilIcon, Trach2Icon } from "./ui/icons";
+import { CopyIcon, Loader2Icon, PencilIcon, Trash2Icon } from "./ui/icons";
 import {
   Table,
   TableBody,
@@ -23,13 +22,20 @@ import {
   AlertDialogTrigger
 } from "./shadcn/ui/alert-dialog";
 import { Landing } from "@/types";
+import useLandingsStore from "@/store/landingsStore";
+import useAppStore from "@/store/appStore";
 
 
 export const LandingsTable = () => {
-  const { landings, removeLanding } = useStore();
+  const { landings, removeLanding } = useLandingsStore();
+  const { setIsOpenNewLandingDialog } = useAppStore();
 
   const deleteLandingHandler = async (id: Landing["id"]) => {
     removeLanding(id);
+  }
+
+  const showNewLandingDialog = (cloneName: Landing["name"]) => {    
+    setIsOpenNewLandingDialog(true, cloneName);    
   }
 
   const preparedData = useMemo(() => {
@@ -47,7 +53,7 @@ export const LandingsTable = () => {
             <TableCell>{date}</TableCell>
             <TableCell className="text-right">
               <div className="flex gap-2 justify-end flex-nowrap">
-                <Button variant="outline" size="icon" className="hover:text-green-600" title="Клонувати">
+                <Button onClick={()=>showNewLandingDialog(el.name)} variant="outline" size="icon" className="hover:text-green-600" title="Клонувати">
                   <CopyIcon className="h-4 w-4" />
                 </Button>
                 <Button variant="outline" size="icon" className="hover:text-green-600" title="Редагувати">
@@ -55,7 +61,7 @@ export const LandingsTable = () => {
                 </Button>
                 <AlertDialog>
                   <AlertDialogTrigger className={buttonVariants({ variant: "outline", size: 'icon' })} title="Видалити">
-                    <Trach2Icon className="h-4 w-4" />
+                    <Trash2Icon className="h-4 w-4" />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>

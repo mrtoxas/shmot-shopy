@@ -1,13 +1,15 @@
 import {
-    Trash2 as Trach2Icon,
-    Pencil as PencilIcon,
-    Loader2 as Loader2Icon,
-    Copy as CopyIcon
+    Trash2Icon,
+    PencilIcon,
+    Loader2Icon,
+    CopyIcon,
+    PlusIcon
 } from "lucide-react";
 
 export { 
-    Trach2Icon, 
+    Trash2Icon, 
     PencilIcon, 
     Loader2Icon,
-    CopyIcon
+    CopyIcon,
+    PlusIcon
 };
