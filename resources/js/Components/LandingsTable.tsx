@@ -35,7 +35,7 @@ export const LandingsTable = () => {
   }
 
   const showNewLandingDialog = (cloneName: Landing["name"]) => {    
-    setIsOpenNewLandingDialog(true, cloneName);    
+    setIsOpenNewLandingDialog(cloneName);    
   }
 
   const preparedData = useMemo(() => {

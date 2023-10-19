@@ -11,15 +11,14 @@ import { NewLandingForm } from '@/components/forms/newLandingForm';
 export const NewLandingDialog = () => {
 
   const { 
-    isOpenNewLandingDialog, 
-    setIsOpenNewLandingDialog, 
-    setNewLandingCloneName 
+    isOpenNewLandingDialog,     
+    toggleNewLandingDialog 
   } = useAppStore();
 
-  const closeDialogHandler = () => setIsOpenNewLandingDialog(false);
+  const closeDialogHandler = () => toggleNewLandingDialog(false);
 
   return (
-    <Dialog open={isOpenNewLandingDialog} onOpenChange={setIsOpenNewLandingDialog}>     
+    <Dialog open={isOpenNewLandingDialog} onOpenChange={toggleNewLandingDialog}>     
       <DialogContent className="sm:max-w-[425px]" >
         <DialogHeader>
           <DialogTitle>Додати сайт</DialogTitle>

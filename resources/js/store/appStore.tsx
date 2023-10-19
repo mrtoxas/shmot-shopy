@@ -2,13 +2,14 @@ import { create } from 'zustand';
 import { Landing, Theme } from '../types';
 
 interface LandingsState {
-  isPending: boolean, 
-  isOpenNewLandingDialog: boolean, 
+  isPending: boolean,
+  isOpenNewLandingDialog: boolean,
   themes: Theme[],
   newLandingCloneName: Landing["name"] | null,
-  setPending: (isPending: LandingsState["isPending"]) => void,  
-  setIsOpenNewLandingDialog: (state: boolean, cloneName: Landing["name"] | null) => void,  
+  setPending: (isPending: LandingsState["isPending"]) => void,
   addThemes: (data: Theme) => void,
+  setIsOpenNewLandingDialog: (cloneName: Landing["name"] | null) => void,
+  toggleNewLandingDialog: (state?: boolean) => void,
 }
 
 const useAppStore = create<LandingsState>()((set) => ({
@@ -20,14 +21,18 @@ const useAppStore = create<LandingsState>()((set) => ({
 
   newLandingCloneName: null,
 
-  setIsOpenNewLandingDialog: (state, cloneName) => {
-    set({ isOpenNewLandingDialog: state });
+  setIsOpenNewLandingDialog: (cloneName) => {
+    set({ isOpenNewLandingDialog: true });
     set({ newLandingCloneName: cloneName })
-  },  
+  },
+
+  toggleNewLandingDialog: (state) => {
+    set((s) => ({ isOpenNewLandingDialog: state ? state : !s.isOpenNewLandingDialog }));
+  },
 
   setPending: (isPending) => set({ isPending }),
-  
-  addThemes: (data) => set((state) => ({ themes: [...state.themes, data] })),  
+
+  addThemes: (data) => set((state) => ({ themes: [...state.themes, data] })),
 
 }));
 

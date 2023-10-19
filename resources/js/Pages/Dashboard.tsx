@@ -24,7 +24,7 @@ export default function Dashboard({ auth, flash }: PageProps) {
   }, [])
 
   const showNewLandingDialog = () => {
-    setIsOpenNewLandingDialog(true, null);    
+    setIsOpenNewLandingDialog(null);    
   };
 
   return (
