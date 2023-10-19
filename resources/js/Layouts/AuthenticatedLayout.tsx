@@ -1,5 +1,5 @@
 import { useState, PropsWithChildren, ReactNode } from 'react';
-import ResponsiveNavLink from '@/components/responsiveNavLink';
+import ResponsiveNavLink from '@/components/ui/responsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
 import {

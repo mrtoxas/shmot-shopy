@@ -53,14 +53,14 @@ export const LandingsTable = () => {
             <TableCell>{date}</TableCell>
             <TableCell className="text-right">
               <div className="flex gap-2 justify-end flex-nowrap">
-                <Button onClick={()=>showNewLandingDialog(el.name)} variant="outline" size="icon" className="hover:text-green-600" title="Клонувати">
+                <Button onClick={()=>showNewLandingDialog(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
                   <CopyIcon className="h-4 w-4" />
                 </Button>
                 <Button variant="outline" size="icon" className="hover:text-green-600" title="Редагувати">
                   <PencilIcon className="h-4 w-4" />
                 </Button>
                 <AlertDialog>
-                  <AlertDialogTrigger className={buttonVariants({ variant: "outline", size: 'icon' })} title="Видалити">
+                  <AlertDialogTrigger className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-red-600' })} title="Видалити">
                     <Trash2Icon className="h-4 w-4" />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
