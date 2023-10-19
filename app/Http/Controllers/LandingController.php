@@ -45,13 +45,13 @@ class LandingController extends Controller
     ]);
 
     try {
-      if (!$request->clone){
+      if (!$request->clone) {
         $landing = Landing::create([
           'name' => $request->input('name'),
           'created_by' => Auth::user()->id,
-        ]);  
+        ]);
       }
-         
+
       return response()->json([
         'data' => $landing,
         'message' => 'Сайт успішно створено!'
@@ -101,7 +101,7 @@ class LandingController extends Controller
         DB::rollBack();
         throw new \Exception('Ви не можете видалити цей сайт', 403);
       }
-      
+
       $landing->delete();
 
       DB::commit();
@@ -113,7 +113,19 @@ class LandingController extends Controller
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені лендингу, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage
-      ], 500);     
+      ], 500);
+    }
+  }
+
+  public function getForDomain(Request $request, $landingName)
+  {    
+    try {      
+      return view('landing.default.index');
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені лендингу, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage
+      ], 500);
     }
   }
 }

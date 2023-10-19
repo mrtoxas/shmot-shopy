@@ -17,6 +17,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::domain('{landingName}.' . env('APP_URL'))->group(function () {
+    Route::get('/', [LandingController::class, 'getForDomain']);
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
