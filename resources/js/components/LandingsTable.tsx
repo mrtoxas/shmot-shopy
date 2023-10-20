@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Button, buttonVariants } from "./shadcn/ui/button";
 import { formatDate } from "@/utils/formatDate";
+import { Link } from '@inertiajs/react';
 import { CopyIcon, Loader2Icon, PencilIcon, Trash2Icon } from "./ui/icons";
 import {
   Table,
@@ -63,9 +64,15 @@ export const LandingsTable = () => {
                 <Button onClick={()=>showNewLandingDialog(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
                   <CopyIcon className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="hover:text-green-600" title="Редагувати">
+                <Link 
+                  className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-green-600' })}
+                  href={route('landing.admin', el.id)}
+                  size="icon"
+                  title="Редагувати"
+                >
                   <PencilIcon className="h-4 w-4" />
-                </Button>
+                </Link>
+            
                 <AlertDialog>
                   <AlertDialogTrigger className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-red-600' })} title="Видалити">
                     <Trash2Icon className="h-4 w-4" />
