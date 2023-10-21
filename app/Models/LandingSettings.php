@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Models\Landing;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class LandingSettings extends Model
 {
     use HasFactory;
 
-    $protected $table = 'settings';
+    protected $table = 'landing_settings';
 
     protected $fillable = [
     'landing_id',

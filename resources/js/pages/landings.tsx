@@ -6,16 +6,16 @@ import { PageHead } from '@/components/ui/pageHead';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
 import { LandingsTable } from '@/components/LandingsTable';
-import useStore from '@/store/landingsStore';
+import useLandingStore from '@/store/landingsStore';
 import { Button } from '@/components/shadcn/ui/button';
 import { PlusIcon } from '@/components/ui/icons';
 import useAppStore from '@/store/appStore';
 
-export default function Dashboard({ auth, flash }: PageProps) {
+export default function Landings({ auth, flash }: PageProps) {
 
   useFlashToasts(flash);
 
-  const { getLandings } = useStore();
+  const { getLandings } = useLandingStore();
   const { setIsOpenNewLandingDialog } = useAppStore();
 
   useEffect(() => {

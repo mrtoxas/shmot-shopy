@@ -21,8 +21,8 @@ class Landing extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function settings()
+    public function landingSettings()
     {
-        return $this->hasOne(Settings::class);
+        return $this->hasOne(LandingSettings::class);
     }
 }

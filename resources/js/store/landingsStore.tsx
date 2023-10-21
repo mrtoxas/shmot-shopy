@@ -10,10 +10,10 @@ interface CreateLandingsProps {
 interface LandingsState {
   landings: Landing[],
   currentLanding: Landing | null;
-  addCurrentLanding: (data: Landing) => void,
   removeLanding: (id: Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
+  getLandingWithData: () => Promise<AxiosResponse>,
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({  
@@ -21,10 +21,8 @@ const useLandingsStore = create<LandingsState>()((set) => ({
 
   currentLanding: null,
 
-  addCurrentLanding: (data) => set({ currentLanding: data }),
-
   removeLanding: async (id) => {
-    const response = await window.axios.delete(route('landings.destroy', { id }));
+    const response = await window.axios.delete(route('landing.destroy', { id }));
     set((state) => ({
       landings: state.landings.filter((landing) => landing.id !== id),
     }));
@@ -37,6 +35,13 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     set((state) => ({
       landings: Array.isArray(data) ? data : [data, ...state.landings],
     }));
+    return response;
+  },
+
+  getLandingWithData: async (id: Landing["id"]) => {
+    const response = await window.axios.get(route('landing.data', id));
+    const { data } = response;
+    set({ currentLanding: data });
     return response;
   },
 

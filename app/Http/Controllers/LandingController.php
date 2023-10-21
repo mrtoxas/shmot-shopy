@@ -29,6 +29,27 @@ class LandingController extends Controller
     }
   }
 
+  public function fetchWithAllData(Request $request)
+  {
+    try {
+      $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->id);
+
+      if ($landing_data === null) {
+        return response()->json(['message' => 'Лендинг не найден'], 404);
+      }
+    
+      $landing_data->load('LandingSettings');
+
+      return response()->json(['data' => $landing_data], 200);
+
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні даних сайту, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage,
+      ], 500);
+    }
+  }
+
   /**
    * Store a newly created resource in storage.
    */

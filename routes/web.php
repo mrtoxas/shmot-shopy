@@ -31,24 +31,33 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/landings', function () {
+    return Inertia::render('landings');
+})->middleware(['auth', 'verified'])->name('landings');
 
 Route::get('/landings/{landingId}', function ($landingId) {
     return Inertia::render('landing', ['landingId' => $landingId]);
-  })
+})
     ->name('landing.admin')
+    ->middleware(['auth', 'verified'])
     ->middleware(CheckLandingAccess::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/api/profile', 
+        [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/api/profile', 
+        [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/api/profile', 
+        [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/landings', [LandingController::class, 'index'])->name('landings.index');
-    Route::post('/landings', [LandingController::class, 'store'])->name('landings.store');    
-    Route::delete('/landings/{id}', [LandingController::class, 'destroy'])->name('landings.destroy');    
+    Route::get('/api/landings', 
+        [LandingController::class, 'index'])->name('landings.index');
+    Route::post('/api/landings', 
+        [LandingController::class, 'store'])->name('landings.store');    
+    Route::delete('/api/landings/{id}', 
+        [LandingController::class, 'destroy'])->name('landing.destroy'); 
+    Route::get('/api/landings/{id}',
+        [LandingController::class, 'fetchWithAllData'])->name('landing.data');
 });
 
 require __DIR__.'/auth.php';
