@@ -14,6 +14,7 @@ interface LandingsState {
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
   getLandingWithData: () => Promise<AxiosResponse>,
+  clearCurrentLanding: () => void;
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({  
@@ -53,7 +54,9 @@ const useLandingsStore = create<LandingsState>()((set) => ({
       landings: [...responseData, ...state.landings],
     }));
     return response;
-  }
+  },
+
+  clearCurrentLanding: () => set({currentLanding: []}),
 
 }));
 

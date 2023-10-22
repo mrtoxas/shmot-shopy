@@ -8,5 +8,4 @@
   <div class="max-w-xl mx-auto font-montserrat">
       @include('landing.default.components.header')
   </div>
-  sss
 @endsection

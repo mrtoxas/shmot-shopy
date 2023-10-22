@@ -9,7 +9,7 @@ import useLandingStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
 
 export default function Landing({ auth, flash }: PageProps){
-  const { getLandingWithData } = useLandingStore();
+  const { getLandingWithData, clearCurrentLanding } = useLandingStore();
   const { landingId } = usePage().props;
 
   useEffect(() => {

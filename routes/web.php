@@ -50,14 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/profile', 
         [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/api/landings', 
-        [LandingController::class, 'index'])->name('landings.index');
-    Route::post('/api/landings', 
-        [LandingController::class, 'store'])->name('landings.store');    
-    Route::delete('/api/landings/{id}', 
-        [LandingController::class, 'destroy'])->name('landing.destroy'); 
-    Route::get('/api/landings/{id}',
-        [LandingController::class, 'fetchWithAllData'])->name('landing.data');
+    Route::get('/api/landings', [LandingController::class, 'index'])->name('landings.index');
+    Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');    
+    Route::delete('/api/landings/{id}', [LandingController::class, 'destroy'])->name('landing.destroy'); 
+    Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data');
+    Route::post('/api/landing/{id}/settings', [LandingController::class, 'fetchWithAllData'])->name('landing.settings.store');
 });
 
 require __DIR__.'/auth.php';

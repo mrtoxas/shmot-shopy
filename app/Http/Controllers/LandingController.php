@@ -43,7 +43,7 @@ class LandingController extends Controller
       return response()->json(['data' => $landing_data], 200);
 
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні даних сайту, зверніться до адміністратора.';
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні даних, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage,
       ], 500);
