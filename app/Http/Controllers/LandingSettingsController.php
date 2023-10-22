@@ -2,26 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Landing\Settings;
+use App\Models\LandingSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class SettingsController extends Controller
+class LandingSettingsController extends Controller
 {
-  public function fetchLandigSettings(Settings $landingSetting)
-  {
-    try {
-      $settings = Settings::where('landing_id', $landingId)->get();
-      return response()->json($settings, 200);    
-    } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні Загальних налаштувань, зверніться до адміністратора.';
-      return response()->json([
-        'message' => $errorMessage,
-      ], 500);
-    }
-  }
-
   public function store(Request $request)
   {
     $request->validate([
@@ -35,10 +22,8 @@ class SettingsController extends Controller
       'telegram_token'    => 'nullable|string',
     ]);
 
-    try {  
-        $user = Auth::user()->id;
-        $landingSettings = LandingSettings::firstOrNew(['landing_id' => $landing_id]);
-
+    try {          
+        $landingSettings = LandingSettings::firstOrNew(['landing_id' => $request->id]);
         $landingSettings->update($request->all());
         
         return response()->json($landingSettings, 200);
@@ -49,4 +34,21 @@ class SettingsController extends Controller
       ], 500);
     }
   }
+
+  public function fetchLandigSettings(Request $request)
+  {  
+    try {
+      $settings = LandingSettings::where('landing_id', $request->landing_id)->get();
+      return response()->json($settings, 200);    
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні Загальних налаштувань, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage,
+      ], 500);
+    }
+  }
 }
+
+/*
+ 
+*/

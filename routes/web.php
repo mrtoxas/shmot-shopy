@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LandingSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,8 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/landings', [LandingController::class, 'index'])->name('landings.index');
     Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');    
     Route::delete('/api/landings/{id}', [LandingController::class, 'destroy'])->name('landing.destroy'); 
-    Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data');
-    Route::post('/api/landing/{id}/settings', [LandingController::class, 'fetchWithAllData'])->name('landing.settings.store');
+    Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data.index');
+    Route::post('/api/landing/{id}/settings', [LandingSettingsController::class, 'store'])->name('landing.settings.store');
 });
 
 require __DIR__.'/auth.php';

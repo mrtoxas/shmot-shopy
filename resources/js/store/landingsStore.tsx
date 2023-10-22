@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Landing, Theme } from '../types';
+import { Landing, LandingFull } from '../types';
 import { AxiosResponse } from 'axios';
 
 interface CreateLandingsProps {
@@ -9,12 +9,12 @@ interface CreateLandingsProps {
 
 interface LandingsState {
   landings: Landing[],
-  currentLanding: Landing | null;
+  currentLanding: LandingFull | null;
   removeLanding: (id: Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: () => Promise<AxiosResponse>,
-  clearCurrentLanding: () => void;
+  getLandingWithData: (id: Landing["id"]) => Promise<AxiosResponse>,
+  clearCurrentLanding: () => void
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({  
@@ -39,10 +39,10 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  getLandingWithData: async (id: Landing["id"]) => {
-    const response = await window.axios.get(route('landing.data', id));
+  getLandingWithData: async (id) => {
+    const response = await window.axios.get(route('landing.data.index', id));
     const { data } = response;
-    set({ currentLanding: data });
+    set({ currentLanding: data.data });
     return response;
   },
 
@@ -56,7 +56,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  clearCurrentLanding: () => set({currentLanding: []}),
+  clearCurrentLanding: () => set({currentLanding: null}),
 
 }));
 
