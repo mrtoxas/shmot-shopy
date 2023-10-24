@@ -9,27 +9,25 @@ interface CreateLandingsProps {
 interface LandingsState {
   landings: App.Models.Landing[],
   currentLanding: App.Models.Landing | null,
-  isPagePending: boolean,
-  removeLanding: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
+  
+  removeLanding: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
-  updateLandingSettings: (id: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
+  getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
+  updateLandingSettings: (landingId: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
-  setPagePending: (isPagePending: boolean) => void,
+  
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({
   landings: [],
 
-  isPagePending: false,
-
   currentLanding: null,
 
-  removeLanding: async (id) => {
-    const response = await window.axios.delete(route('landing.destroy', { id }));
+  removeLanding: async (landingId) => {
+    const response = await window.axios.delete(route('landing.destroy', { landingId }));
     set((state) => ({
-      landings: state.landings.filter((landing) => landing.id !== id),
+      landings: state.landings.filter((landing) => landing.id !== landingId),
     }));
     return response;
   },
@@ -43,8 +41,8 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  getLandingWithData: async (id) => {
-    const response = await window.axios.get(route('landing.data.index', String(id)));
+  getLandingWithData: async (landingId) => {
+    const response = await window.axios.get(route('landing.data.index', String(landingId)));
     const { data } = response;
     set({ currentLanding: data.data });
     return response;
@@ -62,12 +60,10 @@ const useLandingsStore = create<LandingsState>()((set) => ({
 
   clearCurrentLanding: () => set({ currentLanding: null }),
 
-  updateLandingSettings: async (id, data) => {    
-    const response = await window.axios.post(route('landing.settings.update', { id }), { data });
+  updateLandingSettings: async (landingId, data) => {    
+    const response = await window.axios.post(route('landing.settings.update', { landingId: landingId }), { data });
     return response;
-  },
-
-  setPagePending: (isPagePending) => set({ isPagePending })
+  },  
 
 }));
 

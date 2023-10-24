@@ -32,7 +32,7 @@ class LandingController extends Controller
   public function fetchWithAllData(Request $request)
   {
     try {
-      $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->id);
+      $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->landingId);
 
       if ($landing_data === null) {
         return response()->json(['message' => 'Лендинг не найден'], 404);

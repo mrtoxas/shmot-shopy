@@ -7,15 +7,16 @@ import { PageProps } from '@/types';
 import useLandingStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
 import { Loader2Icon } from '@/components/ui/icons';
+import { useFlashToasts } from '@/hooks/useFlashToasts';
+import useAppStore from '@/store/appStore';
 
 export default function Landing({ auth, flash }: PageProps) {
-  const {
-    getLandingWithData,
-    clearCurrentLanding,
-    currentLanding,
-    isPagePending,
-    setPagePending
-  } = useLandingStore();
+  
+  useFlashToasts(flash);
+
+  const { isPagePending, setPagePending } = useAppStore();
+  
+  const { getLandingWithData, clearCurrentLanding, currentLanding } = useLandingStore();
 
   const { landingId } = usePage().props;
 
@@ -44,7 +45,7 @@ export default function Landing({ auth, flash }: PageProps) {
 
       {isPagePending && (
         <div className="fixed flex items-center justify-center inset-0 z-10 w-full h-full bg-white dark:bg-black opacity-80">
-          <Loader2Icon className="animate-spin h-[2rem] w-[2rem] color-blue" />
+          <Loader2Icon className="animate-spin h-[2rem] w-[2rem]" />
         </div>
       )}
 

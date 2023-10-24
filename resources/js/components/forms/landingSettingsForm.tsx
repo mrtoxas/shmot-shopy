@@ -4,11 +4,12 @@ import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/ui/form";
-import { Input } from "../shadcn/ui/input";
-import { Button } from "../shadcn/ui/button";
+import { Input } from "@/components/shadcn/ui/input";
+import { Button } from "@/components/shadcn/ui/button";
 import { useEffect } from "react";
-import { Checkbox } from "../shadcn/ui/checkbox";
-import { toast } from "../shadcn/ui/use-toast";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
+import { toast } from "@/components/shadcn/ui/use-toast";
+import { Loader2Icon } from "@/components/ui/icons";
 
 const FormSchema = z.object({
   meta_title: z.string().nullable(),
@@ -27,15 +28,26 @@ export const LandingSettingsForm = () => {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      meta_title: null,
+      meta_description: null,
+      is_pub: false,
+      fb_pixel_key: null,
+      telegram_chat_id: null,
+      crm_api_key: null,
+      telegram_token: null,
+    }
   });
+
+  const { formState: isSubmitting } = form;
 
   useEffect(() => {
     if (!currentLanding?.landing_settings) return;
 
-    const { landing_settings } = currentLanding;    
+    const { landing_settings } = currentLanding;
 
     form.reset({
-      meta_title: landing_settings.meta_title || "",
+      meta_title: landing_settings.meta_title,
       meta_description: landing_settings.meta_description,
       is_pub: Boolean(landing_settings.is_pub),
       fb_pixel_key: landing_settings.fb_pixel_key,
@@ -45,8 +57,8 @@ export const LandingSettingsForm = () => {
     });
   }, [currentLanding]);
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {    
-    updateLandingSettings(Number(landingId), data as App.Models.LandingSettings).then((res) => {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    return updateLandingSettings(Number(landingId), data as App.Models.LandingSettings).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
@@ -67,7 +79,7 @@ export const LandingSettingsForm = () => {
                 <FormItem>
                   <FormLabel>Мета заголовок</FormLabel>
                   <FormControl>
-                  <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +175,10 @@ export const LandingSettingsForm = () => {
           </div>
 
           <div className="mt-4">
-            <Button type="submit">Зберегти</Button>
+            <Button disabled={isSubmitting.isSubmitting} type="submit">
+              {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+              Зберегти
+            </Button>
           </div>
         </div>
       </form>

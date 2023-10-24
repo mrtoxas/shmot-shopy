@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LandingSettings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Landing;
+use App\Models\LandingSettings;
 
 class LandingSettingsController extends Controller
 {
@@ -19,9 +21,9 @@ class LandingSettingsController extends Controller
       'telegram_token' => 'nullable|string'
     ]);
 
-    try {
-      $landingSettings = LandingSettings::firstOrNew(['landing_id' => '1']);
-      
+    try {      
+      $landingSettings = LandingSettings::firstOrCreate(['landing_id' => $id]);      
+
       $landingSettings->update($request->data);
       
       return response()->json([

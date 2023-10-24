@@ -28,7 +28,7 @@ import { toast } from "@/components/shadcn/ui/use-toast"
 export const LandingsTable = () => {
   const { landings, removeLanding } = useLandingsStore();
   const { setIsOpenNewLandingDialog } = useAppStore();
-
+  
   const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
     removeLanding(id).then((res)=>{
       toast({
@@ -47,7 +47,7 @@ export const LandingsTable = () => {
     return (
       landings.map((el) => {
         const link = `${window.location.protocol}//${el.name}.${window.location.hostname}`;
-        const date = formatDate(el.created_at);
+        const date = formatDate(el.created_at!);
 
         return (
           <TableRow key={el.id}>
@@ -96,10 +96,7 @@ export const LandingsTable = () => {
 
 
   return (
-    <div className="relative">
-      {/* <div className="absolute flex justify-center items-center w-full h-full bg-background opacity-80 z-10">
-        <Loader2Icon className="h-8 w-8 animate-spin stroke-red" />
-      </div> */}
+    <div className="relative">      
       <Table>
         <TableHeader>
           <TableRow>
@@ -110,7 +107,7 @@ export const LandingsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {preparedData}
+          {preparedData}          
         </TableBody>
       </Table>
     </div>

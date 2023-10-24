@@ -49,12 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/api/landings', [LandingController::class, 'index'])->name('landings.index');
-    Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');    
-    Route::delete('/api/landings/{id}', [LandingController::class, 'destroy'])->name('landing.destroy'); 
-    
-    Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data.index');
-
-    Route::post('/api/landing/{id}/settings', [LandingSettingsController::class, 'update'])->name('landing.settings.update');
+    Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');
+    Route::delete('/api/landings/{landingId}', [LandingController::class, 'destroy'])->name('landing.destroy');
+    Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('landing.data.index');
+    Route::post('/api/landing/{landingId}/settings', [LandingSettingsController::class, 'update'])
+        ->name('landing.settings.update')
+        ->middleware(CheckLandingAccess::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
