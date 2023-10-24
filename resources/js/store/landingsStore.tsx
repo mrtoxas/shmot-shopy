@@ -8,17 +8,21 @@ interface CreateLandingsProps {
 
 interface LandingsState {
   landings: App.Models.Landing[],
-  currentLanding: App.Models.Landing | null;
+  currentLanding: App.Models.Landing | null,
+  isPagePending: boolean,
   removeLanding: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
   getLandingWithData: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   updateLandingSettings: (id: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
+  setPagePending: (isPagePending: boolean) => void,
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({
   landings: [],
+
+  isPagePending: false,
 
   currentLanding: null,
 
@@ -61,7 +65,9 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   updateLandingSettings: async (id, data) => {    
     const response = await window.axios.post(route('landing.settings.update', { id }), { data });
     return response;
-  }
+  },
+
+  setPagePending: (isPagePending) => set({ isPagePending })
 
 }));
 
