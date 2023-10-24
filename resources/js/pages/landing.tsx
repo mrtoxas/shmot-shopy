@@ -9,11 +9,16 @@ import useLandingStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
 
 export default function Landing({ auth, flash }: PageProps){
-  const { getLandingWithData, clearCurrentLanding } = useLandingStore();
+  const { 
+    getLandingWithData, 
+    clearCurrentLanding, 
+    currentLanding,
+  } = useLandingStore();
+
   const { landingId } = usePage().props;
 
-  useEffect(() => {
-    getLandingWithData(landingId);
+  useEffect(() => {    
+    getLandingWithData(Number(landingId));
     return () => clearCurrentLanding();
   }, []);
 	return (
@@ -21,16 +26,16 @@ export default function Landing({ auth, flash }: PageProps){
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <PageHead message="Лендing" />
+          <PageHead message={`Налаштування сайту ${currentLanding?.name || ""}`} />
         </div>
       }
     >
       <Head title="Мої сайти" />
 
       <div className="py-12">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        	<h3 className="font-semibold leading-none tracking-tight">Загальнi налаштування</h3>
-          <LandingSettingsForm />
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        	<h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
+          <LandingSettingsForm  />
         </div>
       </div>
 

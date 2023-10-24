@@ -44,18 +44,17 @@ Route::get('/landings/{landingId}', function ($landingId) {
     ->middleware(CheckLandingAccess::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/api/profile', 
-        [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/api/profile', 
-        [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/api/profile', 
-        [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/api/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/api/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/api/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/api/landings', [LandingController::class, 'index'])->name('landings.index');
     Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');    
     Route::delete('/api/landings/{id}', [LandingController::class, 'destroy'])->name('landing.destroy'); 
+    
     Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data.index');
-    Route::post('/api/landing/{id}/settings', [LandingSettingsController::class, 'store'])->name('landing.settings.store');
+
+    Route::post('/api/landing/{id}/settings', [LandingSettingsController::class, 'update'])->name('landing.settings.update');
 });
 
 require __DIR__.'/auth.php';

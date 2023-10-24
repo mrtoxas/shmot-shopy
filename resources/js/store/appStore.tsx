@@ -1,14 +1,11 @@
 import { create } from 'zustand';
-import { Landing, Theme } from '../types';
 
 interface LandingsState {
   isPending: boolean,
-  isOpenNewLandingDialog: boolean,
-  themes: Theme[],
-  newLandingCloneName: Landing["name"] | null,
+  isOpenNewLandingDialog: boolean,  
+  newLandingCloneName: App.Models.Landing["name"] | null,
   setPending: (isPending: LandingsState["isPending"]) => void,
-  addThemes: (data: Theme) => void,
-  setIsOpenNewLandingDialog: (cloneName: Landing["name"] | null) => void,
+  setIsOpenNewLandingDialog: (cloneName: App.Models.Landing["name"] | null) => void,
   toggleNewLandingDialog: (state?: boolean) => void,
 }
 
@@ -30,9 +27,7 @@ const useAppStore = create<LandingsState>()((set) => ({
     set((s) => ({ isOpenNewLandingDialog: state ? state : !s.isOpenNewLandingDialog }));
   },
 
-  setPending: (isPending) => set({ isPending }),
-
-  addThemes: (data) => set((state) => ({ themes: [...state.themes, data] })),
+  setPending: (isPending) => set({ isPending }),  
 
 }));
 

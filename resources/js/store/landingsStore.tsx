@@ -1,24 +1,24 @@
 import { create } from 'zustand';
-import { Landing, LandingFull } from '../types';
 import { AxiosResponse } from 'axios';
 
 interface CreateLandingsProps {
-  name: Landing["name"],
-  clone?: Landing["name"]
+  name: App.Models.Landing["name"],
+  clone?: App.Models.Landing["name"]
 }
 
 interface LandingsState {
-  landings: Landing[],
-  currentLanding: LandingFull | null;
-  removeLanding: (id: Landing["id"]) => Promise<AxiosResponse>,
+  landings: App.Models.Landing[],
+  currentLanding: App.Models.Landing | null;
+  removeLanding: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: (id: Landing["id"]) => Promise<AxiosResponse>,
-  clearCurrentLanding: () => void
+  getLandingWithData: (id: App.Models.Landing["id"]) => Promise<AxiosResponse>,
+  updateLandingSettings: (id: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
+  clearCurrentLanding: () => void,
 }
 
-const useLandingsStore = create<LandingsState>()((set) => ({  
-  landings: [],  
+const useLandingsStore = create<LandingsState>()((set) => ({
+  landings: [],
 
   currentLanding: null,
 
@@ -40,7 +40,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   getLandingWithData: async (id) => {
-    const response = await window.axios.get(route('landing.data.index', id));
+    const response = await window.axios.get(route('landing.data.index', String(id)));
     const { data } = response;
     set({ currentLanding: data.data });
     return response;
@@ -56,7 +56,12 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  clearCurrentLanding: () => set({currentLanding: null}),
+  clearCurrentLanding: () => set({ currentLanding: null }),
+
+  updateLandingSettings: async (id, data) => {    
+    const response = await window.axios.post(route('landing.settings.update', { id }), { data });
+    return response;
+  }
 
 }));
 

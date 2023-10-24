@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
-import useStore from "@/store/landingsStore"
+import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -23,6 +22,7 @@ import {
 import { Loader2Icon } from "../ui/icons"
 import { toast } from "../shadcn/ui/use-toast"
 import useAppStore from "@/store/appStore"
+import useLandingsStore from "@/store/landingsStore"
 
 interface CreateLandingFormProps {
   finallyAction: () => void;  
@@ -45,7 +45,7 @@ const FormSchema = z.object({
 })
 
 export const NewLandingForm = (props: CreateLandingFormProps) => {
-  const { landings, createLanding } = useStore();
+  const { landings, createLanding } = useLandingsStore();
 
   const { newLandingCloneName } = useAppStore();
 
@@ -57,8 +57,7 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
     }    
   })
 
-  const { isSubmitted } = form.formState;
-  const { setValue } = form;
+  const { isSubmitted } = form.formState;  
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     createLanding(data).then((res) => {

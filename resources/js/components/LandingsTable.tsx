@@ -12,8 +12,7 @@ import {
   TableRow
 } from "./shadcn/ui/table";
 import {
-  AlertDialog,
-  AlertDialogAction,
+  AlertDialog,  
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -22,17 +21,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "./shadcn/ui/alert-dialog";
-import { Landing } from "@/types";
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
 import { toast } from "@/components/shadcn/ui/use-toast"
-
 
 export const LandingsTable = () => {
   const { landings, removeLanding } = useLandingsStore();
   const { setIsOpenNewLandingDialog } = useAppStore();
 
-  const deleteLandingHandler = async (id: Landing["id"]) => {
+  const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
     removeLanding(id).then((res)=>{
       toast({
         className: "bg-green-600 text-white",
@@ -42,7 +39,7 @@ export const LandingsTable = () => {
     });
   }
 
-  const showNewLandingDialog = (cloneName: Landing["name"]) => {    
+  const showNewLandingDialog = (cloneName: App.Models.Landing["name"]) => {    
     setIsOpenNewLandingDialog(cloneName);    
   }
 
@@ -66,8 +63,7 @@ export const LandingsTable = () => {
                 </Button>
                 <Link 
                   className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-green-600' })}
-                  href={route('landing.admin', el.id)}
-                  size="icon"
+                  href={route('landing.admin', el.id)}                  
                   title="Редагувати"
                 >
                   <PencilIcon className="h-4 w-4" />

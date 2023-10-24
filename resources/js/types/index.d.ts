@@ -17,26 +17,26 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     flash: FlashProps;
 };
 
-export interface LandingSettings {
-    crm_api_key: string,
-    fb_pixel_key: string,
-    is_pub: boolean,
-    meta_description: string,
-    meta_title: string,
-    telegram_chat_id: string,
-    telegram_token: string,
-}
+// export interface LandingSettings {
+//     crm_api_key: string,
+//     fb_pixel_key: string,
+//     is_pub: boolean,
+//     meta_description: string,
+//     meta_title: string,
+//     telegram_chat_id: string,
+//     telegram_token: string,
+// }
 
-export interface Landing {
-    id: number,
-    name: string,
-    created_at: string,   
-}
+// export interface Landing {
+//     id: number,
+//     name: string,
+//     created_at: string,   
+// }
 
-export interface LandingFull extends Landing {
-    landing_settings: LandingSettings, 
-}
+// export interface LandingFull extends Landing {
+//     landing_settings: LandingSettings, 
+// }
 
-export interface Theme {
-    name: string
-}
+// export interface Theme {
+//     name: string
+// }
