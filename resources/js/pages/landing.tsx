@@ -43,7 +43,7 @@ export default function Landing({ auth, flash }: PageProps) {
       </div>
 
       {isPagePending && (
-        <div className="fixed flex items-center justify-center inset-0 z-10 w-full h-full bg-white opacity-80">
+        <div className="fixed flex items-center justify-center inset-0 z-10 w-full h-full bg-white dark:bg-black opacity-80">
           <Loader2Icon className="animate-spin h-[2rem] w-[2rem] color-blue" />
         </div>
       )}
