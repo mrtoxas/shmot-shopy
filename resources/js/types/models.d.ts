@@ -15,6 +15,19 @@ declare namespace App.Models {
         landing_settings?: App.Models.LandingSettings | null;
     }
 
+    export interface User {
+        id: number;
+        name: string;
+        email: string;
+        email_verified_at: string | null;
+        password: string;
+        remember_token: string | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landings?: Array<App.Models.Landing> | null;
+        landings_count?: number | null;
+    }
+
     export interface LandingSettings {
         id: number;
         landing_id: number;
@@ -27,20 +40,8 @@ declare namespace App.Models {
         telegram_token: string | null;
         created_at: string | null;
         updated_at: string | null;
+        template_id: number;
         landing?: App.Models.Landing | null;
-    }
-
-    export interface User {
-        id: number;
-        name: string;
-        email: string;
-        email_verified_at: string | null;
-        password: string;
-        remember_token: string | null;
-        created_at: string | null;
-        updated_at: string | null;
-        landings?: Array<App.Models.Landing> | null;
-        landings_count?: number | null;
     }
 
 }

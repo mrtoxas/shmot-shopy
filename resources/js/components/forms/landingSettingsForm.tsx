@@ -10,6 +10,13 @@ import { useEffect } from "react";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../shadcn/ui/select"
 
 const FormSchema = z.object({
   meta_title: z.string().nullable(),
@@ -19,6 +26,7 @@ const FormSchema = z.object({
   telegram_chat_id: z.string().nullable(),
   crm_api_key: z.string().nullable(),
   telegram_token: z.string().nullable(),
+  template_id: z.string(),
 })
 
 export const LandingSettingsForm = () => {
@@ -54,6 +62,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: landing_settings.telegram_chat_id,
       crm_api_key: landing_settings.crm_api_key,
       telegram_token: landing_settings.telegram_token,
+      template_id: landing_settings.template_id,
     });
   }, [currentLanding]);
 
@@ -146,6 +155,28 @@ export const LandingSettingsForm = () => {
                   <FormControl>
                     <Input className="w-full" {...field} value={field.value || ""} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="template_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Шаблон</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="m@example.com">m@example.com</SelectItem>
+                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
