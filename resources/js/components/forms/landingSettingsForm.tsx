@@ -1,3 +1,4 @@
+import { useMemo} from 'react';
 import useLandingsStore from "@/store/landingsStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
@@ -32,7 +33,7 @@ const FormSchema = z.object({
 export const LandingSettingsForm = () => {
   const { landingId } = usePage().props;
 
-  const { currentLanding, updateLandingSettings } = useLandingsStore();
+  const { currentLanding, updateLandingSettings, templates } = useLandingsStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -44,6 +45,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: null,
       crm_api_key: null,
       telegram_token: null,
+      template_id: "1",
     }
   });
 
@@ -65,6 +67,14 @@ export const LandingSettingsForm = () => {
       template_id: landing_settings.template_id,
     });
   }, [currentLanding]);
+
+  const themplatesOptions = useMemo(()=>{
+    return templates.map((item) => {
+      return (
+        <SelectItem key={item.id} value={String(item.id)}>{item.title}</SelectItem>
+      )
+    })
+  },[currentLanding, templates]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     return updateLandingSettings(Number(landingId), data as App.Models.LandingSettings).then((res) => {
@@ -165,16 +175,14 @@ export const LandingSettingsForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Шаблон</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={String(field.value)}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {themplatesOptions}
                     </SelectContent>
                   </Select>
                   <FormMessage />

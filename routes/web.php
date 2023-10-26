@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LandingSettingsController;
+use App\Http\Controllers\LandingTemplateController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,5 +57,8 @@ Route::middleware('auth')->group(function () {
         ->name('landing.settings.update')
         ->middleware(CheckLandingAccess::class);
 });
+
+Route::get('/api/templates', [LandingTemplateController::class, 'getAllThemes'])->name('api.templates.all');
+Route::get('/api/templates/{id}', [LandingTemplateController::class, 'getThemeById'])->name('api.templates.single');
 
 require __DIR__ . '/auth.php';

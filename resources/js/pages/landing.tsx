@@ -16,12 +16,18 @@ export default function Landing({ auth, flash }: PageProps) {
 
   const { isPagePending, setPagePending } = useAppStore();
   
-  const { getLandingWithData, clearCurrentLanding, currentLanding } = useLandingStore();
+  const { 
+    getLandingWithData, 
+    clearCurrentLanding, 
+    currentLanding, 
+    getTemplates
+  } = useLandingStore();
 
   const { landingId } = usePage().props;
 
   useEffect(() => {
     setPagePending(true);
+    getTemplates();
     getLandingWithData(Number(landingId)).finally(() => setPagePending(false));
     return () => clearCurrentLanding();
   }, []);
@@ -30,7 +36,7 @@ export default function Landing({ auth, flash }: PageProps) {
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <PageHead message={`Налаштування сайту ${currentLanding?.name || ""}`} />
+          <PageHead message={`Налаштування - ${currentLanding?.name || ""}`} />
         </div>
       }
     >

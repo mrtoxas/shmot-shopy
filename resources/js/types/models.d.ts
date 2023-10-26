@@ -28,6 +28,14 @@ declare namespace App.Models {
         landings_count?: number | null;
     }
 
+    export interface LandingTemplate {
+        id: number;
+        name: string;
+        created_at: string | null;
+        updated_at: string | null;
+        title: string;
+    }
+
     export interface LandingSettings {
         id: number;
         landing_id: number;

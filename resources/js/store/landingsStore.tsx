@@ -8,6 +8,7 @@ interface CreateLandingsProps {
 
 interface LandingsState {
   landings: App.Models.Landing[],
+  templates: App.Models.LandingTemplate[],
   currentLanding: App.Models.Landing | null,
   
   removeLanding: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
@@ -16,21 +17,16 @@ interface LandingsState {
   getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   updateLandingSettings: (landingId: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
-  
 }
 
 const useLandingsStore = create<LandingsState>()((set) => ({
   landings: [],
 
+  templates: [],
+
   currentLanding: null,
 
-  removeLanding: async (landingId) => {
-    const response = await window.axios.delete(route('landing.destroy', { landingId }));
-    set((state) => ({
-      landings: state.landings.filter((landing) => landing.id !== landingId),
-    }));
-    return response;
-  },
+  clearCurrentLanding: () => set({ currentLanding: null }),
 
   getLandings: async () => {
     const response = await window.axios.get(route('landings.index'));
@@ -58,12 +54,25 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  clearCurrentLanding: () => set({ currentLanding: null }),
-
   updateLandingSettings: async (landingId, data) => {    
     const response = await window.axios.post(route('landing.settings.update', { landingId: landingId }), { data });
     return response;
   },  
+
+  removeLanding: async (landingId) => {
+    const response = await window.axios.delete(route('landing.destroy', { landingId }));
+    set((state) => ({
+      landings: state.landings.filter((landing) => landing.id !== landingId),
+    }));
+    return response;
+  },
+
+  getTemplates: async () => {
+    const response = await window.axios.get(route('api.templates.all'));
+    const { data } = response;
+    set({ templates: data });
+    return response;
+  }
 
 }));
 
