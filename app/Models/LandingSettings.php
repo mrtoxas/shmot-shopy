@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LandingSettings extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'landing_settings';
+  protected $table = 'landing_settings';
 
-    protected $fillable = [
+  protected $fillable = [
     'landing_id',
     'is_pub',
     'meta_title',
@@ -20,10 +20,11 @@ class LandingSettings extends Model
     'telegram_chat_id',
     'crm_api_key',
     'telegram_token',
+    'template_id',
   ];
 
   public function landing()
   {
-    return $this->belongsTo(Landing::class);
+    return $this->belongsTo(Landing::class, 'landing_id');
   }
 }

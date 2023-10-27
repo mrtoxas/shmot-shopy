@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
-import useStore from "@/store/landingsStore"
+import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -23,6 +22,7 @@ import {
 import { Loader2Icon } from "../ui/icons"
 import { toast } from "../shadcn/ui/use-toast"
 import useAppStore from "@/store/appStore"
+import useLandingsStore from "@/store/landingsStore"
 
 interface CreateLandingFormProps {
   finallyAction: () => void;  
@@ -45,7 +45,7 @@ const FormSchema = z.object({
 })
 
 export const NewLandingForm = (props: CreateLandingFormProps) => {
-  const { landings, createLanding } = useStore();
+  const { landings, createLanding } = useLandingsStore();
 
   const { newLandingCloneName } = useAppStore();
 
@@ -57,11 +57,10 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
     }    
   })
 
-  const { isSubmitted } = form.formState;
-  const { setValue } = form;
+  const { formState: isSubmitting } = form;
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    createLanding(data).then((res) => {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    return createLanding(data).then((res) => {
       props.finallyAction();
       toast({
         className: "bg-green-600 text-white",
@@ -116,8 +115,8 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
             )}
           />
           <div className="text-right">           
-            <Button type="submit" disabled={isSubmitted}>
-              {isSubmitted && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Додати</Button>
+            <Button type="submit" disabled={isSubmitting.isSubmitting}>
+              {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Додати</Button>
           </div>
         </div>
       </form>

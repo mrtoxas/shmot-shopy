@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Landing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\LandingService;
+use App\Models\Landing;
+use App\Models\LandingTemplate;
 
 class LandingController extends Controller
 {
@@ -32,13 +34,16 @@ class LandingController extends Controller
   public function fetchWithAllData(Request $request)
   {
     try {
-      $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->id);
+      $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->landingId);
 
       if ($landing_data === null) {
         return response()->json(['message' => 'Лендинг не найден'], 404);
       }
     
+      $landing_data->load('GlobalProduct');
       $landing_data->load('LandingSettings');
+      $landing_data->load('GlobalProduct');
+      
 
       return response()->json(['data' => $landing_data], 200);
 
@@ -53,7 +58,7 @@ class LandingController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(Request $request, LandingService $landingService)
   {
     $request->validate([
       'name' => 'required|unique:landings|min:3|max:50',
@@ -65,14 +70,16 @@ class LandingController extends Controller
       'name.max' => 'Занадто довга назва! Максимум 50 символiв.',
     ]);
 
-    try {
-      if (!$request->clone) {
-        $landing = Landing::create([
-          'name' => $request->input('name'),
-          'created_by' => Auth::user()->id,
-        ]);
-      }
+    $name = $request->input('name');
+    $clone = $request->input('clone');
 
+    try {
+      if ($clone) {
+        $landing = $landingService->cloneLanding($clone, $name);
+      } else {
+        $landing = $landingService->createLanding($name);
+      }
+          
       return response()->json([
         'data' => $landing,
         'message' => 'Сайт успішно створено!'
@@ -83,30 +90,6 @@ class LandingController extends Controller
         'message' => $errorMessage
       ], 500);
     }
-  }
-
-  /**
-   * Display the specified resource.
-   */
-  public function show(Landing $landing)
-  {
-    //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(Landing $landing)
-  {
-    //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, Landing $landing)
-  {
-    //
   }
 
   /**
@@ -140,10 +123,18 @@ class LandingController extends Controller
 
   public function getForDomain(Request $request, $landingName)
   {    
-    try {      
-      return view('landing.default.index');
+    try {     
+      $landing = Landing::where('name', $landingName)->first();
+      $landing->load('landingSettings');
+      $templateId = $landing->landingSettings->template_id;
+      $landingTemplate = LandingTemplate::find($templateId);
+      $templateName = $landingTemplate->name;
+      
+      return view('landing.' . $templateName . '.index', [
+            'landingSettings' => $landing->landingSettings
+        ]);
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені лендингу, зверніться до адміністратора.';
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage
       ], 500);

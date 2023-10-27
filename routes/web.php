@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Landing\SettingsController;
+use App\Http\Controllers\LandingTemplateController;
+use App\Http\Controllers\Landing\GlobalProductController;
+use App\Http\Controllers\Landing\AdvantageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,18 +47,25 @@ Route::get('/landings/{landingId}', function ($landingId) {
     ->middleware(CheckLandingAccess::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/api/profile', 
-        [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/api/profile', 
-        [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/api/profile', 
-        [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/api/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/api/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/api/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/api/landings', [LandingController::class, 'index'])->name('landings.index');
-    Route::post('/api/landings', [LandingController::class, 'store'])->name('landings.store');    
-    Route::delete('/api/landings/{id}', [LandingController::class, 'destroy'])->name('landing.destroy'); 
-    Route::get('/api/landings/{id}', [LandingController::class, 'fetchWithAllData'])->name('landing.data');
-    Route::post('/api/landing/{id}/settings', [LandingController::class, 'fetchWithAllData'])->name('landing.settings.store');
+    Route::get('/api/landings', [LandingController::class, 'index'])->name('api.landings.all');
+    Route::post('/api/landings', [LandingController::class, 'store'])->name('api.landings.store');
+    
+    Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('api.landingData.index');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth', 'check_landing_access'])->group(function () {
+    Route::delete('/api/landings/{landingId}', [LandingController::class, 'destroy'])->name('api.landing.destroy');
+    Route::post('/api/landing/{landingId}/settings', [SettingsController::class, 'update'])->name('api.settings.update');
+    Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])->name('api.product.update');
+    Route::post('/api/landing/{landingId}/advantages', [AdvantageController::class, 'update'])->name('api.advantages.update');
+});
+
+
+Route::get('/api/templates', [LandingTemplateController::class, 'getAllThemes'])->name('api.templates.all');
+Route::get('/api/templates/{id}', [LandingTemplateController::class, 'getThemeById'])->name('api.templates.single');
+
+require __DIR__ . '/auth.php';

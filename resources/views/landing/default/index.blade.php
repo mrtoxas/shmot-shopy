@@ -1,7 +1,8 @@
 @extends('landing')
 
 @section('head')
-  <title></title>  
+  <title>{{ $landingSettings->meta_title }}</title> 
+  <meta name="description" content={{ $landingSettings->meta_description }}> 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
 @endsection
 @section('content')

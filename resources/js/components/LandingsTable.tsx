@@ -12,8 +12,7 @@ import {
   TableRow
 } from "./shadcn/ui/table";
 import {
-  AlertDialog,
-  AlertDialogAction,
+  AlertDialog,  
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -22,17 +21,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "./shadcn/ui/alert-dialog";
-import { Landing } from "@/types";
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
 import { toast } from "@/components/shadcn/ui/use-toast"
 
-
 export const LandingsTable = () => {
   const { landings, removeLanding } = useLandingsStore();
   const { setIsOpenNewLandingDialog } = useAppStore();
-
-  const deleteLandingHandler = async (id: Landing["id"]) => {
+  
+  const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
     removeLanding(id).then((res)=>{
       toast({
         className: "bg-green-600 text-white",
@@ -42,7 +39,7 @@ export const LandingsTable = () => {
     });
   }
 
-  const showNewLandingDialog = (cloneName: Landing["name"]) => {    
+  const showNewLandingDialog = (cloneName: App.Models.Landing["name"]) => {    
     setIsOpenNewLandingDialog(cloneName);    
   }
 
@@ -50,7 +47,7 @@ export const LandingsTable = () => {
     return (
       landings.map((el) => {
         const link = `${window.location.protocol}//${el.name}.${window.location.hostname}`;
-        const date = formatDate(el.created_at);
+        const date = formatDate(el.created_at!);
 
         return (
           <TableRow key={el.id}>
@@ -66,8 +63,7 @@ export const LandingsTable = () => {
                 </Button>
                 <Link 
                   className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-green-600' })}
-                  href={route('landing.admin', el.id)}
-                  size="icon"
+                  href={route('landing.admin', el.id)}                  
                   title="Редагувати"
                 >
                   <PencilIcon className="h-4 w-4" />
@@ -100,10 +96,7 @@ export const LandingsTable = () => {
 
 
   return (
-    <div className="relative">
-      {/* <div className="absolute flex justify-center items-center w-full h-full bg-background opacity-80 z-10">
-        <Loader2Icon className="h-8 w-8 animate-spin stroke-red" />
-      </div> */}
+    <div className="relative">      
       <Table>
         <TableHeader>
           <TableRow>
@@ -114,7 +107,7 @@ export const LandingsTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {preparedData}
+          {preparedData}          
         </TableBody>
       </Table>
     </div>
