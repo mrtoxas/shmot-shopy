@@ -23,6 +23,11 @@ class Landing extends Model
 
     public function landingSettings()
     {
-        return $this->hasOne(LandingSettings::class);
+        return $this->hasOne(LandingSettings::class, 'landing_id');
+    }
+
+    public function globalProduct()
+    {
+       return $this->hasOne(GlobalProduct::class, 'landing_id');
     }
 }

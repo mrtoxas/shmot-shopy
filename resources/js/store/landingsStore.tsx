@@ -16,6 +16,7 @@ interface LandingsState {
   getLandings: () => Promise<AxiosResponse>,
   getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   updateLandingSettings: (landingId: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
+  updateGlobalProduct: (landingId: App.Models.GlobalProduct["id"], data: App.Models.GlobalProduct) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
 }
 
@@ -58,6 +59,11 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     const response = await window.axios.post(route('landing.settings.update', { landingId: landingId }), { data });
     return response;
   },  
+
+  updateGlobalProduct: async (landingId, data) => {    
+    const response = await window.axios.post(route('api.product.update', { landingId: landingId }), { data });
+    return response;
+  },
 
   removeLanding: async (landingId) => {
     const response = await window.axios.delete(route('landing.destroy', { landingId }));

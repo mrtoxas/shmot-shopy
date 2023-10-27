@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LandingSettingsController;
 use App\Http\Controllers\LandingTemplateController;
+use App\Http\Controllers\Landing\GlobalProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -55,6 +56,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('landing.data.index');
     Route::post('/api/landing/{landingId}/settings', [LandingSettingsController::class, 'update'])
         ->name('landing.settings.update')
+        ->middleware(CheckLandingAccess::class);
+
+    Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])
+        ->name('api.product.update')
         ->middleware(CheckLandingAccess::class);
 });
 

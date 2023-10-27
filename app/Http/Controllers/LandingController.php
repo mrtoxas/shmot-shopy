@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Landing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\LandingService;
+use App\Models\Landing;
 use App\Models\LandingTemplate;
 use App\Models\LandingSettings;
+use App\Models\GlobalProduct;
 
 class LandingController extends Controller
 {
@@ -41,7 +42,9 @@ class LandingController extends Controller
         return response()->json(['message' => 'Лендинг не найден'], 404);
       }
     
+      $landing_data->load('GlobalProduct');
       $landing_data->load('LandingSettings');
+      
 
       return response()->json(['data' => $landing_data], 200);
 

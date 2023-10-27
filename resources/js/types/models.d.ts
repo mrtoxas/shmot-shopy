@@ -13,6 +13,7 @@ declare namespace App.Models {
         created_by: number;
         user?: App.Models.User | null;
         landing_settings?: App.Models.LandingSettings | null;
+        global_product?: App.Models.GlobalProduct | null;
     }
 
     export interface User {
@@ -49,6 +50,19 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         template_id: number;
+        landing?: App.Models.Landing | null;
+    }
+
+    export interface GlobalProduct {
+        id: number;
+        landing_id: number;
+        sizes: string | null;
+        price: number | null;
+        discount: number | null;
+        rest: number | null;
+        drop_price: number | null;
+        created_at: string | null;
+        updated_at: string | null;
         landing?: App.Models.Landing | null;
     }
 
