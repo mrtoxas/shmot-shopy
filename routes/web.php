@@ -5,6 +5,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LandingSettingsController;
 use App\Http\Controllers\LandingTemplateController;
 use App\Http\Controllers\Landing\GlobalProductController;
+use App\Http\Controllers\Landing\AdvantageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +61,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])
         ->name('api.product.update')
+        ->middleware(CheckLandingAccess::class);
+
+    Route::post('/api/landing/{landingId}/advantages', [AdvantageController::class, 'update'])
+        ->name('api.advantages.update')
         ->middleware(CheckLandingAccess::class);
 });
 

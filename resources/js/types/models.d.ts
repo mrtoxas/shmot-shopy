@@ -14,6 +14,7 @@ declare namespace App.Models {
         user?: App.Models.User | null;
         landing_settings?: App.Models.LandingSettings | null;
         global_product?: App.Models.GlobalProduct | null;
+        advantage?: App.Models.Advantage | null;
     }
 
     export interface User {
@@ -35,6 +36,16 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         title: string;
+    }
+
+    export interface Advantage {
+        id: number;
+        landing_id: number;
+        img_name: string;
+        caption: string;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
     }
 
     export interface LandingSettings {

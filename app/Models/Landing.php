@@ -30,4 +30,9 @@ class Landing extends Model
     {
        return $this->hasOne(GlobalProduct::class, 'landing_id');
     }
+
+    public function advantage()
+    {
+       return $this->hasOne(Advantage::class, 'landing_id');
+    }
 }

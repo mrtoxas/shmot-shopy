@@ -1,8 +1,4 @@
 import { useEffect } from 'react';
-import AuthenticatedLayout from '@/layouts/authenticatedLayout';
-import { PageHead } from '@/components/ui/pageHead';
-import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
-import { LandingGlobalProductForm } from '@/components/forms/landingGlobalProductForm';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import useLandingStore from '@/store/landingsStore';
@@ -10,6 +6,11 @@ import { usePage } from '@inertiajs/react';
 import { Loader2Icon } from '@/components/ui/icons';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import useAppStore from '@/store/appStore';
+import AuthenticatedLayout from '@/layouts/authenticatedLayout';
+import { PageHead } from '@/components/ui/pageHead';
+import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
+import { LandingGlobalProductForm } from '@/components/forms/landingGlobalProductForm';
+import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm';
 
 export default function Landing({ auth, flash }: PageProps) {
   
@@ -49,6 +50,8 @@ export default function Landing({ auth, flash }: PageProps) {
           <LandingSettingsForm />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 mt-12">Глобальний продукт</h2>
           <LandingGlobalProductForm />
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 mt-12">Переваги</h2>
+          <LandingAdvantagesForm />
         </div>
       </div>
 
