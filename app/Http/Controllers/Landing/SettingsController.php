@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Landing;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Landing;
 use App\Models\LandingSettings;
 
-class LandingSettingsController extends Controller
+class SettingsController extends Controller
 {
   public function update(Request $request, $id)
   {               

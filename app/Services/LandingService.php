@@ -19,12 +19,18 @@ class LandingService
         $newLanding->name = $name;
         $newLanding->save();
 
-        $existingSettings = $existingLanding->landingSettings()->first();
 
+        // Clone Landing Settings
+        $existingSettings = $existingLanding->landingSettings()->first();
         $newSettings = $existingSettings->replicate();
         $newSettings->landing_id = $newLanding->id;
         $newSettings->save();
-        $newLanding->landingSettings()->save($newSettings);
+
+        // Clone Global Product
+        $existingGlobalProduct = $existingLanding->globalProduct()->first();
+        $newGlobalProduct = $existingGlobalProduct->replicate();
+        $newGlobalProduct->landing_id = $newLanding->id;
+        $newGlobalProduct->save();
 
         return $newLanding;
       } catch (Exception $e) {

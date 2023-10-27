@@ -30,7 +30,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   clearCurrentLanding: () => set({ currentLanding: null }),
 
   getLandings: async () => {
-    const response = await window.axios.get(route('landings.index'));
+    const response = await window.axios.get(route('api.landings.all'));
     const { data } = response;
     set((state) => ({
       landings: Array.isArray(data) ? data : [data, ...state.landings],
@@ -39,14 +39,14 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   getLandingWithData: async (landingId) => {
-    const response = await window.axios.get(route('landing.data.index', String(landingId)));
+    const response = await window.axios.get(route('api.landingData.index', String(landingId)));
     const { data } = response;
     set({ currentLanding: data.data });
     return response;
   },
 
   createLanding: async ({ name, clone }) => {
-    const response = await window.axios.post(route('landings.store', { name, ...(clone && { clone }) }));
+    const response = await window.axios.post(route('api.landings.store', { name, ...(clone && { clone }) }));
     const { data } = response;
     const responseData = Array.isArray(data.data) ? data.data : [data.data];
     set((state) => ({
@@ -56,7 +56,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   updateLandingSettings: async (landingId, data) => {    
-    const response = await window.axios.post(route('landing.settings.update', { landingId: landingId }), { data });
+    const response = await window.axios.post(route('api.settings.update', { landingId: landingId }), { data });
     return response;
   },  
 
@@ -66,7 +66,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   removeLanding: async (landingId) => {
-    const response = await window.axios.delete(route('landing.destroy', { landingId }));
+    const response = await window.axios.delete(route('api.landing.destroy', { landingId }));
     set((state) => ({
       landings: state.landings.filter((landing) => landing.id !== landingId),
     }));

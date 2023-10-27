@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\DB;
 use App\Services\LandingService;
 use App\Models\Landing;
 use App\Models\LandingTemplate;
-use App\Models\LandingSettings;
-use App\Models\GlobalProduct;
 
 class LandingController extends Controller
 {

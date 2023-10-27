@@ -22,6 +22,6 @@ class GlobalProduct extends Model
 
     public function landing()
     {
-       return $this->belongsTo(Landing::class, 'landing_id');
+        return $this->belongsTo(Landing::class, 'landing_id');
     }
 }

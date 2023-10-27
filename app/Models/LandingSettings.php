@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class LandingSettings extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'landing_settings';
+  protected $table = 'landing_settings';
 
-    protected $fillable = [
+  protected $fillable = [
     'landing_id',
     'is_pub',
     'meta_title',
@@ -25,6 +25,6 @@ class LandingSettings extends Model
 
   public function landing()
   {
-    return $this->belongsTo(Landing::class);
+    return $this->belongsTo(Landing::class, 'landing_id');
   }
 }

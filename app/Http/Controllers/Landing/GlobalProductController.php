@@ -8,26 +8,26 @@ use App\Models\GlobalProduct;
 
 class GlobalProductController extends Controller
 {
-    public function update(Request $request, $id)
-    {                
+  public function update(Request $request, $id)
+  {
 
-        $request->validate([      
-          'sizes'       => 'nullable|string',
-          'price'       => 'nullable|string',
-          'discount'    => 'nullable|string',
-          'rest'        => 'nullable|string',
-          'drop_price'  => 'nullable|string'
-        ]);
+    $request->validate([
+      'sizes' => 'nullable|string',
+      'price' => 'nullable|string',
+      'discount' => 'nullable|string',
+      'rest' => 'nullable|string',
+      'drop_price' => 'nullable|string'
+    ]);
 
-    try {      
-      $globalProduct = GlobalProduct::firstOrCreate(['landing_id' => $id]);    
+    try {
+      $globalProduct = GlobalProduct::firstOrCreate(['landing_id' => $id]);
 
       $globalProduct->update($request->data);
-      
+
       return response()->json([
         'data' => $globalProduct,
         'message' => 'Голобальний продукт успішно збережено!'
-      ], 200);      
+      ], 200);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Помилка при збереженнi даних, зверніться до адміністратора.';
       return response()->json([
