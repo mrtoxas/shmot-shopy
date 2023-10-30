@@ -51,9 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/api/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/api/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::post('/api/landings', [LandingController::class, 'store'])->name('api.landings.store');    
     Route::get('/api/landings', [LandingController::class, 'index'])->name('api.landings.all');
-    Route::post('/api/landings', [LandingController::class, 'store'])->name('api.landings.store');
-    
     Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('api.landingData.index');
 });
 

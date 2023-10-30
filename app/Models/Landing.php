@@ -33,6 +33,6 @@ class Landing extends Model
 
     public function advantage()
     {
-       return $this->hasOne(Advantage::class, 'landing_id');
+        return $this->hasMany(Advantage::class, 'landing_id');
     }
 }

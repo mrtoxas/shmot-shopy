@@ -16,9 +16,9 @@ class Advantage extends Model
         'img_name',
         'caption'
     ];
-
+   
     public function landing()
     {
-       return $this->belongsTo(Landing::class, 'landing_id');
+        return $this->belongsTo(Landing::class, 'landing_id');
     }
 }

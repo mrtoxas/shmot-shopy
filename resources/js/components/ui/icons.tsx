@@ -6,6 +6,7 @@ import {
     CopyIcon,
     PlusIcon,
     ChevronDownIcon,
+    ImageIcon
 } from "lucide-react";
 
 export { 
@@ -16,4 +17,5 @@ export {
     PlusIcon,
     User2Icon,
     ChevronDownIcon,
+    ImageIcon
 };

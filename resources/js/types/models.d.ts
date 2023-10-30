@@ -5,6 +5,29 @@
  */
 
 declare namespace App.Models {
+    export interface Advantage {
+        id: number;
+        landing_id: number;
+        img_name: string;
+        caption: string;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+    }
+
+    export interface GlobalProduct {
+        id: number;
+        landing_id: number;
+        sizes: string | null;
+        price: number | null;
+        discount: number | null;
+        rest: number | null;
+        drop_price: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+    }
+
     export interface Landing {
         id: number;
         created_at: string | null;
@@ -14,38 +37,8 @@ declare namespace App.Models {
         user?: App.Models.User | null;
         landing_settings?: App.Models.LandingSettings | null;
         global_product?: App.Models.GlobalProduct | null;
-        advantage?: App.Models.Advantage | null;
-    }
-
-    export interface User {
-        id: number;
-        name: string;
-        email: string;
-        email_verified_at: string | null;
-        password: string;
-        remember_token: string | null;
-        created_at: string | null;
-        updated_at: string | null;
-        landings?: Array<App.Models.Landing> | null;
-        landings_count?: number | null;
-    }
-
-    export interface LandingTemplate {
-        id: number;
-        name: string;
-        created_at: string | null;
-        updated_at: string | null;
-        title: string;
-    }
-
-    export interface Advantage {
-        id: number;
-        landing_id: number;
-        img_name: string;
-        caption: string;
-        created_at: string | null;
-        updated_at: string | null;
-        landing?: App.Models.Landing | null;
+        advantage?: Array<App.Models.Advantage> | null;
+        advantage_count?: number | null;
     }
 
     export interface LandingSettings {
@@ -64,17 +57,25 @@ declare namespace App.Models {
         landing?: App.Models.Landing | null;
     }
 
-    export interface GlobalProduct {
+    export interface LandingTemplate {
         id: number;
-        landing_id: number;
-        sizes: string | null;
-        price: number | null;
-        discount: number | null;
-        rest: number | null;
-        drop_price: number | null;
+        name: string;
         created_at: string | null;
         updated_at: string | null;
-        landing?: App.Models.Landing | null;
+        title: string;
+    }
+
+    export interface User {
+        id: number;
+        name: string;
+        email: string;
+        email_verified_at: string | null;
+        password: string;
+        remember_token: string | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landings?: Array<App.Models.Landing> | null;
+        landings_count?: number | null;
     }
 
 }

@@ -14,9 +14,10 @@ interface LandingsState {
   removeLanding: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
-  updateLandingSettings: (landingId: App.Models.LandingSettings["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
-  updateGlobalProduct: (landingId: App.Models.GlobalProduct["id"], data: App.Models.GlobalProduct) => Promise<AxiosResponse>,
+  getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,    
+  updateLandingSettings: (landingId: App.Models.Landing["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
+  updateGlobalProduct: (landingId: App.Models.Landing["id"], data: App.Models.GlobalProduct) => Promise<AxiosResponse>,
+  updateAdvantages: (landingId: App.Models.Landing["id"], data: FormData) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
 }
 
@@ -65,6 +66,11 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
+  updateAdvantages: async (landingId, formData) => {    
+    const response = await window.axios.post(route('api.advantages.update', { landingId }), formData);
+    return response;
+  },
+
   removeLanding: async (landingId) => {
     const response = await window.axios.delete(route('api.landing.destroy', { landingId }));
     set((state) => ({
@@ -78,7 +84,9 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     const { data } = response;
     set({ templates: data });
     return response;
-  }
+  },
+
+
 
 }));
 

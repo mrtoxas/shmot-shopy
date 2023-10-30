@@ -64,7 +64,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: landing_settings.telegram_chat_id,
       crm_api_key: landing_settings.crm_api_key,
       telegram_token: landing_settings.telegram_token,
-      template_id: landing_settings.template_id,
+      template_id: String(landing_settings.template_id),
     });
   }, [currentLanding]);
 
@@ -77,7 +77,7 @@ export const LandingSettingsForm = () => {
   },[currentLanding, templates]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    return updateLandingSettings(Number(landingId), data as App.Models.LandingSettings).then((res) => {
+    return updateLandingSettings(Number(landingId), data as unknown as App.Models.LandingSettings).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
