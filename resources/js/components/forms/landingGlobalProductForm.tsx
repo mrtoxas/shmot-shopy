@@ -1,4 +1,4 @@
-import { useMemo} from 'react';
+
 import useLandingsStore from "@/store/landingsStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
@@ -8,23 +8,15 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { useEffect } from "react";
-import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../shadcn/ui/select"
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
   price: z.string().nullable(),
   discount: z.string().nullable(),
   rest: z.string().nullable(),
-  drop_price: z.string().nullable(),
+  drop_price: z.string().nullable()
 })
 
 export const LandingGlobalProductForm = () => {
@@ -52,14 +44,14 @@ export const LandingGlobalProductForm = () => {
 
     form.reset({
       sizes: global_product.sizes,
-      price: global_product.price,
-      discount: global_product.discount,
-      rest: global_product.rest,
-      drop_price: global_product.drop_price,
+      price: global_product.price ? String(global_product.price) : null,
+      discount: global_product.discount ? String(global_product.discount) : null,
+      rest: global_product.rest ? String(global_product.rest) : null,
+      drop_price: global_product.drop_price ? String(global_product.drop_price) : null,
     });
   }, [currentLanding]);
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {    
     return updateGlobalProduct(Number(landingId), data as App.Models.GlobalProduct).then((res) => {
       toast({
         className: "bg-green-600 text-white",
@@ -94,7 +86,7 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Цiна, грн.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -107,7 +99,7 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Знижка, %</FormLabel>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,7 +112,7 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Залишок, шт.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,7 +125,7 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Дроп.цiна, грн.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
