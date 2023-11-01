@@ -6,6 +6,7 @@ use App\Http\Controllers\Landing\SettingsController;
 use App\Http\Controllers\LandingTemplateController;
 use App\Http\Controllers\Landing\GlobalProductController;
 use App\Http\Controllers\Landing\AdvantageController;
+use App\Http\Controllers\Product\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,13 @@ Route::get('/landings/{landingId}', function ($landingId) {
     ->middleware(['auth', 'verified'])
     ->middleware(CheckLandingAccess::class);
 
+Route::get('/landings/{landingId}/{productId}', function ($landingId, $productId) {
+    return Inertia::render('product', ['landingId' => $landingId, 'productId' => $productId]);
+})
+    ->name('product.admin')
+    ->middleware(['auth', 'verified'])
+    ->middleware(CheckLandingAccess::class);
+
 Route::middleware('auth')->group(function () {
     Route::get('/api/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/api/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -55,17 +63,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/landings', [LandingController::class, 'index'])->name('api.landings.all');
     Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('api.landingData.index');
 
-    Route::post('/api/products', [LandingController::class, 'store'])->name('api.products.store');
-    Route::get('/api/products', [LandingController::class, 'index'])->name('api.products.all');
+    
 });
 
 Route::middleware(['auth', 'check_landing_access'])->group(function () {
     Route::delete('/api/landings/{landingId}', [LandingController::class, 'destroy'])->name('api.landing.destroy');
     Route::post('/api/landing/{landingId}/settings', [SettingsController::class, 'update'])->name('api.settings.update');
-    Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])->name('api.globalProduct.update');
+    Route::post('/api/landing/{landingId}/global_product', [GlobalProductController::class, 'update'])->name('api.globalProduct.update');
     Route::post('/api/landing/{landingId}/advantages', [AdvantageController::class, 'update'])->name('api.advantages.update');
 
-    Route::delete('/api/landings/{landingId}/{productId}', [LandingController::class, 'destroy'])->name('api.product.destroy');
+    Route::post('/api/landing/{landingId}/product', [ProductController::class, 'store'])->name('api.products.store');
+    Route::delete('/api/landings/{landingId}/{productId}', [ProductController::class, 'destroy'])->name('api.product.destroy');
 });
 
 

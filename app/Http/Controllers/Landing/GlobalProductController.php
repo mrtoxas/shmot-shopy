@@ -10,7 +10,7 @@ class GlobalProductController extends Controller
 {
   public function update(Request $request, $id)
   {
-
+    dd($request->all());
     $request->validate([
       'sizes' => 'nullable|string',
       'price' => 'nullable|number',

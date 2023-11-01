@@ -49,6 +49,16 @@ class LandingService
         }
       }
 
+      // Clone Products
+      $existingProducts = $existingLanding->products()->get();
+      if ($existingProducts->isNotEmpty()) {
+        foreach ($existingProducts as $existingProduct) {
+          $newProduct = $existingProduct->replicate();
+          $newProduct->landing_id = $newLanding->id;
+          $newProduct->save();
+        }
+      }
+
 
       return $newLanding;
     } catch (Exception $e) {

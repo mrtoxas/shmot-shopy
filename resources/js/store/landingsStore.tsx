@@ -92,16 +92,26 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-  createProduct: async ({ name, article }) => {
-    const response = await window.axios.post(route('api.products.store', { name, article }));
-    const { data } = response;
-    const responseData = Array.isArray(data.data) ? data.data : [data.data];
+  createProduct: async (landingId, data) => {
+    const response = await window.axios.post(route('api.products.store', { landingId: landingId }), data);
+    const { data: resdata } = response;
+
     set((state) => ({
-      products: [...responseData, ...state.landings],
+      currentLanding: {...state.currentLanding, products: [...state.currentLanding.products, resdata.data]}
     }));
+
     return response;
   },
 
+  removeProduct: async (landingId, productId) => {
+    const response = await window.axios.delete(route('api.product.destroy', { landingId, productId }));
+
+    set((state) => ({
+      currentLanding: {...state.currentLanding, products: state.currentLanding.products.filter((e) => e.id !== productId)}
+    }));
+
+    return response;
+  },
 }));
 
 export default useLandingsStore;

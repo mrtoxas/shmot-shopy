@@ -88,8 +88,8 @@ export const LandingsTable = (props: LandingsTableProps) => {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                      <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
+                    <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
+                    <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -109,7 +109,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
           <TableRow>
             <TableHead className="whitespace-nowrap">Назва</TableHead>
             <TableHead>Адреса</TableHead>
-            <TableHead>Дата</TableHead>
+            <TableHead>Створено</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>

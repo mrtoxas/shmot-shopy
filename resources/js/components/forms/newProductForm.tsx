@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Loader2Icon } from "../ui/icons"
 import useLandingsStore from "@/store/landingsStore"
- 
+import { usePage } from "@inertiajs/react";
 import { Button } from "@/components/shadcn/ui/button"
 import {
   Form,
@@ -15,32 +15,20 @@ import {
   FormMessage,
 } from "@/components/shadcn/ui/form"
 import { Input } from "@/components/shadcn/ui/input"
+import { toast } from "../shadcn/ui/use-toast"
  
-interface CreateLandingFormProps {
+interface CreateProductFormProps {
  finallyAction: () => void;  
 }
 const FormSchema = z.object({
-  name: z
-    .string({
-      required_error: "Назва обов'язкова",
-      invalid_type_error: "Неправильний формат",
-    })
-    .min(3, {
-      message: "Назва має містити принаймні 3 символи",
-    }),
-  article: z
-    .string({
-      required_error: "Артикул обов'язковий",
-      invalid_type_error: "Неправильний формат",
-    })
-    .min(3, {
-      message: "Артикул має містити принаймні 3 символи",
-    }),  
-  
+  name: z.string().min(1, { message: "Назва обов'язкова" }),
+  article: z.string().min(1, { message: "Артикул обов'язковий" })
 })
 
-export const NewProductForm = () => {
+export const NewProductForm = (props: CreateProductFormProps) => {
   const { landings, createProduct } = useLandingsStore();
+
+  const { landingId } = usePage().props;
   
 	const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -53,7 +41,7 @@ export const NewProductForm = () => {
   const { formState: isSubmitting } = form;
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    return createProduct(data).then((res) => {
+    return createProduct(Number(landingId), data as App.Models.Product).then((res) => {
       props.finallyAction();
       toast({
         className: "bg-green-600 text-white",
@@ -69,12 +57,13 @@ export const NewProductForm = () => {
         <div className="grid gap-4 pb-4">
         	<FormField
           control={form.control}
-          name="username"
+          name="name"
+          
           render={({ field }) => (
             <FormItem>
               <FormLabel>Назва</FormLabel>
               <FormControl>
-                <Input className="w-full" {...field} placeholder="Введiть назву" />
+                <Input className="w-full" required {...field} placeholder="Введiть назву" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,12 +71,12 @@ export const NewProductForm = () => {
         />
         <FormField
           control={form.control}
-          name="username"
+          name="article"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Артикул</FormLabel>
               <FormControl>
-                <Input className="w-full" {...field} placeholder="Введiть артикул" />
+                <Input className="w-full" required {...field} placeholder="Введiть артикул" />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -4,7 +4,7 @@ import { PageProps } from '@/types';
 import { PageHead } from '@/components/ui/pageHead';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
-import { LandingsTable } from '@/components/LandingsTable';
+import { LandingsTable } from '@/components/landingsTable';
 import useLandingStore from '@/store/landingsStore';
 import { Button } from '@/components/shadcn/ui/button';
 import { Loader2Icon, PlusIcon } from '@/components/ui/icons';

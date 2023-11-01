@@ -4,8 +4,11 @@ export interface CreateLandingsProps {
 }
 
 export interface CreateProductProps {
-  name: App.Models.Product["name"], 
-  article: App.Models.Product["article"]
+  landingId: App.Models.Landing["id"]
+  data: {
+    name: App.Models.Product["name"], 
+    article: App.Models.Product["article"]
+  }
 }
 
 export interface RemoveLandingProps {
