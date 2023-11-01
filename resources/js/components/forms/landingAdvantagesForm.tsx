@@ -64,7 +64,7 @@ export const LandingAdvantagesForm = () => {
 
   const renderImage = (value: string, alt: string) => {
     return (
-      <div className='w-32 h-32 border border-2 border-secondary'>
+      <div className='w-32 h-32 border border-2 border-input'>
         {value
           ? (
             <img
@@ -75,7 +75,7 @@ export const LandingAdvantagesForm = () => {
               className='block w-full h-full object-cover'
             />)
           : <div className='w-full h-full flex items-center justify-center'>
-            <ImageIcon className="stroke-secondary h-[3rem] w-[3rem]" />
+            <ImageIcon className="stroke-input h-[3rem] w-[3rem]" />
           </div>}
       </div>
     )
@@ -126,7 +126,7 @@ export const LandingAdvantagesForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} required />
+                    <Input placeholder="Введiть перевагу" className="w-full" {...field} value={field.value || ""} required />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +163,7 @@ export const LandingAdvantagesForm = () => {
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <div className='grid gap-8'>
-          <div className='grid  md:grid-cols-3 gap-6'>
+          <div className='grid  lg:grid-cols-3 gap-6'>
             {preparedList}
           </div>
           <div>

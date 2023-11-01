@@ -31,8 +31,14 @@ class Landing extends Model
        return $this->hasOne(GlobalProduct::class, 'landing_id');
     }
 
+    //TODO: поменять на advantages
     public function advantage()
     {
         return $this->hasMany(Advantage::class, 'landing_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'landing_id');
     }
 }

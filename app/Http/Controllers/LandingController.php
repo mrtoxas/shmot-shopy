@@ -43,7 +43,7 @@ class LandingController extends Controller
       $landing_data->load('GlobalProduct');
       $landing_data->load('LandingSettings');      
       $landing_data->load('Advantage');   
-         
+      $landing_data->load('Products'); 
 
       return response()->json(['data' => $landing_data], 200);
 

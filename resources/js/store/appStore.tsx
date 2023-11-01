@@ -3,11 +3,13 @@ import { create } from 'zustand';
 interface LandingsState {
   isPending: boolean,
   isOpenNewLandingDialog: boolean,
+  isOpenNewProductDialog: boolean,
   newLandingCloneName: App.Models.Landing["name"] | null,
   isPagePending: boolean,
 
   setPending: (isPending: LandingsState["isPending"]) => void,
   setIsOpenNewLandingDialog: (cloneName: App.Models.Landing["name"] | null) => void,
+  setIsOpenNewProductDialog: () => void,
   toggleNewLandingDialog: (state?: boolean) => void,
   setPagePending: (isPagePending: boolean) => void,
 }
@@ -23,18 +25,23 @@ const useAppStore = create<LandingsState>()((set) => ({
 
   newLandingCloneName: null,
 
-  setIsOpenNewLandingDialog: (cloneName) => {
-    set({ isOpenNewLandingDialog: true });
-    set({ newLandingCloneName: cloneName })
+  setIsOpenNewProductDialog: () => {
+    set({ isOpenNewProductDialog: true });
   },
 
   toggleNewLandingDialog: (state) => {
     set((s) => ({ isOpenNewLandingDialog: state ? state : !s.isOpenNewLandingDialog }));
   },
 
+  toggleNewProductDialog: (state) => {
+    set((s) => ({ isOpenNewProductDialog: state ? state : !s.isOpenNewProductDialog }));
+  },
+
   setPending: (isPending) => set({ isPending }),
 
-  setPagePending: (isPagePending) => set({ isPagePending })
+  setPagePending: (isPagePending) => set({ isPagePending }),
+
+  setNewLandingCloneName: (cloneName) => set({ newLandingCloneName: cloneName })
 
 }));
 

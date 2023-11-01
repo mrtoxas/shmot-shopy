@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import useLandingStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
-import { Loader2Icon } from '@/components/ui/icons';
+import { Loader2Icon, PlusIcon } from '@/components/ui/icons';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import useAppStore from '@/store/appStore';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
@@ -11,11 +11,17 @@ import { PageHead } from '@/components/ui/pageHead';
 import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
 import { LandingGlobalProductForm } from '@/components/forms/landingGlobalProductForm';
 import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm';
+import { ProductsTable } from '@/components/productsTable';
 import { Separator } from '@/components/shadcn/ui/separator';
+import { Button } from '@/components/shadcn/ui/button';
+import { NewProductDialog } from '@/components/dialogs/newProductDialog';
+import { Dialog } from '@/components/ui/dialog';
+import { NewProductForm } from '@/components/forms/newProductForm';
 
 export default function Landing({ auth, flash }: PageProps) {
-  
   useFlashToasts(flash);
+
+  const [isOpenNewProductDialog, setIsOpenNewProductDialog] = useState(false);
 
   const { isPagePending, setPagePending } = useAppStore();
   
@@ -34,6 +40,9 @@ export default function Landing({ auth, flash }: PageProps) {
     getLandingWithData(Number(landingId)).finally(() => setPagePending(false));
     return () => clearCurrentLanding();
   }, []);
+
+  const newProductDialogToggle = () => setIsOpenNewProductDialog((prevState) => !prevState);
+
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -56,8 +65,23 @@ export default function Landing({ auth, flash }: PageProps) {
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
           <LandingAdvantagesForm />
           <Separator className='mt-8 mb-8'/>
+          <h2 className="flex items-center justify-between text-lg font-semibold leading-none tracking-tight mb-6">
+            Товари 
+            <Button>
+              <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
+            </Button>
+          </h2>
+          <ProductsTable />
         </div>
       </div>
+
+      <Button onClick={newProductDialogToggle}>Dialog</Button>
+      <Dialog
+        isOpen={isOpenNewProductDialog}
+        setIsOpen={setIsOpenNewProductDialog}
+        body={<NewProductForm finallyAction={newProductDialogToggle} />}
+        title="Додaти товар"
+       />
 
       {isPagePending && (
         <div className="fixed flex items-center justify-center inset-0 z-10 w-full h-full bg-white dark:bg-black opacity-80">
@@ -65,7 +89,7 @@ export default function Landing({ auth, flash }: PageProps) {
         </div>
       )}
 
-
+      <NewProductDialog />
     </AuthenticatedLayout>
   )
 }

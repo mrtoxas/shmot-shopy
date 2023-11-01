@@ -4,12 +4,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/ui/form";
+import { 
+  Form, 
+  FormDescription, 
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
+} from "../shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { useEffect } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
@@ -132,14 +141,41 @@ export const LandingGlobalProductForm = () => {
               )}
             />
           </div>
-
           <div>
+            <FormField
+                control={form.control}
+                name="is_pub"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        Використовувати для всіх продуктів
+                      </FormLabel>
+                      <FormDescription>
+                        Якщо вимкнути цю опцію, тоді у кожного товару будуть свої дані
+                      </FormDescription>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+        </div>
+          <div className="mt-4">
             <Button disabled={isSubmitting.isSubmitting} type="submit">
               {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
               Зберегти
             </Button>
           </div>
+
+
         </div>
+        
       </form>
     </Form>
   )

@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -47,8 +47,14 @@ const FormSchema = z.object({
 export const NewLandingForm = (props: CreateLandingFormProps) => {
   const { landings, createLanding } = useLandingsStore();
 
-  const { newLandingCloneName } = useAppStore();
+  const { newLandingCloneName,setNewLandingCloneName } = useAppStore();
 
+  useEffect(()=>{
+    return () => {
+      setNewLandingCloneName(null);
+    }
+  },[]);
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

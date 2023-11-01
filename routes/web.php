@@ -54,13 +54,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/landings', [LandingController::class, 'store'])->name('api.landings.store');    
     Route::get('/api/landings', [LandingController::class, 'index'])->name('api.landings.all');
     Route::get('/api/landings/{landingId}', [LandingController::class, 'fetchWithAllData'])->name('api.landingData.index');
+
+    Route::post('/api/products', [LandingController::class, 'store'])->name('api.products.store');
+    Route::get('/api/products', [LandingController::class, 'index'])->name('api.products.all');
 });
 
 Route::middleware(['auth', 'check_landing_access'])->group(function () {
     Route::delete('/api/landings/{landingId}', [LandingController::class, 'destroy'])->name('api.landing.destroy');
     Route::post('/api/landing/{landingId}/settings', [SettingsController::class, 'update'])->name('api.settings.update');
-    Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])->name('api.product.update');
+    Route::post('/api/landing/{landingId}/product', [GlobalProductController::class, 'update'])->name('api.globalProduct.update');
     Route::post('/api/landing/{landingId}/advantages', [AdvantageController::class, 'update'])->name('api.advantages.update');
+
+    Route::delete('/api/landings/{landingId}/{productId}', [LandingController::class, 'destroy'])->name('api.product.destroy');
 });
 
 

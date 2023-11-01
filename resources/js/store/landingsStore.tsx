@@ -1,23 +1,29 @@
 import { create } from 'zustand';
 import { AxiosResponse } from 'axios';
+import { 
+  CreateLandingsProps, 
+  CreateProductProps,
+  RemoveLandingProps,
+  GetLandingWithDataProps,
+  UpdateLandingSettingsProps,
+  UpdateGlobalProductProps,
+  UpdateAdvantagesProps
+} from './types'
 
-interface CreateLandingsProps {
-  name: App.Models.Landing["name"],
-  clone?: App.Models.Landing["name"]
-}
 
 interface LandingsState {
   landings: App.Models.Landing[],
   templates: App.Models.LandingTemplate[],
   currentLanding: App.Models.Landing | null,
   
-  removeLanding: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,
+  removeLanding: (props: RemoveLandingProps) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
+  createProduct: (props: CreateProductProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: (landingId: App.Models.Landing["id"]) => Promise<AxiosResponse>,    
-  updateLandingSettings: (landingId: App.Models.Landing["id"], data: App.Models.LandingSettings) => Promise<AxiosResponse>,
-  updateGlobalProduct: (landingId: App.Models.Landing["id"], data: App.Models.GlobalProduct) => Promise<AxiosResponse>,
-  updateAdvantages: (landingId: App.Models.Landing["id"], data: FormData) => Promise<AxiosResponse>,
+  getLandingWithData: (props: GetLandingWithDataProps) => Promise<AxiosResponse>,    
+  updateLandingSettings: (props: UpdateLandingSettingsProps) => Promise<AxiosResponse>,
+  updateGlobalProduct: (props: UpdateGlobalProductProps) => Promise<AxiosResponse>,
+  updateAdvantages: (props: UpdateAdvantagesProps) => Promise<AxiosResponse>,
   clearCurrentLanding: () => void,
 }
 
@@ -62,7 +68,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },  
 
   updateGlobalProduct: async (landingId, data) => {    
-    const response = await window.axios.post(route('api.product.update', { landingId: landingId }), { data });
+    const response = await window.axios.post(route('api.globalProduct.update', { landingId: landingId }), { data });
     return response;
   },
 
@@ -86,7 +92,15 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
-
+  createProduct: async ({ name, article }) => {
+    const response = await window.axios.post(route('api.products.store', { name, article }));
+    const { data } = response;
+    const responseData = Array.isArray(data.data) ? data.data : [data.data];
+    set((state) => ({
+      products: [...responseData, ...state.landings],
+    }));
+    return response;
+  },
 
 }));
 

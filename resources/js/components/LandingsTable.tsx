@@ -24,10 +24,16 @@ import {
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
 import { toast } from "@/components/shadcn/ui/use-toast"
+import { Dialog } from '@/components/ui/dialog';
 
-export const LandingsTable = () => {
+interface LandingsTableProps {
+  toggleNewLandingDialog: () => void
+}
+
+export const LandingsTable = (props: LandingsTableProps) => {
   const { landings, removeLanding } = useLandingsStore();
-  const { setIsOpenNewLandingDialog } = useAppStore();
+  const { newLandingCloneName, setNewLandingCloneName } = useAppStore();
+  const { toggleNewLandingDialog } = props;
   
   const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
     removeLanding(id).then((res)=>{
@@ -39,8 +45,9 @@ export const LandingsTable = () => {
     });
   }
 
-  const showNewLandingDialog = (cloneName: App.Models.Landing["name"]) => {    
-    setIsOpenNewLandingDialog(cloneName);    
+  const cloneClickHandler = (cloneName: App.Models.Landing["name"]) => {
+    setNewLandingCloneName(cloneName);
+    toggleNewLandingDialog();
   }
 
   const preparedData = useMemo(() => {
@@ -58,7 +65,7 @@ export const LandingsTable = () => {
             <TableCell>{date}</TableCell>
             <TableCell className="text-right">
               <div className="flex gap-2 justify-end flex-nowrap">
-                <Button onClick={()=>showNewLandingDialog(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
+                <Button onClick={()=>cloneClickHandler(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
                   <CopyIcon className="h-4 w-4" />
                 </Button>
                 <Link 
