@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import { NewLandingDialog } from '@/components/dialogs/newLandingDialog';
 import { PageHead } from '@/components/ui/pageHead';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
@@ -60,7 +59,6 @@ export default function Landings({ auth, flash }: PageProps) {
         description="Cтворюйте новий сайт або клонуйте вже існуючий"
        />
 
-      <NewLandingDialog />
     </AuthenticatedLayout>
   );
 }

@@ -14,7 +14,6 @@ import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm'
 import { ProductsTable } from '@/components/productsTable';
 import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '@/components/shadcn/ui/button';
-import { NewProductDialog } from '@/components/dialogs/newProductDialog';
 import { Dialog } from '@/components/ui/dialog';
 import { NewProductForm } from '@/components/forms/newProductForm';
 
@@ -67,7 +66,7 @@ export default function Landing({ auth, flash }: PageProps) {
           <Separator className='mt-8 mb-8'/>
           <h2 className="flex items-center justify-between text-lg font-semibold leading-none tracking-tight mb-6">
             Товари 
-            <Button>
+            <Button onClick={newProductDialogToggle}>
               <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
             </Button>
           </h2>
@@ -75,7 +74,6 @@ export default function Landing({ auth, flash }: PageProps) {
         </div>
       </div>
 
-      <Button onClick={newProductDialogToggle}>Dialog</Button>
       <Dialog
         isOpen={isOpenNewProductDialog}
         setIsOpen={setIsOpenNewProductDialog}
@@ -89,7 +87,6 @@ export default function Landing({ auth, flash }: PageProps) {
         </div>
       )}
 
-      <NewProductDialog />
     </AuthenticatedLayout>
   )
 }
