@@ -6,44 +6,51 @@ import AuthenticatedLayout from '@/layouts/authenticatedLayout';
 import { PageHead } from '@/components/ui/pageHead';
 import useLandingStore from '@/store/landingsStore';
 import { Head } from '@inertiajs/react';
-import { Loader2Icon, PlusIcon } from '@/components/ui/icons';
+import { Loader2Icon, ArrowLeftIcon } from '@/components/ui/icons';
 import useAppStore from '@/store/appStore';
+import { Link } from '@inertiajs/react';
+import { Button, buttonVariants } from "@/components/shadcn/ui/button";
+import { ProductDataForm } from '@/components/forms/productDataForm';
 
 export default function Product({ auth, flash }: PageProps) {
 	useFlashToasts(flash);
+
 	const { landingId, productId } = usePage().props;
 
 	const { isPagePending, setPagePending } = useAppStore();
 
 	const {
-    getLandingWithData,
-    clearCurrentLanding, 
-    currentLanding, 
-    getTemplates
+    getProductWithData, 
+    currentProduct
   } = useLandingStore();
 
   useEffect(() => {
     setPagePending(true);
-    if (!currentLanding) {
-    	getLandingWithData(Number(landingId)).finally(() => setPagePending(false));
-    }
-    
-    //return () => clearCurrentLanding();
-  }, [currentLanding]);
+    getProductWithData(Number(landingId), Number(productId))
+      .finally(() => setPagePending(false));
+  }, []);
 
 	return (
 			<AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between items-center">
-          <PageHead message={`Налаштування - ${currentLanding?.name || ""} - ${productId}`} />
+        <div >
+          <PageHead message={`Налаштування - ${productId}`} />
+          <Link 
+        		href={route('landing.admin', { landingId })}
+        		className="flex items-center text-sm mt-4">
+        		<ArrowLeftIcon className="h-4 w-4 mr-2" /> Повернутись
+        	</Link>
         </div>
       }
     >
       <Head title="Товар productId" />
 
       <div className="py-12">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8"></div>
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        	<h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Дані товару</h2>
+        	<ProductDataForm />
+        </div>
       </div>
 
       {isPagePending && (

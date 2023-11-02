@@ -33,3 +33,14 @@ export interface UpdateAdvantagesProps{
   landingId: App.Models.Landing["id"], 
   data: FormData
 }
+
+export interface GetProductWithDataProps {
+  landingId: App.Models.Landing["id"], 
+  productId: App.Models.Product["id"];
+}
+
+export interface UpdateProductDataProps {
+  landingId: App.Models.Landing["id"], 
+  productId: App.Models.Product["id"]
+  data: App.Models.ProductData
+}

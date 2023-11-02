@@ -7,7 +7,8 @@ import {
   GetLandingWithDataProps,
   UpdateLandingSettingsProps,
   UpdateGlobalProductProps,
-  UpdateAdvantagesProps
+  UpdateAdvantagesProps,
+  GetProductWithDataProps
 } from './types'
 
 
@@ -15,15 +16,19 @@ interface LandingsState {
   landings: App.Models.Landing[],
   templates: App.Models.LandingTemplate[],
   currentLanding: App.Models.Landing | null,
+  currentProduct: App.Models.Product | null,
   
   removeLanding: (props: RemoveLandingProps) => Promise<AxiosResponse>,
   createLanding: (props: CreateLandingsProps) => Promise<AxiosResponse>,
   createProduct: (props: CreateProductProps) => Promise<AxiosResponse>,
   getLandings: () => Promise<AxiosResponse>,
-  getLandingWithData: (props: GetLandingWithDataProps) => Promise<AxiosResponse>,    
+  getLandingWithData: (props: GetLandingWithDataProps) => Promise<AxiosResponse>,
+  getProductWithData: (props: GetProductWithDataProps) => Promise<AxiosResponse>,    
   updateLandingSettings: (props: UpdateLandingSettingsProps) => Promise<AxiosResponse>,
   updateGlobalProduct: (props: UpdateGlobalProductProps) => Promise<AxiosResponse>,
   updateAdvantages: (props: UpdateAdvantagesProps) => Promise<AxiosResponse>,
+  updateProductData: (props: UpdateProductDataProps) => Promise<AxiosResponse>,
+  
   clearCurrentLanding: () => void,
 }
 
@@ -33,6 +38,8 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   templates: [],
 
   currentLanding: null,
+
+  currentProduct: null,
 
   clearCurrentLanding: () => set({ currentLanding: null }),
 
@@ -112,6 +119,19 @@ const useLandingsStore = create<LandingsState>()((set) => ({
 
     return response;
   },
+
+  getProductWithData: async (landingId, productId) => {
+    const response = await window.axios.get(route('api.product.index', { landingId, productId }));
+    const { data } = response;
+    set({ currentProduct: data.data });
+    return response;
+  },
+
+  updateProductData: async (landingId, productId, data) => {    
+    const response = await window.axios.post(route('api.productData.update', { landingId, productId }), { data });
+    return response;
+  },
+
 }));
 
 export default useLandingsStore;

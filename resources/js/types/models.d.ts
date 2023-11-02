@@ -41,6 +41,8 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         landing?: App.Models.Landing | null;
+        product_data?: Array<App.Models.ProductData> | null;
+        product_data_count?: number | null;
     }
 
     export interface LandingTemplate {
@@ -49,6 +51,18 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         title: string;
+    }
+
+    export interface ProductData {
+        id: number;
+        product_id: number;
+        sizes: string | null;
+        price: number | null;
+        discount: number | null;
+        rest: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Landing | null;
     }
 
     export interface Advantage {

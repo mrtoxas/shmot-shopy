@@ -13,7 +13,6 @@ class ProductController extends Controller
 {
   public function store(Request $request, $id)
   {
-
     $request->validate([
       'name' => 'required|string',
       'article' => [
@@ -73,6 +72,27 @@ class ProductController extends Controller
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені товару, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage
+      ], 500);
+    }
+  }
+
+  public function fetchWithAllData(Request $request)
+  {
+    try {
+      $product = Product::find($request->productId);
+
+      if ($product === null) {
+        return response()->json(['message' => 'Товар не знайдено!'], 404);
+      }
+    
+      $product->load('ProductData');
+
+      return response()->json(['data' => $product], 200);
+
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні даних, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage,
       ], 500);
     }
   }

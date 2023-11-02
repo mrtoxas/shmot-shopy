@@ -37,7 +37,7 @@ class LandingController extends Controller
       $landing_data = Landing::where('created_by', Auth::user()->id)->find($request->landingId);
 
       if ($landing_data === null) {
-        return response()->json(['message' => 'Лендинг не найден'], 404);
+        return response()->json(['message' => 'Лендинг не знайдено!'], 404);
       }
     
       $landing_data->load('GlobalProduct');

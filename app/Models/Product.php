@@ -18,7 +18,12 @@ class Product extends Model
   ];
 
   public function landing()
-    {
-      return $this->belongsTo(Landing::class, 'landing_id');
-    }
+  {
+    return $this->belongsTo(Landing::class, 'landing_id');
+  }
+
+  public function productData()
+  {
+    return $this->hasOne(ProductData::class, 'product_id');
+  }
 }

@@ -15,6 +15,8 @@ class LandingService
   {
     try {
 
+      DB::beginTransaction();
+
       $existingLanding = Landing::where('name', $clone)->first();
 
       $newLanding = $existingLanding->replicate();
@@ -56,12 +58,23 @@ class LandingService
           $newProduct = $existingProduct->replicate();
           $newProduct->landing_id = $newLanding->id;
           $newProduct->save();
+
+          $existingProductData = $existingProduct->productData()->get();
+          if ($existingProductData->isNotEmpty()) {
+            foreach ($existingProductData as $existingData) {
+                $newData = $existingData->replicate();
+                $newData->product_id = $newProduct->id;
+                $newData->save();
+            }
+          }
         }
       }
 
-
+      DB::commit();
+      
       return $newLanding;
     } catch (Exception $e) {
+      DB::rollBack();
       throw new Exception($e->getMessage());
     }
   }

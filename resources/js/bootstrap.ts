@@ -14,6 +14,10 @@ axios.interceptors.response.use(
     response => response,
     error => {
         const message = error.response.data.message || 'Виникла помилка!';
+        
+        if (error.response && error.response.status === 404) {
+            window.location.href = route('landings');
+        }
         toast({
             title: "Помилка!",
             variant: "destructive",
