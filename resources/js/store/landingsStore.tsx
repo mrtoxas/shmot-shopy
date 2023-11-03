@@ -28,6 +28,7 @@ interface LandingsState {
   updateGlobalProduct: (props: UpdateGlobalProductProps) => Promise<AxiosResponse>,
   updateAdvantages: (props: UpdateAdvantagesProps) => Promise<AxiosResponse>,
   updateProductData: (props: UpdateProductDataProps) => Promise<AxiosResponse>,
+  updateProductImages: (props: UpdateProductImagesProps) => Promise<AxiosResponse>
   
   clearCurrentLanding: () => void,
 }
@@ -131,6 +132,13 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     const response = await window.axios.post(route('api.productData.update', { landingId, productId }), { data });
     return response;
   },
+
+  updateProductImages: async (landingId, productId, data) => {
+    const response = await window.axios.post(route('api.productImages.update', { landingId, productId }), data);
+    return response;
+  },
+
+
 
 }));
 

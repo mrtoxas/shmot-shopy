@@ -8,6 +8,7 @@ use App\Http\Controllers\Landing\GlobalProductController;
 use App\Http\Controllers\Landing\AdvantageController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductDataController;
+use App\Http\Controllers\Product\ProductImageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -91,6 +92,9 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
 
     Route::post('/api/landing/{landingId}/product/{productId}/product_data', 
         [ProductDataController::class, 'update'])->name('api.productData.update');
+
+    Route::post('/api/landing/{landingId}/product/{productId}/pdoduct_images', 
+        [ProductImageController::class, 'update'])->name('api.productImages.update');
 });
 
 Route::get('/api/templates', 

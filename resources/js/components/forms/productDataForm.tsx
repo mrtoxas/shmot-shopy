@@ -34,7 +34,7 @@ export const ProductDataForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      sizes: null,
+      sizes: "",
       price: null,
       discount: null,
       rest: null,
@@ -44,23 +44,22 @@ export const ProductDataForm = () => {
   const { formState: isSubmitting } = form;
 
   useEffect(() => {
-    if (!currentProduct) return;
+    if (!currentProduct?.product_data) return;
 
     const { product_data } = currentProduct;
 
-    console.log(currentProduct);
-
     form.reset({
-      sizes: product_data.sizes,
+      sizes: product_data.sizes ? product_data.sizes : "",
       price: product_data.price ? String(product_data.price) : null,
-      discount: product_data.discount ? String(product_data.discount) : null,
+      discount: product_data.rest ? String(product_data.rest) : null,
       rest: product_data.rest ? String(product_data.rest) : null,
     });
-  }, [currentProduct]);
+  }, [currentProduct?.product_data]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {    
     return updateProductData( 
-      Number(landingId), Number(productId), 
+      Number(landingId), 
+      Number(productId), 
       data as App.Models.ProductData).then((res) => {
       toast({
         className: "bg-green-600 text-white",
@@ -82,7 +81,7 @@ export const ProductDataForm = () => {
                 <FormItem>
                   <FormLabel>Розмiри (,)</FormLabel>
                   <FormControl>
-                    <Input className="w-full" {...field} value={field.value || ""} />
+                    <Input className="w-full" {...field} value={String(field.value) || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -39,8 +39,11 @@ export interface GetProductWithDataProps {
   productId: App.Models.Product["id"];
 }
 
-export interface UpdateProductDataProps {
-  landingId: App.Models.Landing["id"], 
-  productId: App.Models.Product["id"]
+export interface UpdateProductDataProps extends GetProductWithDataProps {
   data: App.Models.ProductData
 }
+
+export interface UpdateProductImagesProps extends GetProductWithDataProps { {
+  data: FormData
+}
+

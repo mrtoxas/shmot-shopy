@@ -41,8 +41,7 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         landing?: App.Models.Landing | null;
-        product_data?: Array<App.Models.ProductData> | null;
-        product_data_count?: number | null;
+        product_data?: App.Models.ProductData | null;
     }
 
     export interface LandingTemplate {
@@ -73,6 +72,14 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         landing?: App.Models.Landing | null;
+    }
+
+    export interface ProductImage {
+        id: number;
+        product_id: number;
+        img_name: string;
+        created_at: string | null;
+        updated_at: string | null;
     }
 
     export interface LandingSettings {

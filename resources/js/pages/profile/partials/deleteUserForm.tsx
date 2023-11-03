@@ -44,7 +44,6 @@ export default function DeleteUserForm({ className = '' }: { className?: string 
       preserveScroll: true,
       onError: () => {
         passwordInput.current?.focus()
-        console.log(passwordInput.current)
       },
       onFinish: () => reset(),
     });

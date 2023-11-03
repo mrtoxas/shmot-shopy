@@ -86,6 +86,7 @@ class ProductController extends Controller
       }
     
       $product->load('ProductData');
+      $product->load('ProductImages');
 
       return response()->json(['data' => $product], 200);
 
