@@ -12,8 +12,8 @@ import { Link } from '@inertiajs/react';
 import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { ProductDataForm } from '@/components/forms/productDataForm';
 import { ProductImagesForm } from '@/components/forms/productImagesForm';
+import { ProductAdvantagesForm } from '@/components/forms/productAdvantagesForm';
 import { Separator } from '@/components/shadcn/ui/separator';
-
 
 export default function Product({ auth, flash }: PageProps) {
 	useFlashToasts(flash);
@@ -56,6 +56,9 @@ export default function Product({ auth, flash }: PageProps) {
           <Separator className='mt-8 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Зображення</h2>
           <ProductImagesForm />
+          <Separator className='mt-8 mb-8'/>
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
+          <ProductAdvantagesForm />
         </div>
       </div>
 

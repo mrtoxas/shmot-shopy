@@ -62,10 +62,31 @@ class LandingService
           $newProduct->landing_id = $newLanding->id;
           $newProduct->save();
 
+          // Clone ProductData
           $existingProductData = $existingProduct->productData()->get();
           if ($existingProductData->isNotEmpty()) {
             foreach ($existingProductData as $existingData) {
                 $newData = $existingData->replicate();
+                $newData->product_id = $newProduct->id;
+                $newData->save();
+            }
+          }
+
+          // Clone ProductImages
+          // $existingProductImages = $existingProduct->productImages()->get();
+          // if ($existingProductImages->isNotEmpty()) {
+          //   foreach ($existingProductImages as $existingImages) {
+          //       $newData = $existingImages->replicate();
+          //       $newData->product_id = $newProduct->id;
+          //       $newData->save();
+          //   }
+          // }
+
+          // Clone ProductFeatures
+          $existingProductFeatures = $existingProduct->productFeatures()->get();
+          if ($existingProductFeatures->isNotEmpty()) {
+            foreach ($existingProductFeatures as $existingFeatures) {
+                $newData = $existingFeatures->replicate();
                 $newData->product_id = $newProduct->id;
                 $newData->save();
             }
