@@ -95,7 +95,7 @@ class LandingController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy($id)
+  public function destroy($id, LandingService $landingService)
   {
     try {
       DB::beginTransaction();
@@ -105,6 +105,8 @@ class LandingController extends Controller
         DB::rollBack();
         throw new \Exception('Ви не можете видалити цей сайт', 403);
       }
+
+      $landingService->removeAllLandingImages($id);
 
       $landing->delete();
 

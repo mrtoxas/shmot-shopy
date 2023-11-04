@@ -3,11 +3,14 @@
 namespace App\Services;
 
 use App\Models\Landing;
+use App\Models\Product;
+use App\Models\ProductImage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\InvalidOrderException;
+use Illuminate\Support\Facades\Storage;
 
 class LandingService
 {
@@ -90,5 +93,14 @@ class LandingService
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
+  }
+
+  public function removeAllLandingImages($landingId)
+  {
+    $productIds = Product::where('landing_id', $landingId)->pluck('id');
+    $imageNames = ProductImage::whereIn('product_id', $productIds)->pluck('img_name');
+    Storage::delete($imageNames->map(function ($imgName) {
+        return env('IMG_DIR') . '/' . $imgName;
+    })->all());
   }
 }

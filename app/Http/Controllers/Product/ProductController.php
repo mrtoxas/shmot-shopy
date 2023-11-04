@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Product;
 use App\Models\Landing;
 use Illuminate\Support\Facades\Auth;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
@@ -50,7 +51,7 @@ class ProductController extends Controller
     }
   }
 
-  public function destroy($landingId, $productId)
+  public function destroy($landingId, $productId, ProductService $productService)
   {
    try {
       $landing = Landing::find($landingId);
@@ -59,11 +60,7 @@ class ProductController extends Controller
         throw new \Exception('Ви не можете видалити цей товар', 403);
       }
 
-      $product = Product::find($productId);
-
-      if ($product) {
-        $product->delete();
-      }
+      $productService->deleteAllProductImages($productId);
 
       return response()->json([
         'message' => 'Товар успішно видалено!'

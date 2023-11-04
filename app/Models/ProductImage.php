@@ -12,6 +12,8 @@ class ProductImage extends Model
 
   protected $table = "product_images";
 
+  protected $dates = ['deleted_at'];
+
   protected $fillable = [
     'product_id',
     'img_name'
@@ -20,15 +22,5 @@ class ProductImage extends Model
   public function product()
   {
     return $this->belongsTo(Product::class, 'product_id');
-  }
-
-  protected static function boot()
-  {
-    parent::boot();
-
-    static::deleting(function($image) {
-      // Удаление файла изображения с диска
-      //Storage::delete('images/' . $image->img_name);
-    });
   }
 }

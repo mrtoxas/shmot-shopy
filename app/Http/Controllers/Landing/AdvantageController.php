@@ -33,7 +33,7 @@ class AdvantageController extends Controller
           $fileName = 'advantage' . $id . '_' . $index . '.' . $extension;
 
           if ($oldImgName) {
-            Storage::disk('public')->delete($oldImgName);
+            Storage::disk('public/images')->delete($oldImgName);
           }
 
           $file->storeAs('public', $fileName);
