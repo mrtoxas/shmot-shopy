@@ -60,6 +60,12 @@ class ProductController extends Controller
         throw new \Exception('Ви не можете видалити цей товар', 403);
       }
 
+      $product = Product::find($productId);
+
+      if ($product) {
+        $product->delete();
+      }
+
       $productService->deleteAllProductImages($productId);
 
       return response()->json([

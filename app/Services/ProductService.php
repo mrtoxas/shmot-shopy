@@ -17,13 +17,12 @@ class ProductService
   public function deleteAllProductImages($productId)
   {
     try {
+      $productImages = ProductImage::where('product_id', $productId)->pluck('img_name');
 
-      $productImages = ProductImage::where('product_id', $productId)->get();
+      Storage::delete($productImages->map(function ($imgName) {
+          return 'public/images/' . $imgName;
+      })->all());
 
-      foreach ($productImages as $image) {
-        $imgName = $image->img_name;
-        Storage::delete(env('IMG_DIR') . '/' . $imgName);
-      }
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
