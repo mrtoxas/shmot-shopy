@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useLandingsStore from "@/store/landingsStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
@@ -11,10 +12,9 @@ import {
   FormItem, 
   FormLabel, 
   FormMessage 
-} from "../shadcn/ui/form";
+} from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
-import { useEffect } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
@@ -24,7 +24,8 @@ const FormSchema = z.object({
   price: z.string().nullable(),
   discount: z.string().nullable(),
   rest: z.string().nullable(),
-  drop_price: z.string().nullable()
+  drop_price: z.string().nullable(),
+  is_pub: z.boolean()
 })
 
 export const LandingGlobalProductForm = () => {
@@ -40,6 +41,7 @@ export const LandingGlobalProductForm = () => {
       discount: null,
       rest: null,
       drop_price: null,
+      is_pub: false,
     }
   });
 
@@ -56,6 +58,7 @@ export const LandingGlobalProductForm = () => {
       discount: global_product.discount ? String(global_product.discount) : null,
       rest: global_product.rest ? String(global_product.rest) : null,
       drop_price: global_product.drop_price ? String(global_product.drop_price) : null,
+      is_pub: global_product.is_pub
     });
   }, [currentLanding]);
 
@@ -171,10 +174,7 @@ export const LandingGlobalProductForm = () => {
               Зберегти
             </Button>
           </div>
-
-
         </div>
-        
       </form>
     </Form>
   )

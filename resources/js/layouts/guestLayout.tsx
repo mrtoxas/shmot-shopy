@@ -1,6 +1,6 @@
+import { PropsWithChildren } from 'react';
 import ApplicationLogo from '@/components/ui/applicationLogo';
 import { Link } from '@inertiajs/react';
-import { PropsWithChildren } from 'react';
 
 export default function Guest({ children }: PropsWithChildren) {
     return (

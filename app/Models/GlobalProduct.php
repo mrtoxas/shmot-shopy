@@ -9,7 +9,7 @@ class GlobalProduct extends Model
 {
     use HasFactory;
 
-    protected $table = 'global_products';
+    protected $table = 'global_product';
 
     protected $fillable = [
         'landing_id',
@@ -17,6 +17,7 @@ class GlobalProduct extends Model
         'price',
         'discount',
         'rest',
+        'is_pub',
         'drop_price'
     ];
 

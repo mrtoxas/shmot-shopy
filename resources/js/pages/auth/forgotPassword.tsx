@@ -1,6 +1,6 @@
+import { FormEventHandler } from 'react';
 import GuestLayout from '@/layouts/guestLayout';
 import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
 import { Input } from '@/components/shadcn/ui/input';
 import { FormError } from '@/components/ui/formError';
 import { Button } from '@/components/shadcn/ui/button';

@@ -4,20 +4,18 @@ import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
 import { 
-  Form, 
-  FormDescription, 
+  Form,   
   FormControl, 
   FormField, 
   FormItem, 
   FormLabel, 
   FormMessage 
-} from "../shadcn/ui/form";
+} from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { useEffect } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
-import { Checkbox } from "@/components/shadcn/ui/checkbox";
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),

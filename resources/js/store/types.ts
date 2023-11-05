@@ -1,49 +1,72 @@
-export interface CreateLandingsProps {
-  name: App.Models.Landing["name"],
-  clone?: App.Models.Landing["name"]
-}
+import { AxiosResponse } from "axios"
 
-export interface CreateProductProps {
-  landingId: App.Models.Landing["id"]
-  data: {
-    name: App.Models.Product["name"], 
-    article: App.Models.Product["article"]
-  }
-}
+export interface LandingsState {
+  landings: App.Models.Landing[],
+  templates: App.Models.LandingTemplate[],
+  currentLanding: App.Models.Landing | null,
+  currentProduct: App.Models.Product | null,
 
-export interface RemoveLandingProps {
-  landingId: App.Models.Landing["id"];
-}
+  removeLanding: (
+    landingId: App.Models.Landing["id"]
+  ) => Promise<AxiosResponse>,
 
-export interface GetLandingWithDataProps {
-  landingId: App.Models.Landing["id"];
-}
+  createLanding: (
+    name: App.Models.Landing["name"],
+    clone?: App.Models.Landing["name"]
+  ) => Promise<AxiosResponse>,
 
-export interface UpdateLandingSettingsProps {
-  landingId: App.Models.Landing["id"], 
-  data: App.Models.LandingSettings
-}
+  createProduct: (
+    landingId: App.Models.Landing["id"],
+    data: {
+      name: App.Models.Product["name"],
+      article: App.Models.Product["article"]
+    }
+  ) => Promise<AxiosResponse>,
 
-export interface UpdateGlobalProductProps {
-  landingId: App.Models.Landing["id"], 
-  data: App.Models.GlobalProduct
-}
+  getLandings: () => Promise<AxiosResponse>,
 
-export interface UpdateAdvantagesProps{
-  landingId: App.Models.Landing["id"], 
-  data: FormData
-}
+  getLandingWithData: (
+    landingId: App.Models.Landing["id"]
+  ) => Promise<AxiosResponse>,
 
-export interface GetProductWithDataProps {
-  landingId: App.Models.Landing["id"], 
-  productId: App.Models.Product["id"];
-}
+  getProductWithData: (
+    landingId: App.Models.Landing["id"],
+    productId: App.Models.Product["id"]
+  ) => Promise<AxiosResponse>,
 
-export interface UpdateProductDataProps extends GetProductWithDataProps {
-  data: App.Models.ProductData
-}
+  updateLandingSettings: (
+    landingId: App.Models.Landing["id"],
+    data: App.Models.LandingSettings
+  ) => Promise<AxiosResponse>,
 
-export interface UpdateProductImagesProps extends GetProductWithDataProps { {
-  data: FormData
-}
+  updateGlobalProduct: (
+    landingId: App.Models.Landing["id"],
+    data: App.Models.GlobalProduct
+  ) => Promise<AxiosResponse>,
 
+  updateAdvantages: (
+    landingId: App.Models.Landing["id"],
+    data: FormData
+  ) => Promise<AxiosResponse>,
+
+  updateProductData: (
+    landingId: App.Models.Landing["id"],
+    productId: App.Models.Product["id"],
+    data: App.Models.ProductData
+  ) => Promise<AxiosResponse>,
+
+  updateProductImages: (
+    landingId: App.Models.Landing["id"],
+    productId: App.Models.Product["id"],
+    data: FormData
+  ) => Promise<AxiosResponse>,
+
+  removeProduct: (
+    landingId: App.Models.Landing["id"],
+    productId: App.Models.Product["id"],
+  ) => Promise<AxiosResponse>,
+
+  getTemplates: () => Promise<AxiosResponse>,
+
+  clearCurrentLanding: () => void,
+}

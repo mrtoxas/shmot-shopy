@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
@@ -9,10 +9,9 @@ import { Head } from '@inertiajs/react';
 import { Loader2Icon, ArrowLeftIcon } from '@/components/ui/icons';
 import useAppStore from '@/store/appStore';
 import { Link } from '@inertiajs/react';
-import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { ProductDataForm } from '@/components/forms/productDataForm';
 import { ProductImagesForm } from '@/components/forms/productImagesForm';
-import { ProductAdvantagesForm } from '@/components/forms/productAdvantagesForm';
+import { ProductFeaturesForm } from '@/components/forms/productFeaturesForm';
 import { Separator } from '@/components/shadcn/ui/separator';
 
 export default function Product({ auth, flash }: PageProps) {
@@ -23,8 +22,7 @@ export default function Product({ auth, flash }: PageProps) {
 	const { isPagePending, setPagePending } = useAppStore();
 
 	const {
-    getProductWithData, 
-    currentProduct
+    getProductWithData,     
   } = useLandingStore();
 
   useEffect(() => {
@@ -40,7 +38,7 @@ export default function Product({ auth, flash }: PageProps) {
         <div >
           <PageHead message={`Налаштування - ${productId}`} />
           <Link 
-        		href={route('landing.admin', { landingId })}
+        		href={route('landing.admin', { landingId: String(landingId) })}
         		className="flex items-center text-sm mt-4">
         		<ArrowLeftIcon className="h-4 w-4 mr-2" /> Повернутись
         	</Link>
@@ -58,7 +56,7 @@ export default function Product({ auth, flash }: PageProps) {
           <ProductImagesForm />
           <Separator className='mt-8 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
-          <ProductAdvantagesForm />
+          {/* <ProductFeaturesForm /> */}
         </div>
       </div>
 

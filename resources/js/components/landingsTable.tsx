@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { Button, buttonVariants } from "./shadcn/ui/button";
+import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { formatDate } from "@/utils/formatDate";
 import { Link } from '@inertiajs/react';
-import { CopyIcon, Loader2Icon, PencilIcon, Trash2Icon } from "./ui/icons";
+import { CopyIcon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
 import {
   Table,
   TableBody,
@@ -10,9 +10,9 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "./shadcn/ui/table";
+} from "@/components/shadcn/ui/table";
 import {
-  AlertDialog,  
+  AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -20,11 +20,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
-} from "./shadcn/ui/alert-dialog";
+} from "@/components/shadcn/ui/alert-dialog";
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
 import { toast } from "@/components/shadcn/ui/use-toast"
-import { Dialog } from '@/components/ui/dialog';
 
 interface LandingsTableProps {
   toggleNewLandingDialog: () => void
@@ -32,11 +31,11 @@ interface LandingsTableProps {
 
 export const LandingsTable = (props: LandingsTableProps) => {
   const { landings, removeLanding } = useLandingsStore();
-  const { newLandingCloneName, setNewLandingCloneName } = useAppStore();
+  const { setNewLandingCloneName } = useAppStore();
   const { toggleNewLandingDialog } = props;
-  
+
   const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
-    removeLanding(id).then((res)=>{
+    removeLanding(id).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
@@ -65,17 +64,17 @@ export const LandingsTable = (props: LandingsTableProps) => {
             <TableCell>{date}</TableCell>
             <TableCell className="text-right">
               <div className="flex gap-2 justify-end flex-nowrap">
-                <Button onClick={()=>cloneClickHandler(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
+                <Button onClick={() => cloneClickHandler(el.name)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
                   <CopyIcon className="h-4 w-4" />
                 </Button>
-                <Link 
+                <Link
                   className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-green-600' })}
-                  href={route('landing.admin', el.id)}                  
+                  href={route('landing.admin', el.id)}
                   title="Редагувати"
                 >
                   <PencilIcon className="h-4 w-4" />
                 </Link>
-            
+
                 <AlertDialog>
                   <AlertDialogTrigger className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-red-600' })} title="Видалити">
                     <Trash2Icon className="h-4 w-4" />
@@ -88,8 +87,8 @@ export const LandingsTable = (props: LandingsTableProps) => {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                    <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                    <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
+                      <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
+                      <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -103,7 +102,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
 
 
   return (
-    <div className="relative">      
+    <div className="relative">
       <Table>
         <TableHeader>
           <TableRow>
@@ -114,7 +113,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {preparedData}          
+          {preparedData}
         </TableBody>
       </Table>
     </div>

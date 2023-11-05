@@ -1,6 +1,6 @@
+import { FormEventHandler } from 'react';
 import GuestLayout from '@/layouts/guestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
 import { Button } from '@/components/shadcn/ui/button';
 
 export default function VerifyEmail({ status }: { status?: string }) {

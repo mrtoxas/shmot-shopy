@@ -5,6 +5,30 @@
  */
 
 declare namespace App.Models {
+    export interface Advantage {
+        id: number;
+        landing_id: number;
+        img_name: string;
+        caption: string;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+    }
+
+    export interface GlobalProduct {
+        id: number;
+        landing_id: number;
+        sizes: string | null;
+        price: number | null;
+        discount: number | null;
+        rest: number | null;
+        is_pub: boolean;
+        drop_price: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+    }
+
     export interface Landing {
         id: number;
         created_at: string | null;
@@ -18,68 +42,6 @@ declare namespace App.Models {
         products?: Array<App.Models.Product> | null;
         advantage_count?: number | null;
         products_count?: number | null;
-    }
-
-    export interface User {
-        id: number;
-        name: string;
-        email: string;
-        email_verified_at: string | null;
-        password: string;
-        remember_token: string | null;
-        created_at: string | null;
-        updated_at: string | null;
-        landings?: Array<App.Models.Landing> | null;
-        landings_count?: number | null;
-    }
-
-    export interface Product {
-        id: number;
-        landing_id: number;
-        name: string;
-        article: string;
-        created_at: string | null;
-        updated_at: string | null;
-        landing?: App.Models.Landing | null;
-        product_data?: App.Models.ProductData | null;
-    }
-
-    export interface LandingTemplate {
-        id: number;
-        name: string;
-        created_at: string | null;
-        updated_at: string | null;
-        title: string;
-    }
-
-    export interface ProductData {
-        id: number;
-        product_id: number;
-        sizes: string | null;
-        price: number | null;
-        discount: number | null;
-        rest: number | null;
-        created_at: string | null;
-        updated_at: string | null;
-        product?: App.Models.Landing | null;
-    }
-
-    export interface Advantage {
-        id: number;
-        landing_id: number;
-        img_name: string;
-        caption: string;
-        created_at: string | null;
-        updated_at: string | null;
-        landing?: App.Models.Landing | null;
-    }
-
-    export interface ProductImage {
-        id: number;
-        product_id: number;
-        img_name: string;
-        created_at: string | null;
-        updated_at: string | null;
     }
 
     export interface LandingSettings {
@@ -98,17 +60,71 @@ declare namespace App.Models {
         landing?: App.Models.Landing | null;
     }
 
-    export interface GlobalProduct {
+    export interface LandingTemplate {
+        id: number;
+        name: string;
+        created_at: string | null;
+        updated_at: string | null;
+        title: string;
+    }
+
+    export interface Product {
         id: number;
         landing_id: number;
+        name: string;
+        article: string;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+        product_data?: App.Models.ProductData | null;
+        product_images?: Array<App.Models.ProductImage> | null;
+        product_features?: Array<App.Models.ProductFeature> | null;
+        product_images_count?: number | null;
+        product_features_count?: number | null;
+    }
+
+    export interface ProductData {
+        id: number;
+        product_id: number;
         sizes: string | null;
         price: number | null;
         discount: number | null;
         rest: number | null;
-        drop_price: number | null;
         created_at: string | null;
         updated_at: string | null;
-        landing?: App.Models.Landing | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface ProductFeature {
+        id: number;
+        product_id: number;
+        name: string;
+        value: string;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface ProductImage {
+        id: number;
+        product_id: number;
+        img_name: string;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface User {
+        id: number;
+        name: string;
+        email: string;
+        email_verified_at: string | null;
+        password: string;
+        remember_token: string | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landings?: Array<App.Models.Landing> | null;
+        landings_count?: number | null;
     }
 
 }

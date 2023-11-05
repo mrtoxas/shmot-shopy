@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { FlashProps } from "@/types";
-import { useEffect } from "react";
 
 export const useFlashToasts = (flash: FlashProps) => {
     useEffect(() => {

@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
+    "compilerOptions": {        
         "allowJs": true,
         "module": "ESNext",
         "moduleResolution": "bundler",

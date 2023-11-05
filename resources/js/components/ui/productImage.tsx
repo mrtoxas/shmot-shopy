@@ -1,5 +1,3 @@
-import { Trash2Icon } from '@/components/ui/icons';
-
 interface ProductImageProps{
 	key: number;
 	src: string;

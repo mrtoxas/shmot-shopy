@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Button } from '../shadcn/ui/button';
+import { useEffect, useMemo } from 'react';
+import { Button } from '@/components/shadcn/ui/button';
 import useLandingsStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../shadcn/ui/form';
-import { toast } from '../shadcn/ui/use-toast';
-import { Input } from '../shadcn/ui/input';
-import { ImageIcon, Loader2Icon } from '../ui/icons';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+import { toast } from '@/components/shadcn/ui/use-toast';
+import { Input } from '@/components/shadcn/ui/input';
+import { ImageIcon, Loader2Icon } from '@/components/ui/icons';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

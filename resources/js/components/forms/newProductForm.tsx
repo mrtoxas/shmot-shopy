@@ -1,21 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Loader2Icon } from "../ui/icons"
+import { Loader2Icon } from "@/components/ui/icons"
 import useLandingsStore from "@/store/landingsStore"
 import { usePage } from "@inertiajs/react";
 import { Button } from "@/components/shadcn/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/shadcn/ui/form"
 import { Input } from "@/components/shadcn/ui/input"
-import { toast } from "../shadcn/ui/use-toast"
+import { toast } from "@/components/shadcn/ui/use-toast"
  
 interface CreateProductFormProps {
  finallyAction: () => void;  
@@ -26,7 +25,7 @@ const FormSchema = z.object({
 })
 
 export const NewProductForm = (props: CreateProductFormProps) => {
-  const { landings, createProduct } = useLandingsStore();
+  const { createProduct } = useLandingsStore();
 
   const { landingId } = usePage().props;
   

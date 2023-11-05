@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import {
   Dialog as ShadcnDialog,
   DialogContent,
@@ -5,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/shadcn/ui/dialog';
+
 
 interface DialogProps {
   isOpen: boolean;

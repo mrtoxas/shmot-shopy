@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react"
+import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -9,18 +9,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from "../shadcn/ui/form"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
+} from "@/components/shadcn/ui/form"
+import { Input } from "@/components/shadcn/ui/input"
+import { Button } from "@/components/shadcn/ui/button"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "../shadcn/ui/select"
-import { Loader2Icon } from "../ui/icons"
-import { toast } from "../shadcn/ui/use-toast"
+} from "@/components/shadcn/ui/select"
+import { Loader2Icon } from "@/components/ui/icons"
+import { toast } from "@/components/shadcn/ui/use-toast"
 import useAppStore from "@/store/appStore"
 import useLandingsStore from "@/store/landingsStore"
 
@@ -47,13 +47,7 @@ const FormSchema = z.object({
 export const NewLandingForm = (props: CreateLandingFormProps) => {
   const { landings, createLanding } = useLandingsStore();
 
-  const { newLandingCloneName,setNewLandingCloneName } = useAppStore();
-
-  useEffect(()=>{
-    return () => {
-      setNewLandingCloneName(null);
-    }
-  },[]);
+  const { newLandingCloneName } = useAppStore();
   
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -66,7 +60,8 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
   const { formState: isSubmitting } = form;
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    return createLanding(data).then((res) => {
+    const { name, clone } = data;
+    return createLanding(name, clone).then((res) => {
       props.finallyAction();
       toast({
         className: "bg-green-600 text-white",

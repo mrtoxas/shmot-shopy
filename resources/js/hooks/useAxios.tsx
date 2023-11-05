@@ -1,6 +1,3 @@
-
-
-
 export const useAxios = () => {
     window.axios.interceptors.request.use(request => {
         console.log('Starting Request', request)
@@ -11,5 +8,4 @@ export const useAxios = () => {
         console.log('Response:', response)
         return response
     })
-
 }
