@@ -26,7 +26,7 @@ import useLandingsStore from '@/store/landingsStore';
 import { toast } from '../shadcn/ui/use-toast';
 
 const FormSchema = z.object({
-  advantages: z.array(
+  variants: z.array(
     z.object({
       id: z.number().optional(),
       name: z.string().min(1),
@@ -34,9 +34,9 @@ const FormSchema = z.object({
     })),
 });
 
-export const ProductAdvantagesForm = () => {
+export const ProductVariantsForm = () => {
   const { landingId, productId } = usePage().props;
-  const { currentProduct, updateProductAdvantages } = useLandingsStore();
+  const { currentProduct, updateProductVariants } = useLandingsStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -47,20 +47,20 @@ export const ProductAdvantagesForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "advantages"
+    name: "variants"
   });
 
   useEffect(() => {
-    if (!currentProduct?.product_advantages) return;
+    if (!currentProduct?.product_variants) return;
     reset({
-      advantages: currentProduct.product_advantages
+      variants: currentProduct.product_variants
     });
-  }, [currentProduct?.product_advantages]);
+  }, [currentProduct?.product_variants]);
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     setIsSubmitting(true);
 
-    updateProductAdvantages(Number(landingId), Number(productId), data.advantages).then((res)=>{
+    updateProductVariants(Number(landingId), Number(productId), data.variants).then((res)=>{
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
@@ -80,7 +80,7 @@ export const ProductAdvantagesForm = () => {
           <TableCell className="pl-1 pr-2 py-2">
             <FormField
               control={control}
-              name={`advantages.${index}.name`}
+              name={`variants.${index}.name`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -94,7 +94,7 @@ export const ProductAdvantagesForm = () => {
           <TableCell className="pl-2 pr-0 py-2">
             <FormField
               control={control}
-              name={`advantages.${index}.value`}
+              name={`variants.${index}.value`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

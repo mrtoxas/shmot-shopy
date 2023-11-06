@@ -11,7 +11,7 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductDataController;
 use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Controllers\Product\ProductFeatureController;
-use App\Http\Controllers\Product\ProductAdvantageController;
+use App\Http\Controllers\Product\ProductVariantController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -130,9 +130,9 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
   )->name('api.productFeatures.update');
 
   Route::post(
-    '/api/landing/{landingId}/product/{productId}/product_advantages',
-    [ProductAdvantageController::class, 'update']
-  )->name('api.productAdvantages.update');
+    '/api/landing/{landingId}/product/{productId}/product_variants',
+    [ProductVariantController::class, 'update']
+  )->name('api.productVariants.update');
 });
 
 Route::get(

@@ -6,10 +6,8 @@ use App\Models\Landing;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Exceptions\InvalidOrderException;
 use Illuminate\Support\Facades\Storage;
 
 class LandingService
@@ -92,11 +90,11 @@ class LandingService
             }
           }
 
-          // Clone ProductAdvantages
-          $existingProductAdvantages = $existingProduct->productAdvantages()->get();
-          if ($existingProductAdvantages->isNotEmpty()) {
-            foreach ($existingProductAdvantages as $existingAdvantages) {
-                $newData = $existingAdvantages->replicate();
+          // Clone ProductVariants
+          $existingProductVariants = $existingProduct->productVariants()->get();
+          if ($existingProductVariants->isNotEmpty()) {
+            foreach ($existingProductVariants as $existingVariants) {
+                $newData = $existingVariants->replicate();
                 $newData->product_id = $newProduct->id;
                 $newData->save();
             }

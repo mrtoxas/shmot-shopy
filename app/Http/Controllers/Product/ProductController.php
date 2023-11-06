@@ -91,7 +91,7 @@ class ProductController extends Controller
       $product->load('ProductData');
       $product->load('ProductImages');
       $product->load('ProductFeatures');
-      $product->load('ProductAdvantages');
+      $product->load('ProductVariants');
 
       return response()->json(['data' => $product], 200);
 
