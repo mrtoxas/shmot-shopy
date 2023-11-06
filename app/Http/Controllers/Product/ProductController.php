@@ -20,9 +20,9 @@ class ProductController extends Controller
         'required',
         'string',
         Rule::unique('products')->where(function ($query) use ($request, $id) {
-                return $query->where('landing_id', $id);
-            })
-    ]
+          return $query->where('landing_id', $id);
+        })
+      ]
     ], [
       'name.required' => 'Поле "Назва товару" обов\'язкове!',
       'article.required' => 'Поле "Назва товару" обов\'язкове!',
@@ -32,12 +32,12 @@ class ProductController extends Controller
     $name = $request->input('name');
     $article = $request->input('article');
 
-    try{
+    try {
       $product = Product::create([
-        'landing_id' => $id, 
-        'name' => $name, 
+        'landing_id' => $id,
+        'name' => $name,
         'article' => $article
-      ]);      
+      ]);
 
       return response()->json([
         'data' => $product,
@@ -53,7 +53,7 @@ class ProductController extends Controller
 
   public function destroy($landingId, $productId, ProductService $productService)
   {
-   try {
+    try {
       $landing = Landing::find($landingId);
 
       if (!$landing || $landing->created_by != Auth::user()->id) {
@@ -87,7 +87,7 @@ class ProductController extends Controller
       if ($product === null) {
         return response()->json(['message' => 'Товар не знайдено!'], 404);
       }
-    
+
       $product->load('ProductData');
       $product->load('ProductImages');
       $product->load('ProductFeatures');

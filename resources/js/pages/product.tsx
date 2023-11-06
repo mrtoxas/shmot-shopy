@@ -56,7 +56,7 @@ export default function Product({ auth, flash }: PageProps) {
           <ProductImagesForm />
           <Separator className='mt-8 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
-          {/* <ProductFeaturesForm /> */}
+          <ProductFeaturesForm />
         </div>
       </div>
 

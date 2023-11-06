@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod';
 import { Trash2Icon, PlusIcon } from "@/components/ui/icons";
@@ -7,7 +7,7 @@ import {
   Form,
   FormControl,
   FormField,
-  FormItem,  
+  FormItem,
   FormMessage
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input"
@@ -22,93 +22,104 @@ import {
   TableRow
 } from "@/components/shadcn/ui/table";
 import { usePage } from '@inertiajs/react';
-
-const fakeData: Partial<App.Models.ProductFeature>[] = [
-  { id: 1, name: 'name1', value: 'value1' },
-  { id: 2, name: 'name2', value: 'value2' },
-  { id: 3, name: 'name3', value: 'value3' },
-]
-
-type DataType = { advantages: Partial<App.Models.ProductFeature>[] }
+import useLandingsStore from '@/store/landingsStore';
+import { toast } from '../shadcn/ui/use-toast';
 
 const FormSchema = z.object({
-  advantages: z.array(
+  features: z.array(
     z.object({
-      id: z.number(),
-      name: z.string(),
-      value: z.string(),
+      id: z.number().optional(),
+      name: z.string().min(1),
+      value: z.string().min(1)
     })),
 });
 
 export const ProductFeaturesForm = () => {
-  const { landingId } = usePage().props;
-  
-  const [data, setData] = useState<DataType>();
+  const { landingId, productId } = usePage().props;
+  const { currentProduct, updateProductFeatures } = useLandingsStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
   });
 
-  const { handleSubmit, setValue, formState: { isSubmitting } } = form;
+  const { handleSubmit, control, reset, formState: { isSubmitting } } = form;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "features"
+  });
 
   useEffect(() => {
-    if (fakeData) setValue('advantages', fakeData);
-  }, [fakeData]);
+    if (!currentProduct?.product_features) return;
+    reset({
+      features: currentProduct.product_features
+    });
+  }, [currentProduct?.product_features]);
+
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    updateProductFeatures(Number(landingId), Number(productId), data.features).then((res)=>{
+      toast({
+        className: "bg-green-600 text-white",
+        title: "Успіх!",
+        description: res.data.message,
+      })
+    });    
+  }
+
+  const handleAddItem = () => (append({ name: "", value: "" }));
+
+  const handleRemoveItem = (index: number) => remove(index);
 
   const preparedItems = useMemo(() => {
-    return data.fields.map((item, index) => {
+    return fields.map((_, index) => {
       return (
-        <TableRow className="hover:bg-transparent">
-          <TableCell className="pl-0 pr-2">
+        <TableRow key={index} className="hover:bg-transparent border-0">
+          <TableCell className="pl-1 pr-2 py-2">
             <FormField
               control={control}
-              name={item.name}
+              name={`features.${index}.name`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Введiть перевагу" {...field} />
+                    <Input required placeholder="Введiть перевагу" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </TableCell>
-          <TableCell className="pl-2 pr-0">
+          <TableCell className="pl-2 pr-0 py-2">
             <FormField
-              control={item.control}
-              name="value"
+              control={control}
+              name={`features.${index}.value`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Введiть значення" {...field} />
+                    <Input required placeholder="Введiть перевагу" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </TableCell>
-          <TableCell className="pl-2 pr-0">
-            <Button variant="ghost" type="button" className="hover:text-red-600">
+          <TableCell className="pl-2 pr-0 py-2">
+            <Button onClick={() => handleRemoveItem(index)} variant="ghost" type="button" className="hover:text-red-600">
               <Trash2Icon className="h-4 w-4" />
             </Button>
           </TableCell>
         </TableRow>
       )
     })
-  }, [data])
-
-
-
-  function onSubmit(data: z.infer<typeof FormSchema>) { }
+  }, [fields])
 
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <Table>
-            <TableHeader>
+            <TableHeader className="pb-4">
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[50%] pl-0 pr-2">Назва</TableHead>
+                <TableHead className="w-[50%] pl-1 pr-2">Назва</TableHead>
                 <TableHead className="w-[50%] pl-2 pr-0">Значення</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -117,11 +128,11 @@ export const ProductFeaturesForm = () => {
               {preparedItems}
             </TableBody>
           </Table>
-          <div className="mt-4 flex justify-between">
-            <Button onClick={handleSubmit} type="submit" disabled={isSubmitting}>
+          <div className="mt-4 flex gap-2">
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
             </Button>
-            <Button variant="secondary">
+            <Button variant="secondary" type="button" onClick={handleAddItem}>
               <PlusIcon className="mr-2 h-4 w-4" /> Додати поле
             </Button>
           </div>
