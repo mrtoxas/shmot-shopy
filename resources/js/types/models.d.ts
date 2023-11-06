@@ -79,8 +79,20 @@ declare namespace App.Models {
         product_data?: App.Models.ProductData | null;
         product_images?: Array<App.Models.ProductImage> | null;
         product_features?: Array<App.Models.ProductFeature> | null;
+        product_advantages?: Array<App.Models.ProductAdvantage> | null;
         product_images_count?: number | null;
         product_features_count?: number | null;
+        product_advantages_count?: number | null;
+    }
+
+    export interface ProductAdvantage {
+        id: number;
+        product_id: number;
+        name: string;
+        value: string;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Product | null;
     }
 
     export interface ProductData {

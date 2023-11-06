@@ -36,4 +36,9 @@ class Product extends Model
   {
     return $this->hasMany(ProductFeature::class, 'product_id');
   }
+
+  public function productAdvantages()
+  {
+    return $this->hasMany(ProductAdvantage::class, 'product_id');
+  }
 }

@@ -91,6 +91,16 @@ class LandingService
                 $newData->save();
             }
           }
+
+          // Clone ProductAdvantages
+          $existingProductAdvantages = $existingProduct->productAdvantages()->get();
+          if ($existingProductAdvantages->isNotEmpty()) {
+            foreach ($existingProductAdvantages as $existingAdvantages) {
+                $newData = $existingAdvantages->replicate();
+                $newData->product_id = $newProduct->id;
+                $newData->save();
+            }
+          }
         }
       }
 

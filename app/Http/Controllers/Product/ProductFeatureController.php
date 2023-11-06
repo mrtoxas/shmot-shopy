@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductFeature;
-use Illuminate\Validation\Rule;
 
 class ProductFeatureController extends Controller
 {
@@ -16,10 +15,9 @@ class ProductFeatureController extends Controller
       '*.name' => 'required|string',
       '*.value' => 'required|string',
     ], [
-      '*.name.unique' => 'Кожна назва повинна мати унікальна в межах продукту!',
-      '*.name.required' => 'Назва переваги обов\'язкова!',
+      '*.name.required' => 'Назва Характеристики обов\'язкова!',
       '*.name.string' => 'Невірний формат данних, зверніться до админістратора!',
-      '*.value.required' => 'Значення переваги обов\'язкове!',
+      '*.value.required' => 'Значення Характеристики обов\'язкове!',
       '*.value.string' => 'Невірний формат данних, зверніться до админістратора!',
     ]);
 
@@ -28,7 +26,7 @@ class ProductFeatureController extends Controller
     $collection = collect($features);
 
     if ($collection->duplicates('name')->isNotEmpty()) {
-      throw new \Exception('Кожна назва повинна мати унікальна в межах продукту!');
+      throw new \Exception('Кожна назва Характеристики повинна мати унікальна в межах продукту!');
     }
 
     try {
@@ -46,16 +44,14 @@ class ProductFeatureController extends Controller
       DB::commit();
 
       return response()->json([       
-        'message' => 'Переваги успішно змінені!'
+        'message' => 'Характеристики успішно змінені!'
       ], 200);
      
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при створені лендингу, зверніться до адміністратора.';
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при оновлені характеристик, зверніться до адміністратора.';
       return response()->json([
         'message' => $errorMessage
       ], 500);
     }
-
-
   }
 }

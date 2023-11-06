@@ -12,6 +12,7 @@ import { Link } from '@inertiajs/react';
 import { ProductDataForm } from '@/components/forms/productDataForm';
 import { ProductImagesForm } from '@/components/forms/productImagesForm';
 import { ProductFeaturesForm } from '@/components/forms/productFeaturesForm';
+import { ProductAdvantagesForm } from '@/components/forms/productAdvantagesForm';
 import { Separator } from '@/components/shadcn/ui/separator';
 
 export default function Product({ auth, flash }: PageProps) {
@@ -55,8 +56,11 @@ export default function Product({ auth, flash }: PageProps) {
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Зображення</h2>
           <ProductImagesForm />
           <Separator className='mt-8 mb-8'/>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Характеристики</h2>
           <ProductFeaturesForm />
+          <Separator className='mt-8 mb-8'/>
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
+          <ProductAdvantagesForm />
         </div>
       </div>
 

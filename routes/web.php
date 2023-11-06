@@ -11,10 +11,10 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductDataController;
 use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Controllers\Product\ProductFeatureController;
+use App\Http\Controllers\Product\ProductAdvantageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Middleware\CheckLandingAccess;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +128,11 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
     '/api/landing/{landingId}/product/{productId}/product_features',
     [ProductFeatureController::class, 'update']
   )->name('api.productFeatures.update');
+
+  Route::post(
+    '/api/landing/{landingId}/product/{productId}/product_advantages',
+    [ProductAdvantageController::class, 'update']
+  )->name('api.productAdvantages.update');
 });
 
 Route::get(

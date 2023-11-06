@@ -67,6 +67,12 @@ export interface LandingsState {
     data: Partial<App.Models.ProductFeature>[]
   ) => Promise<AxiosResponse>,
 
+  updateProductAdvantages: (
+    landingId: App.Models.Landing["id"],
+    productId: App.Models.Product["id"],
+    data: Partial<App.Models.ProductAdvantages>[]
+  ) => Promise<AxiosResponse>,
+
   removeProduct: (
     landingId: App.Models.Landing["id"],
     productId: App.Models.Product["id"],
