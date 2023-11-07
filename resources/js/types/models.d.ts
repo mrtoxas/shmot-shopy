@@ -50,6 +50,7 @@ declare namespace App.Models {
         meta_title: string | null;
         meta_description: string | null;
         is_pub: boolean;
+        use_global_product: boolean;
         fb_pixel_key: string | null;
         telegram_chat_id: string | null;
         crm_api_key: string | null;

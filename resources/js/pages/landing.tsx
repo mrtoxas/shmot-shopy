@@ -47,7 +47,7 @@ export default function Landing({ auth, flash }: PageProps) {
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <PageHead message={`Налаштування - ${currentLanding?.name || ""}`} />
+          <PageHead message={`Налаштування сайту - ${currentLanding?.name || ""}`} />
         </div>
       }
     >

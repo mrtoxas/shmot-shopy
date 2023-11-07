@@ -144,31 +144,6 @@ export const LandingGlobalProductForm = () => {
             />
           </div>
           <div>
-            <FormField
-                control={form.control}
-                name="is_pub"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>
-                        Використовувати для всіх продуктів
-                      </FormLabel>
-                      <FormDescription>
-                        При відключенні цієї опції, у кожного товару будуть свої дані
-                      </FormDescription>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-        </div>
-          <div className="mt-4">
             <Button disabled={isSubmitting.isSubmitting} type="submit">
               {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
               Зберегти

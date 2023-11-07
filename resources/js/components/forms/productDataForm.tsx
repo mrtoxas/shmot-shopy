@@ -3,17 +3,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
-import { 
-  Form,   
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
 
@@ -54,17 +54,17 @@ export const ProductDataForm = () => {
     });
   }, [currentProduct?.product_data]);
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {    
-    return updateProductData( 
-      Number(landingId), 
-      Number(productId), 
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    return updateProductData(
+      Number(landingId),
+      Number(productId),
       data as App.Models.ProductData).then((res) => {
-      toast({
-        className: "bg-green-600 text-white",
-        title: "Успіх!",
-        description: res.data.message,
+        toast({
+          className: "bg-green-600 text-white",
+          title: "Успіх!",
+          description: res.data.message,
+        })
       })
-    })
   }
 
   return (
@@ -75,6 +75,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="sizes"
+              disabled={false}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Розмiри (,)</FormLabel>
@@ -88,6 +89,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="price"
+              disabled={false}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Цiна, грн.</FormLabel>
@@ -101,6 +103,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="discount"
+              disabled={false}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Знижка, %</FormLabel>
@@ -114,6 +117,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="rest"
+              disabled={false}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Залишок, шт.</FormLabel>
@@ -124,7 +128,8 @@ export const ProductDataForm = () => {
                 </FormItem>
               )}
             />
-          </div>
+          </div>          
+          {/* <p className="text-destructive text-sm m-0 font-medium">Наразі використовуються дані Глобального продукту!</p> */}
           <div className="">
             <Button disabled={isSubmitting.isSubmitting} type="submit">
               {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
@@ -132,9 +137,7 @@ export const ProductDataForm = () => {
             </Button>
           </div>
         </div>
-        
       </form>
     </Form>
   )
-
 }

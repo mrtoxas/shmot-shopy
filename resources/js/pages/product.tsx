@@ -37,7 +37,7 @@ export default function Product({ auth, flash }: PageProps) {
       user={auth.user}
       header={
         <div >
-          <PageHead message={`Налаштування - ${productId}`} />
+          <PageHead message={`Налаштування товару - ${productId}`} />
           <Link 
         		href={route('landing.admin', { landingId: String(landingId) })}
         		className="flex items-center text-sm mt-4">
@@ -52,12 +52,12 @@ export default function Product({ auth, flash }: PageProps) {
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         	<h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Дані товару</h2>
         	<ProductDataForm />
+          <Separator className='mt-8 mb-8'/>          
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Характеристики</h2>
+          <ProductFeaturesForm />
           <Separator className='mt-8 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Зображення</h2>
           <ProductImagesForm />
-          <Separator className='mt-8 mb-8'/>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Характеристики</h2>
-          <ProductFeaturesForm />
           <Separator className='mt-8 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Варіанти</h2>
           <ProductVariantsForm />

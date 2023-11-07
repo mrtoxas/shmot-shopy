@@ -21,7 +21,8 @@ class LandingSettings extends Model
     'crm_api_key',
     'telegram_token',
     'template_id',
-    'template_settings'
+    'template_settings',
+    'use_global_product'
   ];
 
   public function landing()

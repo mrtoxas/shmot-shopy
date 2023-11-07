@@ -8,7 +8,7 @@ import {
     ChevronDownIcon,
     ImageIcon,
     ArrowLeftIcon,
-    BracesIcon
+    BracesIcon,    
 } from "lucide-react";
 
 export { 

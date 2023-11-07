@@ -31,7 +31,8 @@ const FormSchema = z.object({
   crm_api_key: z.string().nullable(),
   telegram_token: z.string().nullable(),
   template_id: z.string(),
-  template_settings: z.string().nullable()
+  template_settings: z.string().nullable(),
+  use_global_product: z.boolean().default(true)
 })
 
 export const LandingSettingsForm = () => {
@@ -54,7 +55,8 @@ export const LandingSettingsForm = () => {
       crm_api_key: null,
       telegram_token: null,
       template_id: "1",
-      template_settings: null
+      template_settings: null,
+      use_global_product: true
     }
   });
 
@@ -75,6 +77,7 @@ export const LandingSettingsForm = () => {
       telegram_token: landing_settings.telegram_token,
       template_id: String(landing_settings.template_id),
       template_settings: landing_settings.template_settings ? JSON.stringify(JSON.parse(landing_settings.template_settings), undefined, 2) : "",
+      use_global_product: Boolean(landing_settings.use_global_product)
     });
   }, [currentLanding]);
 
@@ -229,7 +232,33 @@ export const LandingSettingsForm = () => {
                 )}
               />
             </div>
-            <div className='mt-2'>
+            <div className='mt-4'>
+              <FormField
+                control={form.control}
+                name="use_global_product"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        Використовувати "Глобальний продукт".
+                      </FormLabel>
+                      <FormDescription>
+                      При використанні цієї опції всі товари будуть будуть використовувати дані, зазначені у формі "Глобальний продукт"
+                      </FormDescription>
+                      
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className='mt-4'>
               <FormField
                 control={form.control}
                 name="template_settings"
