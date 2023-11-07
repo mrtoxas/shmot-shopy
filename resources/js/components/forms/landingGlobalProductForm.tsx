@@ -160,7 +160,7 @@ export const LandingGlobalProductForm = () => {
                         Використовувати для всіх продуктів
                       </FormLabel>
                       <FormDescription>
-                        Якщо вимкнути цю опцію, тоді у кожного товару будуть свої дані
+                        При відключенні цієї опції, у кожного товару будуть свої дані
                       </FormDescription>
                     </div>
                     <FormMessage />

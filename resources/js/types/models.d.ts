@@ -57,12 +57,14 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         template_id: number;
+        template_settings: Array<any> | any | null;
         landing?: App.Models.Landing | null;
     }
 
     export interface LandingTemplate {
         id: number;
         name: string;
+        css_vars: Array<any> | any | null;
         created_at: string | null;
         updated_at: string | null;
         title: string;
@@ -79,8 +81,10 @@ declare namespace App.Models {
         product_data?: App.Models.ProductData | null;
         product_images?: Array<App.Models.ProductImage> | null;
         product_features?: Array<App.Models.ProductFeature> | null;
+        product_variants?: Array<App.Models.ProductVariant> | null;
         product_images_count?: number | null;
         product_features_count?: number | null;
+        product_variants_count?: number | null;
     }
 
     export interface ProductData {

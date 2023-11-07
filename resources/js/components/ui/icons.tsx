@@ -7,7 +7,8 @@ import {
     PlusIcon,
     ChevronDownIcon,
     ImageIcon,
-    ArrowLeftIcon
+    ArrowLeftIcon,
+    BracesIcon
 } from "lucide-react";
 
 export { 
@@ -19,5 +20,6 @@ export {
     User2Icon,
     ChevronDownIcon,
     ImageIcon,
-    ArrowLeftIcon
+    ArrowLeftIcon,
+    BracesIcon
 };

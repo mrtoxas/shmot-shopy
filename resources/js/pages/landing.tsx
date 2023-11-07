@@ -56,8 +56,8 @@ export default function Landing({ auth, flash }: PageProps) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
-          <LandingSettingsForm />
-          <Separator className='mt-8 mb-8'/>
+          <LandingSettingsForm />          
+          <Separator className='mt-8 mb-8'/>                            
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
           <LandingGlobalProductForm />
           <Separator className='mt-8 mb-8'/>
