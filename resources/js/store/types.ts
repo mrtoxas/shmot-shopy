@@ -10,6 +10,13 @@ export interface LandingsState {
     landingId: App.Models.Landing["id"]
   ) => Promise<AxiosResponse>,
 
+  renameLanding: (
+    landingId: App.Models.Landing["id"],
+    data: {
+      name: App.Models.Landing["name"]
+    }
+  ) => Promise<AxiosResponse>,
+
   createLanding: (
     name: App.Models.Landing["name"],
     clone?: App.Models.Landing["name"]

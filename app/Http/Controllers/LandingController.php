@@ -142,4 +142,27 @@ class LandingController extends Controller
       ], 500);
     }
   }
+
+  public function rename(Request $request)
+  {
+    $request->validate([
+      'name' => 'required',
+    ], [
+      'name.required' => 'Поле "Назва сайту" обов\'язкове!',
+    ]);
+
+    $name = $request->input('name');
+    $id = $request->landingId;
+
+    try {
+      $landing = Landing::find($id);
+      $landing->name = $name;
+      $landing->save();
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при видалені сайту, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage
+      ], 500);
+    }
+  }
 }

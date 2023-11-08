@@ -32,7 +32,6 @@ export const TemplateVariables = () => {
       <Textarea
         className="min-h-[120px]"
         value={preparedField}
-        placeholder="Type your message here." 
         readOnly
         autoFocus={false}
       />

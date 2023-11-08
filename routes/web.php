@@ -84,6 +84,11 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
     [LandingController::class, 'destroy']
   )->name('api.landing.destroy');
 
+  Route::put(
+    '/api/landings/{landingId}',
+    [LandingController::class, 'rename']
+  )->name('api.landing.rename');
+
   Route::post(
     '/api/landing/{landingId}/settings',
     [SettingsController::class, 'update']

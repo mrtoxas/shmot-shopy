@@ -61,6 +61,14 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     return response;
   },
 
+  renameLanding: async (landingId, data) => {
+    const response = await window.axios.put(route('api.landing.rename', { landingId }), data);
+    set((state) => ({
+      //landings: state.landings.filter((landing) => landing.id !== landingId),
+    }));
+    return response;
+  },
+
   getTemplates: async () => {
     const response = await window.axios.get(route('api.templates.all'));
     const { data } = response;

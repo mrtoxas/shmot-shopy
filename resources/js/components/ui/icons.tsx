@@ -9,6 +9,7 @@ import {
     ImageIcon,
     ArrowLeftIcon,
     BracesIcon,    
+    FileEditIcon,
 } from "lucide-react";
 
 export { 
@@ -21,5 +22,6 @@ export {
     ChevronDownIcon,
     ImageIcon,
     ArrowLeftIcon,
-    BracesIcon
+    BracesIcon,
+    FileEditIcon,
 };

@@ -74,6 +74,14 @@ export const ProductVariantsForm = () => {
   const handleRemoveItem = (index: number) => remove(index);
 
   const preparedItems = useMemo(() => {
+    if (!fields.length) return (
+      <TableRow className="hover:bg-transparent border-0">
+        <TableCell colSpan={2} className="pl-1 pr-2 py-2">
+          <p className="text-sm text-muted-foreground ">Не додано жодного варiанту</p>
+        </TableCell>
+      </TableRow>
+    )
+
     return fields.map((_, index) => {
       return (
         <TableRow key={index} className="hover:bg-transparent border-0">

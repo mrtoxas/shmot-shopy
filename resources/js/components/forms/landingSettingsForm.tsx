@@ -249,9 +249,8 @@ export const LandingSettingsForm = () => {
                         Використовувати "Глобальний продукт".
                       </FormLabel>
                       <FormDescription>
-                      При використанні цієї опції всі товари будуть будуть використовувати дані, зазначені у формі "Глобальний продукт"
+                      При використанні цієї опції всі товари будуть використовувати дані, зазначені у формі "Глобальний продукт"
                       </FormDescription>
-                      
                     </div>
                     <FormMessage />
                   </FormItem>
@@ -269,7 +268,7 @@ export const LandingSettingsForm = () => {
                       <Textarea
                         className="min-h-[100px] whitespace-pre-wrap"
                         {...field}
-                        value={String(field.value)}
+                        value={field.value ? String(field.value) : ""}
                       />
                     </FormControl>
                     <FormDescription>

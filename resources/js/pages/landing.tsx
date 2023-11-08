@@ -11,6 +11,7 @@ import { PageHead } from '@/components/ui/pageHead';
 import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
 import { LandingGlobalProductForm } from '@/components/forms/landingGlobalProductForm';
 import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm';
+import { LandingSetupForm } from '@/components/forms/landingSetupForm';
 import { ProductsTable } from '@/components/productsTable';
 import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '@/components/shadcn/ui/button';
@@ -71,6 +72,10 @@ export default function Landing({ auth, flash }: PageProps) {
             </Button>
           </h2>
           <ProductsTable />
+
+          <Separator className='mt-8 mb-8'/>
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування сайту</h2>
+          <LandingSetupForm />
         </div>
       </div>
 
