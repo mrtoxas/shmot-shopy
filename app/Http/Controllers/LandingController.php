@@ -40,10 +40,10 @@ class LandingController extends Controller
         return response()->json(['message' => 'Лендинг не знайдено!'], 404);
       }
     
-      $landing_data->load('GlobalProduct');
-      $landing_data->load('LandingSettings');      
-      $landing_data->load('Advantage');   
-      $landing_data->load('Products'); 
+      $landing_data->load('globalProduct');
+      $landing_data->load('landingSettings');      
+      $landing_data->load('advantage');   
+      $landing_data->load('products'); 
 
       return response()->json(['data' => $landing_data], 200);
 
@@ -125,16 +125,29 @@ class LandingController extends Controller
 
   public function getForDomain(Request $request, $landingName)
   {    
-    try {     
-      $landing = Landing::where('name', $landingName)->first();
-      $landing->load('landingSettings');
+    try {   
+      $landing = Landing::with([
+        'landingSettings', 
+        'globalProduct',
+        'advantage',
+        'products'
+      ])->where('name', $landingName)->first();
+
+      if ($landing === null) {
+        return response()->json(['message' => 'Лендинг не найден!'], 404);
+      }
+
       $templateId = $landing->landingSettings->template_id;
       $landingTemplate = LandingTemplate::find($templateId);
-      $templateName = $landingTemplate->name;
-      
+      $templateName = $landingTemplate->name; 
+
       return view('landing.' . $templateName . '.index', [
-            'landingSettings' => $landing->landingSettings
-        ]);
+        'landingSettings' => $landing->landingSettings,
+        'globalProduct' => $landing->globalProduct,
+        'advantage' => $landing->advantage,
+        'products' => $landing->products
+
+      ]);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора.';
       return response()->json([

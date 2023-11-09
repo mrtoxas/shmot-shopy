@@ -25,7 +25,6 @@ const FormSchema = z.object({
   discount: z.string().nullable(),
   rest: z.string().nullable(),
   drop_price: z.string().nullable(),
-  is_pub: z.boolean()
 })
 
 export const LandingGlobalProductForm = () => {
@@ -41,7 +40,6 @@ export const LandingGlobalProductForm = () => {
       discount: null,
       rest: null,
       drop_price: null,
-      is_pub: false,
     }
   });
 
@@ -58,7 +56,6 @@ export const LandingGlobalProductForm = () => {
       discount: global_product.discount ? String(global_product.discount) : null,
       rest: global_product.rest ? String(global_product.rest) : null,
       drop_price: global_product.drop_price ? String(global_product.drop_price) : null,
-      is_pub: global_product.is_pub
     });
   }, [currentLanding]);
 
