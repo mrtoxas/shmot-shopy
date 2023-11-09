@@ -57,7 +57,15 @@ export const LandingsTable = (props: LandingsTableProps) => {
 
         return (
           <TableRow key={el.id}>
-            <TableCell className="font-medium">{el.name}</TableCell>
+            <TableCell className="font-medium">
+              <Link
+                  className="hover:text-blue-600"
+                  href={route('landing.admin', el.id)}
+                  title="Редагувати"
+                >
+                  <strong>{el.name}</strong>
+                </Link>
+            </TableCell>
             <TableCell>
               <a className="hover:text-blue-600" href={link}>{link}</a>
             </TableCell>

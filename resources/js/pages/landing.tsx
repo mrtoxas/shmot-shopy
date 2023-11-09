@@ -73,7 +73,7 @@ export default function Landing({ auth, flash }: PageProps) {
           </h2>
           <ProductsTable />
 
-          <Separator className='mt-8 mb-8'/>
+          <Separator className='mt-20 mb-8'/>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування сайту</h2>
           <LandingSetupForm />
         </div>

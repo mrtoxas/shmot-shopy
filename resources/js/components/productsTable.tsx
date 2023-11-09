@@ -47,7 +47,15 @@ export const ProductsTable = () => {
     return currentLanding?.products.map((el) => {
       return (
         <TableRow key={el.id}>
-          <TableCell className="font-medium">{el.name}</TableCell>
+          <TableCell className="font-medium">
+            <Link
+                className="hover:text-blue-600"
+                href={route('product.admin', { landingId: String(landingId), productId: el.id })}
+                title="Редагувати"
+              >
+                <strong>{el.name}</strong>
+              </Link>
+          </TableCell>
           <TableCell>{el.article}</TableCell>
           <TableCell>{formatDate(String(el.created_at))}</TableCell>
           <TableCell className="text-right">

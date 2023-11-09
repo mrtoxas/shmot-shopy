@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { Trash2Icon, FileEditIcon } from "@/components/ui/icons";
+import { Loader2Icon } from "@/components/ui/icons";
 
 const FormSchema = z.object({
   name: z.string().min(1)
@@ -75,17 +76,17 @@ export const LandingSetupForm = () => {
   },[currentLanding])
 
 	return (
-		<>
+		<div className="flex justify-between gap-4 items-end flex-wrap">
 		<Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="md:w-1/3  space-y-6">
         <div className="grid gap-4">
-          <div className="pb-4">
+          <div className="gap-2 items-end flex-wrap">
           	<FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Назва</FormLabel>
+                  <FormLabel>Нова назва</FormLabel>
                   <FormControl>
                     <Input {...field} value={field.value || ""} />
                   </FormControl>
@@ -94,8 +95,10 @@ export const LandingSetupForm = () => {
               )}
             />
             <Button disabled={isSubmitting} type="submit" className="mt-4">
-              {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
-              <FileEditIcon className="h-4 w-4 mr-2" />Перейменувати
+              {isSubmitting 
+              ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+              : <FileEditIcon className="h-4 w-4 mr-2" />}
+              Перейменувати
             </Button>
           </div>
         </div>
@@ -105,7 +108,10 @@ export const LandingSetupForm = () => {
       <AlertDialog>
 				<AlertDialogTrigger asChild>
 				  <Button variant="destructive" type="submit" className="mt-4">
-				  	<Trash2Icon className="h-4 w-4 mr-2" /> Видалити сайт
+            {isSubmitting 
+              ? <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+              : <Trash2Icon className="h-4 w-4 mr-2" />}
+            Видалити сайт
         	</Button>
 				</AlertDialogTrigger>
 				<AlertDialogContent>
@@ -126,6 +132,6 @@ export const LandingSetupForm = () => {
 				</AlertDialogContent>
 			</AlertDialog>      	
     </div>
-  </>
+  </div>
 	)
 }
