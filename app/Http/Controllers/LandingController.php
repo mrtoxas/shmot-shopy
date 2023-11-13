@@ -96,9 +96,7 @@ class LandingController extends Controller
    * Remove the specified resource from storage.
    */
   public function destroy($id, LandingService $landingService)
-  {
-    dd('ddd');
-    
+  {    
     try {
       DB::beginTransaction();
       $landing = Landing::find($id);
