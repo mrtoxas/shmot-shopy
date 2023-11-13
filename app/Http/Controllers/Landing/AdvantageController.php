@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Advantage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
 
 class AdvantageController extends Controller
 {
@@ -33,10 +34,10 @@ class AdvantageController extends Controller
           $fileName = 'advantage' . $id . '_' . $index . '.' . $extension;
 
           if ($oldImgName) {
-            Storage::disk('public/images')->delete($oldImgName);
+            Storage::disk(env('IMG_DIR'))->delete($oldImgName);
           }
 
-          $file->storeAs('public', $fileName);
+          $file->storeAs(env('IMG_DIR'), $fileName);
           $fileNames[$index] = $fileName;
         } else {
           $fileNames[$index] = $oldImgName;

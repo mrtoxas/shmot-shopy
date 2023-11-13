@@ -130,12 +130,15 @@ class LandingController extends Controller
         'landingSettings', 
         'globalProduct',
         'advantage',
-        'products'
+        'products',
       ])->where('name', $landingName)->first();
+
 
       if ($landing === null) {
         return response()->json(['message' => 'Лендинг не найден!'], 404);
       }
+
+     
 
       $templateId = $landing->landingSettings->template_id;
       $landingTemplate = LandingTemplate::find($templateId);
@@ -145,8 +148,7 @@ class LandingController extends Controller
         'landingSettings' => $landing->landingSettings,
         'globalProduct' => $landing->globalProduct,
         'advantage' => $landing->advantage,
-        'products' => $landing->products
-
+        'products' => $landing->products,
       ]);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора.';
