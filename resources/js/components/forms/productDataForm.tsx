@@ -16,6 +16,7 @@ import { Button } from "@/components/shadcn/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
+import { useLoader } from "@/hooks/useLoading";
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
@@ -29,6 +30,8 @@ export const ProductDataForm = () => {
 
   const { currentProduct, updateProductData } = useLandingsStore();
 
+  const { startLoading, stopLoading, isLoading } = useLoader();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,8 +41,6 @@ export const ProductDataForm = () => {
       rest: null,
     }
   });
-
-  const { formState: isSubmitting } = form;
 
   useEffect(() => {
     if (!currentProduct?.product_data) return;
@@ -55,6 +56,8 @@ export const ProductDataForm = () => {
   }, [currentProduct?.product_data]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    startLoading();
+
     return updateProductData(
       Number(landingId),
       Number(productId),
@@ -64,7 +67,7 @@ export const ProductDataForm = () => {
           title: "Успіх!",
           description: res.data.message,
         })
-      })
+      }).finally(() => stopLoading())
   }
 
   return (
@@ -128,11 +131,11 @@ export const ProductDataForm = () => {
                 </FormItem>
               )}
             />
-          </div>          
+          </div>
           {/* <p className="text-destructive text-sm m-0 font-medium">Наразі використовуються дані Глобального продукту!</p> */}
           <div className="">
-            <Button disabled={isSubmitting.isSubmitting} type="submit">
-              {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+            <Button disabled={isLoading} type="submit">
+              {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
               Зберегти
             </Button>
           </div>

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link } from '@inertiajs/react';
 import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { usePage } from "@inertiajs/react";
-import { PencilIcon, Trash2Icon } from "@/components/ui/icons";
+import { Loader2Icon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
 import {
   Table,
   TableBody,
@@ -25,20 +25,25 @@ import {
 import useLandingsStore from "@/store/landingsStore";
 import { formatDate } from "@/utils/formatDate";
 import { toast } from "@/components/shadcn/ui/use-toast"
+import { useLoader } from "@/hooks/useLoading";
 
 export const ProductsTable = () => {
   const { landingId } = usePage().props;
 
   const { currentLanding, removeProduct } = useLandingsStore();
 
+  const { startLoading, stopLoading, isLoading } = useLoader();
+
   const deleteProductHandler = async (id: App.Models.Product["id"]) => {
+    startLoading();
+
     removeProduct(Number(landingId), id).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    });
+    }).finally(() => stopLoading());
   }
 
   const preparedData = useMemo(() => {
@@ -49,12 +54,12 @@ export const ProductsTable = () => {
         <TableRow key={el.id}>
           <TableCell className="font-medium">
             <Link
-                className="hover:text-blue-600"
-                href={route('product.admin', { landingId: String(landingId), productId: el.id })}
-                title="Редагувати"
-              >
-                <strong>{el.name}</strong>
-              </Link>
+              className="hover:text-blue-600"
+              href={route('product.admin', { landingId: String(landingId), productId: el.id })}
+              title="Редагувати"
+            >
+              <strong>{el.name}</strong>
+            </Link>
           </TableCell>
           <TableCell>{el.article}</TableCell>
           <TableCell>{formatDate(String(el.created_at))}</TableCell>
@@ -80,10 +85,9 @@ export const ProductsTable = () => {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Button onClick={() => deleteProductHandler(el.id)} variant="destructive">Так, видалити</Button>
-                    </AlertDialogAction>
-
+                    <Button disabled={isLoading} onClick={() => deleteProductHandler(el.id)} variant="destructive">
+                        {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Так, видалити
+                    </Button>                   
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -92,7 +96,7 @@ export const ProductsTable = () => {
         </TableRow>
       )
     })
-  }, [currentLanding?.products, landingId])
+  }, [currentLanding?.products, landingId, isLoading])
 
 
   return (

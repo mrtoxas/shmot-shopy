@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { formatDate } from "@/utils/formatDate";
 import { Link } from '@inertiajs/react';
-import { CopyIcon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
+import { CopyIcon, Loader2Icon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
 import {
   Table,
   TableBody,
@@ -24,6 +24,7 @@ import {
 import useLandingsStore from "@/store/landingsStore";
 import useAppStore from "@/store/appStore";
 import { toast } from "@/components/shadcn/ui/use-toast"
+import { useLoader } from "@/hooks/useLoading";
 
 interface LandingsTableProps {
   toggleNewLandingDialog: () => void
@@ -31,17 +32,23 @@ interface LandingsTableProps {
 
 export const LandingsTable = (props: LandingsTableProps) => {
   const { landings, removeLanding } = useLandingsStore();
+
   const { setNewLandingCloneName } = useAppStore();
+
   const { toggleNewLandingDialog } = props;
 
+  const { startLoading, stopLoading, isLoading } = useLoader();
+
   const deleteLandingHandler = async (id: App.Models.Landing["id"]) => {
+    startLoading();
+
     removeLanding(id).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    });
+    }).finally(() => stopLoading());
   }
 
   const cloneClickHandler = (cloneName: App.Models.Landing["name"]) => {
@@ -59,12 +66,12 @@ export const LandingsTable = (props: LandingsTableProps) => {
           <TableRow key={el.id}>
             <TableCell className="font-medium">
               <Link
-                  className="hover:text-blue-600"
-                  href={route('landing.admin', el.id)}
-                  title="Редагувати"
-                >
-                  <strong>{el.name}</strong>
-                </Link>
+                className="hover:text-blue-600"
+                href={route('landing.admin', el.id)}
+                title="Редагувати"
+              >
+                <strong>{el.name}</strong>
+              </Link>
             </TableCell>
             <TableCell>
               <a className="hover:text-blue-600" href={link}>{link}</a>
@@ -96,7 +103,9 @@ export const LandingsTable = (props: LandingsTableProps) => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Ні, залишити</AlertDialogCancel>
-                      <Button onClick={() => deleteLandingHandler(el.id)} variant="destructive">Так, видалити</Button>
+                      <Button disabled={isLoading} onClick={() => deleteLandingHandler(el.id)} variant="destructive">
+                        {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Так, видалити
+                      </Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -106,7 +115,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
         )
       })
     )
-  }, [landings])
+  }, [landings, isLoading])
 
 
   return (

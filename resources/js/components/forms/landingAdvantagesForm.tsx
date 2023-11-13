@@ -9,6 +9,7 @@ import { ImageIcon, Loader2Icon } from '@/components/ui/icons';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useLoader } from '@/hooks/useLoading';
 
 const FormSchema = z.object({
   advantages: z.array(
@@ -23,19 +24,23 @@ const FormSchema = z.object({
 export const LandingAdvantagesForm = () => {
   const { landingId } = usePage().props;
 
+  const { startLoading, stopLoading, isLoading } = useLoader();
+
   const { currentLanding, updateAdvantages } = useLandingsStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
   })
 
-  const { handleSubmit, setValue, formState: { isSubmitting } } = form;
+  const { handleSubmit, setValue } = form;
 
   useEffect(() => {
     if (currentLanding?.advantage) setValue('advantages', currentLanding?.advantage);
   }, [currentLanding?.advantage]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    startLoading();
+
     const formData = new FormData();
 
     for (let index = 0; index < data.advantages.length; index++) {
@@ -59,7 +64,7 @@ export const LandingAdvantagesForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    });
+    }).finally(() => stopLoading());
   }
 
   const renderImage = (value: string, alt: string) => {
@@ -167,8 +172,8 @@ export const LandingAdvantagesForm = () => {
             {preparedList}
           </div>
           <div>
-            <Button disabled={isSubmitting} type="submit">
-              {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
+            <Button disabled={isLoading} type="submit">
+              {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
               Зберегти
             </Button>
           </div>

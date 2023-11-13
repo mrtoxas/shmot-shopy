@@ -24,6 +24,7 @@ import {
 import { usePage } from '@inertiajs/react';
 import useLandingsStore from '@/store/landingsStore';
 import { toast } from '../shadcn/ui/use-toast';
+import { useLoader } from '@/hooks/useLoading';
 
 const FormSchema = z.object({
   features: z.array(
@@ -36,8 +37,10 @@ const FormSchema = z.object({
 
 export const ProductFeaturesForm = () => {
   const { landingId, productId } = usePage().props;
+
   const { currentProduct, updateProductFeatures } = useLandingsStore();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { startLoading, stopLoading, isLoading } = useLoader();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
@@ -58,15 +61,15 @@ export const ProductFeaturesForm = () => {
   }, [currentProduct?.product_features]);
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    setIsSubmitting(true);
+    startLoading();    
 
-    updateProductFeatures(Number(landingId), Number(productId), data.features).then((res)=>{
+    updateProductFeatures(Number(landingId), Number(productId), data.features).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(()=>setIsSubmitting(false));    
+    }).finally(() => stopLoading());
   }
 
   const handleAddItem = () => (append({ name: "", value: "" }));
@@ -139,8 +142,8 @@ export const ProductFeaturesForm = () => {
             </TableBody>
           </Table>
           <div className="mt-4 flex gap-2">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
+            <Button type="submit" disabled={isLoading}>
+              {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
             </Button>
             <Button variant="secondary" type="button" onClick={handleAddItem}>
               <PlusIcon className="mr-2 h-4 w-4" /> Додати поле

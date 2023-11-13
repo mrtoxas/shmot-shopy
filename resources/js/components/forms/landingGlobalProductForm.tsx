@@ -5,8 +5,7 @@ import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
 import { 
-  Form, 
-  FormDescription, 
+  Form,   
   FormControl, 
   FormField, 
   FormItem, 
@@ -17,7 +16,7 @@ import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { Loader2Icon } from "@/components/ui/icons";
-import { Checkbox } from "@/components/shadcn/ui/checkbox";
+import { useLoader } from "@/hooks/useLoading";
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
@@ -29,6 +28,8 @@ const FormSchema = z.object({
 
 export const LandingGlobalProductForm = () => {
   const { landingId } = usePage().props;
+
+  const { startLoading, stopLoading, isLoading } = useLoader();
 
   const { currentLanding, updateGlobalProduct } = useLandingsStore();
 
@@ -42,8 +43,6 @@ export const LandingGlobalProductForm = () => {
       drop_price: null,
     }
   });
-
-  const { formState: isSubmitting } = form;
 
   useEffect(() => {
     if (!currentLanding?.global_product) return;
@@ -60,13 +59,15 @@ export const LandingGlobalProductForm = () => {
   }, [currentLanding]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {    
+    startLoading();
+
     return updateGlobalProduct(Number(landingId), data as App.Models.GlobalProduct).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    })
+    }).finally(()=>stopLoading())
   }
 
   return (
@@ -141,9 +142,8 @@ export const LandingGlobalProductForm = () => {
             />
           </div>
           <div>
-            <Button disabled={isSubmitting.isSubmitting} type="submit">
-              {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
-              Зберегти
+            <Button disabled={isLoading} type="submit">
+              {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
             </Button>
           </div>
         </div>

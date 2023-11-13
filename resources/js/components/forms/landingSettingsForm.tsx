@@ -21,6 +21,7 @@ import {
 import { Textarea } from '../shadcn/ui/textarea';
 import { Dialog } from '../ui/dialog';
 import { TemplateVariables } from '../templateVariables';
+import { useLoader } from '@/hooks/useLoading';
 
 const FormSchema = z.object({
   meta_title: z.string().nullable(),
@@ -37,6 +38,8 @@ const FormSchema = z.object({
 
 export const LandingSettingsForm = () => {
   const { landingId } = usePage().props;
+
+  const { startLoading, stopLoading, isLoading } = useLoader();
 
   const { currentLanding, updateLandingSettings, templates } = useLandingsStore();
 
@@ -58,9 +61,7 @@ export const LandingSettingsForm = () => {
       template_settings: null,
       use_global_product: true
     }
-  });
-
-  const { formState: isSubmitting } = form;
+  });  
 
   useEffect(() => {
     if (!currentLanding?.landing_settings) return;
@@ -81,22 +82,20 @@ export const LandingSettingsForm = () => {
     });
   }, [currentLanding]);
 
-  const themplatesOptions = useMemo(() => {
-    return templates.map((item) => {
-      return (
-        <SelectItem key={item.id} value={String(item.id)}>{item.title}</SelectItem>
-      )
-    })
-  }, [currentLanding, templates]);
+  const themplatesOptions = useMemo(() => templates.map((item) => (
+    <SelectItem key={item.id} value={String(item.id)}>{item.title}</SelectItem>
+  )), [currentLanding, templates]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    startLoading();
+    
     return updateLandingSettings(Number(landingId), data as unknown as App.Models.LandingSettings).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    })
+    }).finally(() => stopLoading())
   }
 
   return (
@@ -249,7 +248,7 @@ export const LandingSettingsForm = () => {
                         Використовувати "Глобальний продукт".
                       </FormLabel>
                       <FormDescription>
-                      При використанні цієї опції всі товари будуть використовувати дані, зазначені у формі "Глобальний продукт"
+                        При використанні цієї опції всі товари будуть використовувати дані, зазначені у формі "Глобальний продукт"
                       </FormDescription>
                     </div>
                     <FormMessage />
@@ -281,9 +280,8 @@ export const LandingSettingsForm = () => {
             </div>
 
             <div className="mt-4">
-              <Button disabled={isSubmitting.isSubmitting} type="submit">
-                {isSubmitting.isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
-                Зберегти
+              <Button disabled={isLoading} type="submit">
+                {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
               </Button>
             </div>
           </div>

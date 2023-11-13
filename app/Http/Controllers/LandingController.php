@@ -97,6 +97,8 @@ class LandingController extends Controller
    */
   public function destroy($id, LandingService $landingService)
   {
+    dd('ddd');
+    
     try {
       DB::beginTransaction();
       $landing = Landing::find($id);

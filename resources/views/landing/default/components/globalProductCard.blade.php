@@ -14,7 +14,7 @@
 @endphp
 
 <div class="grid grid-cols-2 bg-white rounded-sm py-6 ">
-	<div class="translate-x-[-2rem] rounded-sm">
+	<div class="translate-x-[-2rem] rounded-sm rounded-sm max-h-80">
 		@include("$template.components.productCarousel", [
 			'discount' => $globalProduct->dicsount,
 			'images' => $imgNames

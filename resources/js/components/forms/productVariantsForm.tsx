@@ -24,6 +24,7 @@ import {
 import { usePage } from '@inertiajs/react';
 import useLandingsStore from '@/store/landingsStore';
 import { toast } from '../shadcn/ui/use-toast';
+import { useLoader } from '@/hooks/useLoading';
 
 const FormSchema = z.object({
   variants: z.array(
@@ -36,8 +37,10 @@ const FormSchema = z.object({
 
 export const ProductVariantsForm = () => {
   const { landingId, productId } = usePage().props;
-  const { currentProduct, updateProductVariants } = useLandingsStore();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { currentProduct, updateProductVariants } = useLandingsStore(); 
+
+  const { startLoading, stopLoading, isLoading } = useLoader();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
@@ -58,7 +61,7 @@ export const ProductVariantsForm = () => {
   }, [currentProduct?.product_variants]);
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    setIsSubmitting(true);
+    startLoading();
 
     updateProductVariants(Number(landingId), Number(productId), data.variants).then((res)=>{
       toast({
@@ -66,7 +69,7 @@ export const ProductVariantsForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(()=>setIsSubmitting(false));    
+    }).finally(()=>stopLoading());    
   }
 
   const handleAddItem = () => (append({ name: "", value: "" }));
@@ -140,8 +143,8 @@ export const ProductVariantsForm = () => {
             </TableBody>
           </Table>
           <div className="mt-4 flex gap-2">
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
+            <Button type="submit" disabled={isLoading}>
+              {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
             </Button>
             <Button variant="secondary" type="button" onClick={handleAddItem}>
               <PlusIcon className="mr-2 h-4 w-4" /> Додати поле

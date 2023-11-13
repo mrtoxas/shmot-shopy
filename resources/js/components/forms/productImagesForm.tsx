@@ -4,17 +4,22 @@ import { PlusIcon, Trash2Icon, Loader2Icon } from '@/components/ui/icons';
 import { Button } from "@/components/shadcn/ui/button";
 import useLandingsStore from "@/store/landingsStore";
 import { toast } from "@/components/shadcn/ui/use-toast";
+import { useLoader } from '@/hooks/useLoading';
 
 interface StateProductImage extends Partial<App.Models.ProductImage> {
-  file?: File;    
+  file?: File;
 }
 
 export const ProductImagesForm = () => {
   const [imgList, setImgList] = useState<StateProductImage[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { currentProduct, updateProductImages } = useLandingsStore();
+
   const { landingId, productId } = usePage().props;
+
   const [deletingIds, setDeletingIds] = useState<number[]>([]);
+  
+  const { startLoading, stopLoading, isLoading } = useLoader();
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -37,7 +42,7 @@ export const ProductImagesForm = () => {
 
       setImgList(prevState => [...prevState, { img_name: imageUrl, file }]);
     });
-    
+
     event.target.value = '';
   }
 
@@ -52,7 +57,7 @@ export const ProductImagesForm = () => {
   }, [imgList])
 
   const handleSubmit = useCallback(() => {
-    setIsSubmitting(true);
+    startLoading();
 
     const formData = new FormData();
 
@@ -76,7 +81,7 @@ export const ProductImagesForm = () => {
         description: res.data.message,
       })
     })
-      .finally(() => setIsSubmitting(false));
+      .finally(() => stopLoading())
   }, [imgList, deletingIds]);
 
   const preparedImgList = useMemo(() => {
@@ -101,12 +106,12 @@ export const ProductImagesForm = () => {
         {preparedImgList}
         <label className="w-32 h-32 border border-2 border-placeholder border-dashed flex items-center justify-center cursor-pointer hover:bg-secondary">
           <PlusIcon className="mr-2 h-10 w-10 stroke-placeholder" />
-          <input disabled={isSubmitting} ref={inputFileRef} hidden type="file" accept="image/*" multiple onChange={handleImageUpload} />
+          <input disabled={isLoading} ref={inputFileRef} hidden type="file" accept="image/*" multiple onChange={handleImageUpload} />
         </label>
       </div>
       <div className="mt-8">
-        <Button onClick={handleSubmit} type="submit" disabled={isSubmitting}>
-          {isSubmitting && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
+        <Button onClick={handleSubmit} type="submit" disabled={isLoading}>
+          {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
         </Button>
       </div>
     </div>
