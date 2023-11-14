@@ -12,10 +12,9 @@ class GlobalProductController extends Controller
   {
     $request->validate([
       'sizes' => 'nullable|string',
-      'price' => 'nullable|number',
-      'discount' => 'nullable|number',
-      'rest' => 'nullable|number',
-      'drop_price' => 'nullable|number'
+      'price' => 'nullable|numeric',
+      'discount' => 'nullable|numeric',
+      'rest' => 'nullable|numeric',      
     ]);
 
     try {
