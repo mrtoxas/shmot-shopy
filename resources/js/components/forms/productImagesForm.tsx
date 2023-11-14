@@ -81,7 +81,7 @@ export const ProductImagesForm = () => {
         description: res.data.message,
       })
     })
-      .finally(() => stopLoading())
+      .finally(() => stopLoading());
   }, [imgList, deletingIds]);
 
   const preparedImgList = useMemo(() => {

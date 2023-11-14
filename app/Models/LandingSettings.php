@@ -15,14 +15,14 @@ class LandingSettings extends Model
     'landing_id',
     'is_pub',
     'meta_title',
-    'meta_description',
+    'meta_description',    
+    'use_global_product',
     'fb_pixel_key',
     'telegram_chat_id',
     'crm_api_key',
     'telegram_token',
-    'template_id',
-    'template_settings',
-    'use_global_product'
+    'template_name',
+    'template_settings',    
   ];
 
   public function landing()

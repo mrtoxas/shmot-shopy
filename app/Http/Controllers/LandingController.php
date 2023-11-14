@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\LandingService;
 use App\Models\Landing;
-use App\Models\LandingTemplate;
 
 class LandingController extends Controller
 {
@@ -138,11 +137,7 @@ class LandingController extends Controller
         return response()->json(['message' => 'Лендинг не найден!'], 404);
       }
 
-     
-
-      $templateId = $landing->landingSettings->template_id;
-      $landingTemplate = LandingTemplate::find($templateId);
-      $templateName = $landingTemplate->name; 
+      $templateName = $landing->landingSettings->template_name;      
 
       return view('landing.' . $templateName . '.index', [
         'landingSettings' => $landing->landingSettings,

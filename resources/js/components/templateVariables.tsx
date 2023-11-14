@@ -4,17 +4,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "./shadcn/ui/button";
 import { CopyIcon } from "./ui/icons";
 
-export const TemplateVariables = () => {
-  const [data, setData] = useState<App.Models.LandingTemplate>();
+export const TemplateVariables = ({templateName}: {templateName: string}) => {
+  const [data, setData] = useState<string>();
   const [isCopy, setIsCopy] = useState(false);
   const { currentLanding, templates } = useLandingsStore();
 
   useEffect(()=>{
-    const actualTemplate = templates.find((e) => e.id === currentLanding?.landing_settings?.template_id);
-    const variables = actualTemplate?.css_vars;
-    setData(variables);
-    //
-  },[templates, currentLanding?.landing_settings?.template_id])  
+    const actualTemplate = templates.find((e) => e.name === templateName);      
+    const prepareddata = JSON.stringify(actualTemplate.variables);
+    setData(prepareddata);
+  },[templates, currentLanding?.landing_settings?.template_name])  
 
   const copyToClipboard = useCallback(()=>{
     if (!data) return;

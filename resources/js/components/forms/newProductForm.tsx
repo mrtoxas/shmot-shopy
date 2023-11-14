@@ -50,7 +50,7 @@ export const NewProductForm = (props: CreateProductFormProps) => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading())
+    }).finally(() => stopLoading());
   }
 
   return (

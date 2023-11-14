@@ -72,7 +72,7 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading())
+    }).finally(() => stopLoading());
   }
 
   const cloneOptionsPrepared = useMemo(() => landings.map((item) => (

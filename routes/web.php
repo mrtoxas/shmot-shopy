@@ -89,10 +89,7 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
     [LandingController::class, 'rename']
   )->name('api.landing.rename');
 
-  Route::post(
-    '/api/landing/{landingId}/settings',
-    [SettingsController::class, 'update']
-  )->name('api.settings.update');
+  Route::post('/api/landing/{landingId}/settings', [SettingsController::class, 'update'])->name('api.settings.update');
 
   Route::post(
     '/api/landing/{landingId}/global_product',

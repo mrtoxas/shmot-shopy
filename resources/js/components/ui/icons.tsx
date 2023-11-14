@@ -10,6 +10,8 @@ import {
     ArrowLeftIcon,
     BracesIcon,    
     FileEditIcon,
+    LayoutListIcon,
+    MenuIcon,
 } from "lucide-react";
 
 export { 
@@ -24,4 +26,6 @@ export {
     ArrowLeftIcon,
     BracesIcon,
     FileEditIcon,
+    LayoutListIcon,
+    MenuIcon,
 };

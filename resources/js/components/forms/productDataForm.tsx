@@ -67,7 +67,7 @@ export const ProductDataForm = () => {
           title: "Успіх!",
           description: res.data.message,
         })
-      }).finally(() => stopLoading())
+      }).finally(() => stopLoading());
   }
 
   return (

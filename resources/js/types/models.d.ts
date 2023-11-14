@@ -22,7 +22,6 @@ declare namespace App.Models {
         price: number | null;
         discount: number | null;
         rest: number | null;
-        is_pub: boolean;
         drop_price: number | null;
         created_at: string | null;
         updated_at: string | null;
@@ -55,20 +54,11 @@ declare namespace App.Models {
         telegram_chat_id: string | null;
         crm_api_key: string | null;
         telegram_token: string | null;
-        created_at: string | null;
-        updated_at: string | null;
-        template_id: number;
+        template_name: string;
         template_settings: Array<any> | any | null;
-        landing?: App.Models.Landing | null;
-    }
-
-    export interface LandingTemplate {
-        id: number;
-        name: string;
-        css_vars: Array<any> | any | null;
         created_at: string | null;
         updated_at: string | null;
-        title: string;
+        landing?: App.Models.Landing | null;
     }
 
     export interface Product {
@@ -132,6 +122,7 @@ declare namespace App.Models {
     export interface User {
         id: number;
         name: string;
+        role: string;
         email: string;
         email_verified_at: string | null;
         password: string;

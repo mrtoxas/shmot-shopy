@@ -2,13 +2,10 @@ import { useState, PropsWithChildren, ReactNode } from 'react';
 import ResponsiveNavLink from '@/components/ui/responsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
-import {
-  Home as HomeIcon,
-  Menu as MenuIcon
-} from "lucide-react"
 import { Toaster } from '@/components/shadcn/ui/toaster';
 import { ProfileDropdown } from '@/components/ui/profileDropdown';
 import { ModeToggle } from '@/components/theme/modeToggle';
+import { LayoutListIcon, MenuIcon } from '@/components/ui/icons';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -18,9 +15,9 @@ export default function Authenticated({ user, header, children }: PropsWithChild
       <nav className="border-b bg-secondary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-12 ">
-            <div className="flex gap-2 items-center text-gray-500 hover:text-gray-700">
-              <Link href={route('landings')}>
-                <HomeIcon className="h-[1.2rem] w-[1.2rem]" />
+            <div className="flex gap-2 items-center hover:text-gray-300">
+              <Link href={route('landings')} title='Мої сайти'>                
+                <LayoutListIcon className="h-[1.2rem] w-[1.2rem]" />
               </Link>
             </div>
             <div className="hidden sm:flex sm:items-center sm:ml-6">

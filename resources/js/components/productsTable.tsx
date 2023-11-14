@@ -43,7 +43,7 @@ export const ProductsTable = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());
+    }).finally(() => stopLoading());;
   }
 
   const preparedData = useMemo(() => {
@@ -78,7 +78,7 @@ export const ProductsTable = () => {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Ви впевненні?</AlertDialogTitle>
+                    <AlertDialogTitle>Ви впевнені?</AlertDialogTitle>
                     <AlertDialogDescription>
                       Ви дійсно бажаєте видалити товар <strong>{el.name}</strong>? Цю дію не можна буде скасувати!
                     </AlertDialogDescription>

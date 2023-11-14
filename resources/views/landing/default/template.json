@@ -1,0 +1,18 @@
+{
+  "name": "default",
+  "title": "Початкова",
+  "variables": {
+    "color-dark": "#212529",
+    "color-light": "#f8f9fa",
+    "color-danger": "#dc3545",
+    "color-primary": "#2c2cb5",
+    "color-success": "#198754",
+    "color-warning": "#0dcaf0",
+    "color-carousel": "carousel",
+    "carousel-height": "720px",
+    "color-secondary": "#595b61",
+    "color-text-inverse": "#ffffff",
+    "color-text-primary": "#000000",
+    "color-text-secondary": "#6c757d"
+  }
+}

@@ -64,7 +64,7 @@ export const LandingAdvantagesForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());
+    }).finally(() => stopLoading());;
   }
 
   const renderImage = (value: string, alt: string) => {

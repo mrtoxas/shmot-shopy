@@ -63,7 +63,7 @@ export const LandingSetupForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading())
+    }).finally(() => stopLoading());
   }
 
   const handleDeleteLanding = useCallback(() => {
@@ -75,7 +75,7 @@ export const LandingSetupForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());
+    }).finally(() => stopLoading());;
   }, [currentLanding])
 
   return (

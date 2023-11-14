@@ -48,7 +48,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());
+    }).finally(() => stopLoading());;
   }
 
   const cloneClickHandler = (cloneName: App.Models.Landing["name"]) => {
@@ -96,7 +96,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Ви впевненні?</AlertDialogTitle>
+                      <AlertDialogTitle>Ви впевнені?</AlertDialogTitle>
                       <AlertDialogDescription>
                         Ви дійсно бажаєте видалити сайт <strong>{el.name}</strong>? Цю дію не можна буде скасувати!
                       </AlertDialogDescription>

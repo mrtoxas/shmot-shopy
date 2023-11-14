@@ -69,7 +69,7 @@ export const ProductFeaturesForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());
+    }).finally(() => stopLoading());;
   }
 
   const handleAddItem = () => (append({ name: "", value: "" }));

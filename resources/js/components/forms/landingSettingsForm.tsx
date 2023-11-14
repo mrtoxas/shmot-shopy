@@ -31,7 +31,9 @@ const FormSchema = z.object({
   telegram_chat_id: z.string().nullable(),
   crm_api_key: z.string().nullable(),
   telegram_token: z.string().nullable(),
-  template_id: z.string(),
+  template_name: z.string().min(1, {
+    message: 'Шаблон обов\'язковий'
+  }),
   template_settings: z.string().nullable(),
   use_global_product: z.boolean().default(true)
 })
@@ -57,11 +59,13 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: null,
       crm_api_key: null,
       telegram_token: null,
-      template_id: "1",
+      template_name: "",
       template_settings: null,
       use_global_product: true
     }
-  });  
+  });
+
+  const { getValues } = form;  
 
   useEffect(() => {
     if (!currentLanding?.landing_settings) return;
@@ -76,26 +80,26 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: landing_settings.telegram_chat_id,
       crm_api_key: landing_settings.crm_api_key,
       telegram_token: landing_settings.telegram_token,
-      template_id: String(landing_settings.template_id),
+      template_name: String(landing_settings.template_name),
       template_settings: landing_settings.template_settings ? JSON.stringify(JSON.parse(landing_settings.template_settings), undefined, 2) : "",
       use_global_product: Boolean(landing_settings.use_global_product)
     });
   }, [currentLanding]);
 
   const themplatesOptions = useMemo(() => templates.map((item) => (
-    <SelectItem key={item.id} value={String(item.id)}>{item.title}</SelectItem>
+    <SelectItem key={item.name} value={item.name}>{item.title}</SelectItem>
   )), [currentLanding, templates]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     startLoading();
-    
+
     return updateLandingSettings(Number(landingId), data as unknown as App.Models.LandingSettings).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading())
+    }).finally(() => stopLoading());
   }
 
   return (
@@ -182,32 +186,33 @@ export const LandingSettingsForm = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex gap-2 items-end">
+              <div>
                 <FormField
                   control={form.control}
-                  name="template_id"
+                  name="template_name"
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Шаблон</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value || ""}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {themplatesOptions}
-                        </SelectContent>
-                      </Select>
+                      <div className='flex gap-2'>
+                        <Select onValueChange={field.onChange} value={field.value || ""}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {themplatesOptions}
+                          </SelectContent>
+                        </Select>
+                        <Button onClick={templateVarsDialogToggle} type="button" variant="outline" size="icon" title="Показати змінні теми">
+                          <BracesIcon className="h-4 w-4" />
+                        </Button>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button onClick={templateVarsDialogToggle} type="button" variant="outline" size="icon" title="Показати змінні теми">
-                  <BracesIcon className="h-4 w-4" />
-                </Button>
               </div>
-
             </div>
             <div>
               <FormField
@@ -290,8 +295,8 @@ export const LandingSettingsForm = () => {
       <Dialog
         isOpen={isOpenTemplateVarsDialog}
         setIsOpen={templateVarsDialogToggle}
-        body={<TemplateVariables />}
-        title="Змінні теми"
+        body={<TemplateVariables templateName={getValues("template_name")} />}
+        title={`Змінні теми`}
       />
     </>
   )
