@@ -58,7 +58,7 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
       name: "",
       clone: newLandingCloneName || ""
     }
-  })
+  })  
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     startLoading();
@@ -103,7 +103,7 @@ export const NewLandingForm = (props: CreateLandingFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Сайт для клонування</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value} >
+                <Select onValueChange={field.onChange} defaultValue={field.value} disabled={!landings.length}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Оберіть сайт для клонування" />
