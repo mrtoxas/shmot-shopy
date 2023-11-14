@@ -21,8 +21,9 @@ declare namespace App.Models {
         sizes: string | null;
         price: number | null;
         discount: number | null;
+        discounted_price: number | null;
+        description: number | null;
         rest: number | null;
-        drop_price: number | null;
         created_at: string | null;
         updated_at: string | null;
         landing?: App.Models.Landing | null;

@@ -12,6 +12,7 @@ import {
     FileEditIcon,
     LayoutListIcon,
     MenuIcon,
+    CalculatorIcon,
 } from "lucide-react";
 
 export { 
@@ -28,4 +29,5 @@ export {
     FileEditIcon,
     LayoutListIcon,
     MenuIcon,
+    CalculatorIcon
 };

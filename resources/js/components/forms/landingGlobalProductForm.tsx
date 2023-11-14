@@ -4,18 +4,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod"
-import { 
-  Form,   
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { Loader2Icon } from "@/components/ui/icons";
+import { CalculatorIcon, Loader2Icon } from "@/components/ui/icons";
 import { useLoader } from "@/hooks/useLoading";
 
 const FormSchema = z.object({
@@ -23,7 +23,7 @@ const FormSchema = z.object({
   price: z.string().nullable(),
   discount: z.string().nullable(),
   rest: z.string().nullable(),
-  drop_price: z.string().nullable(),
+  discounted_price: z.string().nullable(),
 })
 
 export const LandingGlobalProductForm = () => {
@@ -40,9 +40,11 @@ export const LandingGlobalProductForm = () => {
       price: null,
       discount: null,
       rest: null,
-      drop_price: null,
+      discounted_price: null,
     }
   });
+
+  const { getValues, setValue } = form;
 
   useEffect(() => {
     if (!currentLanding?.global_product) return;
@@ -54,20 +56,34 @@ export const LandingGlobalProductForm = () => {
       price: global_product.price ? String(global_product.price) : null,
       discount: global_product.discount ? String(global_product.discount) : null,
       rest: global_product.rest ? String(global_product.rest) : null,
-      drop_price: global_product.drop_price ? String(global_product.drop_price) : null,
+      discounted_price: global_product.discounted_price ? String(global_product.discounted_price) : null,
     });
   }, [currentLanding]);
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {    
+  const calcPriceDiscount = () => {
+    const discount = getValues("discount");
+    const price = getValues("price");
+    
+    if (!discount && price) setValue("discounted_price", price)
+    if (discount && price) setValue("discounted_price", String(Number(price) - (Number(discount) / 100) * Number(price)))
+  }
+
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     startLoading();
 
-    return updateGlobalProduct(Number(landingId), data as App.Models.GlobalProduct).then((res) => {
+    const preparedData = {
+      ...data, 
+      price: (data.price) ? parseFloat(data.price) : null,
+      discountedPrice: (data.discounted_price) ? parseFloat(data.discounted_price) : null,
+    }
+
+    return updateGlobalProduct(Number(landingId), preparedData as unknown as App.Models.GlobalProduct).then((res) => {
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(()=>stopLoading())
+    }).finally(() => stopLoading())
   }
 
   return (
@@ -95,7 +111,7 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Цiна, грн.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" step="any" min={0} {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +124,25 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Знижка, %</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" min={0} {...field} value={field.value || ""} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="discounted_price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Цiна зі скидкою, грн.</FormLabel>
+                  <FormControl>
+                    <div className="flex">
+                      <Input className="w-full rounded-e-none" type="number" step="any" min={0} {...field} value={field.value || ""} />
+                      <Button onClick={calcPriceDiscount} type="button" variant="outline" size="icon" title="Показати змінні теми" className="rounded-s-none border-s-0">
+                        <CalculatorIcon className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,25 +155,13 @@ export const LandingGlobalProductForm = () => {
                 <FormItem>
                   <FormLabel>Залишок, шт.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input className="w-full" type="number" min={0} {...field} value={field.value || ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="drop_price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Дроп.цiна, грн.</FormLabel>
-                  <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
           </div>
           <div>
             <Button disabled={isLoading} type="submit">

@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->string('sizes')->nullable();
-            $table->integer('price')->nullable();
+            $table->float('price')->nullable();
             $table->integer('discount')->nullable();
+            $table->float('discounted_price')->nullable();
             $table->integer('rest')->nullable();
             $table->timestamps();
 

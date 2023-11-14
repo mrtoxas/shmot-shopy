@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('landing_id')->unique();
             $table->string('sizes')->nullable();
-            $table->integer('price')->nullable();
+            $table->float('price')->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('rest')->nullable();
-            $table->integer('drop_price')->nullable();
+            $table->float('discounted_price')->nullable();
+            $table->integer('description')->nullable();
+            $table->integer('rest')->nullable();            
             $table->timestamps();
 
             $table->foreign('landing_id')

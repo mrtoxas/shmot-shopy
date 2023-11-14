@@ -17,7 +17,8 @@ class GlobalProduct extends Model
         'price',
         'discount',
         'rest',
-        'drop_price'
+        'discounted_price',
+        'description'
     ];
 
     public function landing()

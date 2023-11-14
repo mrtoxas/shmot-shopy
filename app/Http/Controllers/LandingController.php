@@ -38,11 +38,11 @@ class LandingController extends Controller
       if ($landing_data === null) {
         return response()->json(['message' => 'Лендинг не знайдено!'], 404);
       }
-    
+
       $landing_data->load('globalProduct');
-      $landing_data->load('landingSettings');      
-      $landing_data->load('advantage');   
-      $landing_data->load('products'); 
+      $landing_data->load('landingSettings');
+      $landing_data->load('advantage');
+      $landing_data->load('products');
 
       return response()->json(['data' => $landing_data], 200);
 
@@ -78,7 +78,7 @@ class LandingController extends Controller
       } else {
         $landing = $landingService->createLanding($name);
       }
-          
+
       return response()->json([
         'data' => $landing,
         'message' => 'Сайт успішно створено!'
@@ -95,7 +95,7 @@ class LandingController extends Controller
    * Remove the specified resource from storage.
    */
   public function destroy($id, LandingService $landingService)
-  {    
+  {
     try {
       DB::beginTransaction();
       $landing = Landing::find($id);
@@ -123,19 +123,19 @@ class LandingController extends Controller
   }
 
   public function getForDomain(Request $request, $landingName)
-  {    
-    try {   
+  {
+    try {
       $landing = Landing::with([
-        'landingSettings', 
+        'landingSettings',
         'globalProduct',
         'advantage',
         'products',
       ])->where('name', $landingName)->first();
 
 
-      if ($landing === null) {
-        return response()->json(['message' => 'Лендинг не найден!'], 404);
-      }
+      if ($landing === null) throw new \Exception('Лендiнг не знайдено', 404);
+
+      if (!isset($landing->landingSettings->template_name)) throw new \Exception('Шаблон не знайдено', 404);
 
       $templateName = $landing->landingSettings->template_name;      
 
@@ -146,10 +146,8 @@ class LandingController extends Controller
         'products' => $landing->products,
       ]);
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора.';
-      return response()->json([
-        'message' => $errorMessage
-      ], 500);
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора!';
+      return view('error', ['message' => $errorMessage]);     
     }
   }
 
