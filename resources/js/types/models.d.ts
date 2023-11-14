@@ -85,6 +85,7 @@ declare namespace App.Models {
         sizes: string | null;
         price: number | null;
         discount: number | null;
+        discounted_price: number | null;
         rest: number | null;
         created_at: string | null;
         updated_at: string | null;

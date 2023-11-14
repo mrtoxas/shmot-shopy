@@ -16,6 +16,7 @@ class ProductData extends Model
     'sizes',
     'price',
     'discount',
+    'discounted_price',
     'rest'
   ];
 

@@ -12,15 +12,15 @@ class ProductDataController extends Controller
   {
      $request->validate([
       'sizes' => 'nullable|string',
-      'price' => 'nullable|number',
-      'discount' => 'nullable|number',
-      'rest' => 'nullable|number',
+      'price' => 'nullable|numeric',
+      'discount' => 'nullable|numeric',
+      'rest' => 'nullable|numeric',
     ]);
 
     try {
       $productData = ProductData::firstOrCreate(['product_id' => $productId]);
 
-      $productData->update($request->data);
+      $productData->update($request->all());
 
       return response()->json([
         'data' => $productData,

@@ -121,7 +121,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   updateProductData: async (landingId, productId, data) => {
-    const response = await window.axios.post(route('api.productData.update', { landingId, productId }), { data });
+    const response = await window.axios.post(route('api.productData.update', { landingId, productId }), data);
     return response;
   },
 

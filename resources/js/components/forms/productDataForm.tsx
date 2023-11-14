@@ -15,14 +15,15 @@ import { Input } from "@/components/shadcn/ui/input";
 import { Button } from "@/components/shadcn/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "@/components/shadcn/ui/use-toast";
-import { Loader2Icon } from "@/components/ui/icons";
+import { CalculatorIcon, Loader2Icon } from "@/components/ui/icons";
 import { useLoader } from "@/hooks/useLoading";
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
-  price: z.string().nullable(),
-  discount: z.string().nullable(),
-  rest: z.string().nullable(),
+  price: z.number().nullable(),
+  discount: z.number().nullable(),
+  discounted_price: z.number().nullable(),
+  rest: z.number().nullable(),
 })
 
 export const ProductDataForm = () => {
@@ -38,9 +39,12 @@ export const ProductDataForm = () => {
       sizes: "",
       price: null,
       discount: null,
+      discounted_price: null,
       rest: null,
     }
   });
+
+  const { getValues, setValue, register } = form;
 
   useEffect(() => {
     if (!currentProduct?.product_data) return;
@@ -48,20 +52,35 @@ export const ProductDataForm = () => {
     const { product_data } = currentProduct;
 
     form.reset({
-      sizes: product_data.sizes ? product_data.sizes : "",
-      price: product_data.price ? String(product_data.price) : null,
-      discount: product_data.rest ? String(product_data.rest) : null,
-      rest: product_data.rest ? String(product_data.rest) : null,
+      sizes: product_data.sizes || "",
+      price: product_data.price || null,
+      discount: product_data.discount || null,
+      discounted_price: product_data.discounted_price || null,
+      rest: product_data.rest || null,
     });
   }, [currentProduct?.product_data]);
+
+  const calcPriceDiscount = () => {
+    const discount = getValues("discount");
+    const price = getValues("price");
+
+    if (!discount && price) setValue("discounted_price", price);
+    if (discount && price) setValue("discounted_price", price - (discount / 100) * price);
+  }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     startLoading();
 
+    const preparedData = {
+      ...data,
+      price: (data.price) ? Number(data.price.toFixed(2)) : null,
+      discountedPrice: (data.discounted_price) ? Number(data.discounted_price.toFixed(2)) : null,
+    }
+
     return updateProductData(
       Number(landingId),
       Number(productId),
-      data as App.Models.ProductData).then((res) => {
+      preparedData as unknown as App.Models.ProductData).then((res) => {
         toast({
           className: "bg-green-600 text-white",
           title: "Успіх!",
@@ -74,7 +93,7 @@ export const ProductDataForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid gap-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pb-4">
             <FormField
               control={form.control}
               name="sizes"
@@ -97,7 +116,15 @@ export const ProductDataForm = () => {
                 <FormItem>
                   <FormLabel>Цiна, грн.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input
+                      {...field}
+                      {...register(field.name, { setValueAs: (value) => Number(value) })}
+                      className="w-full"
+                      type="number"
+                      step="any"
+                      min={0}
+                      value={field.value || ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,7 +138,39 @@ export const ProductDataForm = () => {
                 <FormItem>
                   <FormLabel>Знижка, %</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input
+                      {...field}
+                      {...register(field.name, { setValueAs: (value) => Number(value) })}
+                      className="w-full"
+                      type="number"                      
+                      min={0}
+                      value={field.value || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="discounted_price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Цiна зі скидкою, грн.</FormLabel>
+                  <FormControl>
+                    <div className="flex">
+                      <Input {...field}
+                        {...register(field.name, { setValueAs: (value) => Number(value) })}
+                        className="w-full rounded-e-none"
+                        type="number"
+                        step="any"
+                        min={0}
+                        value={field.value || ""}
+                      />
+                      <Button onClick={calcPriceDiscount} type="button" variant="outline" size="icon" title="Показати змінні теми" className="rounded-s-none border-s-0">
+                        <CalculatorIcon className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -125,7 +184,14 @@ export const ProductDataForm = () => {
                 <FormItem>
                   <FormLabel>Залишок, шт.</FormLabel>
                   <FormControl>
-                    <Input className="w-full" type="number" {...field} value={field.value || ""} />
+                    <Input {...field}
+                      {...register(field.name, { setValueAs: (value) => Number(value) })}
+                      className="w-full"
+                      type="number"
+                      step="any"
+                      min={0}
+                      value={field.value || ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
