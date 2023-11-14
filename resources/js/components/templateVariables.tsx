@@ -10,7 +10,9 @@ export const TemplateVariables = ({templateName}: {templateName: string}) => {
   const { currentLanding, templates } = useLandingsStore();
 
   useEffect(()=>{
-    const actualTemplate = templates.find((e) => e.name === templateName);      
+    const actualTemplate = templates.find((e) => e.name === templateName); 
+    if(!actualTemplate) return;
+    
     const prepareddata = JSON.stringify(actualTemplate.variables);
     setData(prepareddata);
   },[templates, currentLanding?.landing_settings?.template_name])  

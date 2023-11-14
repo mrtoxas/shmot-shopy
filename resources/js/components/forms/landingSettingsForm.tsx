@@ -65,7 +65,7 @@ export const LandingSettingsForm = () => {
     }
   });
 
-  const { getValues } = form;  
+  const { getValues } = form;
 
   useEffect(() => {
     if (!currentLanding?.landing_settings) return;
@@ -204,7 +204,14 @@ export const LandingSettingsForm = () => {
                             {themplatesOptions}
                           </SelectContent>
                         </Select>
-                        <Button onClick={templateVarsDialogToggle} type="button" variant="outline" size="icon" title="Показати змінні теми">
+                        <Button
+                          disabled={!getValues("template_name")}
+                          onClick={templateVarsDialogToggle}
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          title="Показати змінні теми"
+                        >
                           <BracesIcon className="h-4 w-4" />
                         </Button>
                       </div>
