@@ -16,11 +16,11 @@
 <meta name="description" content="{{ $landingSettings->meta_description }}">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
 <link href='{{ asset("templates/$templateName/css/swiper-bundle.min.css") }}' rel="stylesheet">
-<link href='{{ asset("templates/$templateName/css/main.css") }}' rel="stylesheet">
+<link href='{{ asset("templates/$templateName/css/app.css") }}' rel="stylesheet">
 <style>
-    :root{{!! implode(' ', array_map(function ($key, $value) {
+    {{-- :root{{!! implode(' ', array_map(function ($key, $value) {
         return sprintf('--%s: %s;', str_replace('_', '-', $key), trim($value));
-    }, array_keys($templateVariables), $templateVariables)) !!}}
+    }, array_keys($templateVariables), $templateVariables)) !!}}--}}
 </style>
 
 @endsection

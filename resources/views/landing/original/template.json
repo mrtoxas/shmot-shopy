@@ -1,9 +1,4 @@
 {
   "name": "original",
-  "title": "Original",
-  "variables": {
-    "color-primary": "#2c2cb5",
-    "color-secondary": "#595b61",
-    "carousel-height": "720px"
-  }
+  "title": "Original"  
 }
