@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import useLandingStore from '@/store/landingsStore';
 import { usePage } from '@inertiajs/react';
-import { Loader2Icon, PlusIcon } from '@/components/ui/icons';
+import { LinkIcon, Loader2Icon, PlusIcon } from '@/components/ui/icons';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
 import useAppStore from '@/store/appStore';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
@@ -24,11 +24,11 @@ export default function Landing({ auth, flash }: PageProps) {
   const [isOpenNewProductDialog, setIsOpenNewProductDialog] = useState(false);
 
   const { isPagePending, setPagePending } = useAppStore();
-  
-  const { 
-    getLandingWithData, 
-    clearCurrentLanding, 
-    currentLanding, 
+
+  const {
+    getLandingWithData,
+    clearCurrentLanding,
+    currentLanding,
     getTemplates
   } = useLandingStore();
 
@@ -43,12 +43,21 @@ export default function Landing({ auth, flash }: PageProps) {
 
   const newProductDialogToggle = () => setIsOpenNewProductDialog((prevState) => !prevState);
 
+  const landingLink = useMemo(() => {
+    return `${window.location.protocol}//${currentLanding?.name}.${window.location.hostname}`;
+  }, [currentLanding?.name])
+
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <PageHead message={`Налаштування сайту - ${currentLanding?.name || ""}`} />
+          <div className="flex items-center">
+            <PageHead message={`Налаштування сайту - ${currentLanding?.name || ""}`} />
+            <a className="px-2 hover:text-blue-600" href={landingLink} target="_blank">
+              <LinkIcon className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       }
     >
@@ -57,23 +66,23 @@ export default function Landing({ auth, flash }: PageProps) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
-          <LandingSettingsForm />          
-          <Separator className='mt-8 mb-8'/>                            
+          <LandingSettingsForm />
+          <Separator className='mt-8 mb-8' />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
           <LandingGlobalProductForm />
-          <Separator className='mt-8 mb-8'/>
+          <Separator className='mt-8 mb-8' />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
           <LandingAdvantagesForm />
-          <Separator className='mt-8 mb-8'/>
+          <Separator className='mt-8 mb-8' />
           <h2 className="flex items-center justify-between text-lg font-semibold leading-none tracking-tight mb-6">
-            Товари 
+            Товари
             <Button onClick={newProductDialogToggle}>
               <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
             </Button>
           </h2>
           <ProductsTable />
 
-          <Separator className='mt-20 mb-8'/>
+          <Separator className='mt-20 mb-8' />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування сайту</h2>
           <LandingSetupForm />
         </div>
@@ -84,7 +93,7 @@ export default function Landing({ auth, flash }: PageProps) {
         setIsOpen={setIsOpenNewProductDialog}
         body={<NewProductForm finallyAction={newProductDialogToggle} />}
         title="Додaти товар"
-       />
+      />
 
       {isPagePending && (
         <div className="fixed flex items-center justify-center inset-0 z-10 w-full h-full bg-white dark:bg-black opacity-80">

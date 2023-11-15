@@ -153,13 +153,14 @@ export const LandingGlobalProductForm = () => {
                   <FormLabel>Цiна зі скидкою, грн.</FormLabel>
                   <FormControl>
                     <div className="flex">
-                      <Input {...field}
+                      <Input 
+                        {...field}
                         {...register(field.name, { setValueAs: (value) => Number(value) })}
                         className="w-full rounded-e-none"
                         type="number"
                         step="any"
                         min={0}
-                        value={field.value || ""}
+                        value={field.value || ""}                        
                       />
                       <Button onClick={calcPriceDiscount} type="button" variant="outline" size="icon" title="Показати змінні теми" className="rounded-s-none border-s-0">
                         <CalculatorIcon className="h-4 w-4" />
