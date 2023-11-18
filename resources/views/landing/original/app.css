@@ -2,4 +2,15 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import 'variables.css';
+@layer base {
+  :root {
+    --color-primary: #2c2cb5;
+    --color-primary-lighter: #b4c0d6;
+    --color-primary-darker: #041e4d;
+    --color-secondary: #595b61;
+    --color-backplate: #f0f0f0;
+    --carousel-height: 720px;
+  }
+}
+
+@import 'css/swiper-bundle.min.css';

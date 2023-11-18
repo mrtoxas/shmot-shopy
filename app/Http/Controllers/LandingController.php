@@ -43,6 +43,7 @@ class LandingController extends Controller
       $landing_data->load('landingSettings');
       $landing_data->load('advantage');
       $landing_data->load('products');
+      $landing_data->load('landingCollection');
 
       return response()->json(['data' => $landing_data], 200);
 
@@ -130,6 +131,7 @@ class LandingController extends Controller
         'globalProduct',
         'advantage',
         'products',
+        'landingCollection'
       ])->where('name', $landingName)->first();
 
 
@@ -145,6 +147,7 @@ class LandingController extends Controller
         'globalProduct' => $landing->globalProduct,
         'advantage' => $landing->advantage,
         'products' => $landing->products,
+        'landingCollection' => $landing->landingCollection,
       ]);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора!';

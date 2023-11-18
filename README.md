@@ -70,3 +70,18 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ```
 ./vendor/bin/sail artisan typescript:generate
 ```
+
+## Run server
+```
+./vendor/bin/sail artisan up -d
+```
+
+## Run front
+```
+npm run dev
+```
+
+## Run landing templates watcher
+```
+npx mix watch
+```

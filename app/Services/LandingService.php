@@ -33,13 +33,20 @@ class LandingService
         $newSettings->save();
       }
 
-
       // Clone Global Product
       $existingGlobalProduct = $existingLanding->globalProduct()->first();
       if ($existingGlobalProduct) {
         $newGlobalProduct = $existingGlobalProduct->replicate();
         $newGlobalProduct->landing_id = $newLanding->id;
         $newGlobalProduct->save();
+      }
+
+      // Clone Landing Collection
+      $existingLandingCollection = $existingLanding->landingCollection()->first();
+      if ($existingLandingCollection) {
+        $newLandingCollection = $existingLandingCollection->replicate();
+        $newLandingCollection->landing_id = $newLanding->id;
+        $newLandingCollection->save();
       }
 
       // Clone Advantages

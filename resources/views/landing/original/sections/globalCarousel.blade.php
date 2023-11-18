@@ -8,8 +8,7 @@ $imgNames = [];
 }
 @endphp
 
-<div>
-    @include("$template.components.carousel", [
-      'images' => $imgNames
-    ])
-</div>
+@include("$template.components.carousel", [
+	'images' => $imgNames,
+	'discount' => $globalProduct->discount
+])

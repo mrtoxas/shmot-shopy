@@ -1,18 +1,21 @@
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
 const swiper = new Swiper('.swiper', {
+  modules: [Navigation, Pagination, Autoplay],
   loop: true,
   autoHeight: false,
-  // If we need pagination
   pagination: {
     el: '.swiper-pagination',
   },
-
-  // Navigation arrows
+  autoplay: {
+   delay: 3000,
+  },
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
 
-  // And if we need scrollbar
   scrollbar: {
     el: '.swiper-scrollbar',
   },

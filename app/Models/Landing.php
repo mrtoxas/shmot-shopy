@@ -41,4 +41,9 @@ class Landing extends Model
     {
         return $this->hasMany(Product::class, 'landing_id');
     }
+
+    public function landingCollection()
+    {
+       return $this->hasOne(LandingCollection::class, 'landing_id');
+    }
 }
