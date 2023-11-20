@@ -51,7 +51,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
         </div>
 
         <div className="mt-4">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Пароль</Label>
 
           <Input
             id="password"
@@ -74,22 +74,22 @@ export default function Login({ status, canResetPassword }: { status?: string, c
               onCheckedChange={(e)=> setData('remember', Boolean(e))}
               //onChange={(e) => setData('remember', e.currentTarget.checked)}
             />
-            <span className="ml-2 text-sm text-gray-600">Remember me</span>
+            <span className="ml-2 text-sm text-gray-600">Запам'ятати мене</span>
           </label>
         </div>
 
         <div className="flex items-center justify-end mt-4">
-          {canResetPassword && (
+          {/* {canResetPassword && (
             <Link
               href={route('password.request')}
               className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Forgot your password?
             </Link>
-          )}
+          )} */}
 
           <Button className="ml-4" disabled={processing}>
-            Log in
+            Увійти
           </Button>
         </div>
       </form>
