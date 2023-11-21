@@ -69,7 +69,7 @@ export const LandingAdvantagesForm = () => {
 
   const renderImage = (value: string, alt: string) => {
     return (
-      <div className='w-32 h-32 border border-2 border-input'>
+      <div className='w-32 h-32 border border-2 border-input rounded-sm overflow-hidden'>
         {value
           ? (
             <img
@@ -77,7 +77,7 @@ export const LandingAdvantagesForm = () => {
                 ? value
                 : `${window.location.protocol}//${window.location.hostname}/storage/images/${value}`}
               alt={alt}
-              className='block w-full h-full object-cover'
+              className='block w-full h-full object-cover '
             />)
           : <div className='w-full h-full flex items-center justify-center'>
             <ImageIcon className="stroke-input h-[3rem] w-[3rem]" />

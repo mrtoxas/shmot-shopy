@@ -17,6 +17,8 @@ import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '@/components/shadcn/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { NewProductForm } from '@/components/forms/newProductForm';
+import { ReviewsForm } from '@/components/forms/reviewsForm';
+import { PageCard } from '@/components/ui/pageCard';
 
 export default function Landing({ auth, flash }: PageProps) {
   useFlashToasts(flash);
@@ -53,7 +55,7 @@ export default function Landing({ auth, flash }: PageProps) {
       header={
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <PageHead message={`Налаштування сайту - ${currentLanding?.name || ""}`} />
+            <PageHead message={`${currentLanding?.name || ""}.${window.location.hostname}`} />
             <a className="px-2 hover:text-blue-600" href={landingLink} target="_blank">
               <LinkIcon className="h-4 w-4" />
             </a>
@@ -63,17 +65,28 @@ export default function Landing({ auth, flash }: PageProps) {
     >
       <Head title="Мої сайти" />
 
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
-          <LandingSettingsForm />
-          <Separator className='mt-8 mb-8' />
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
-          <GlobalProductForm />                  
-          <Separator className='mt-8 mb-8' />
+      <div className="py-6 bg-secondary">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
+
+          <PageCard>            
+            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
+            <LandingSettingsForm />
+          </PageCard>
+
+          <PageCard>            
+            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
+            <GlobalProductForm />
+          </PageCard>
+
+          <PageCard>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
           <LandingAdvantagesForm />
-          <Separator className='mt-8 mb-8' />
+          </PageCard>
+          <PageCard>
+          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Відгуки</h2>
+          <ReviewsForm />
+          </PageCard>
+          <PageCard>
           <h2 className="flex items-center justify-between text-lg font-semibold leading-none tracking-tight mb-6">
             Товари
             <Button onClick={newProductDialogToggle}>
@@ -81,10 +94,11 @@ export default function Landing({ auth, flash }: PageProps) {
             </Button>
           </h2>
           <ProductsTable />
-
-          <Separator className='mt-20 mb-8' />
+          </PageCard>
+          <PageCard>
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування сайту</h2>
           <LandingSetupForm />
+          </PageCard>                   
         </div>
       </div>
 

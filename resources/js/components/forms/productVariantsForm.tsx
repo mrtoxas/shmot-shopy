@@ -85,9 +85,9 @@ export const ProductVariantsForm = () => {
       </TableRow>
     )
 
-    return fields.map((_, index) => {
+    return fields.map((item, index) => {
       return (
-        <TableRow key={index} className="hover:bg-transparent border-0">
+        <TableRow key={item.id} className="hover:bg-transparent border-0">
           <TableCell className="pl-1 pr-2 py-2">
             <FormField
               control={control}

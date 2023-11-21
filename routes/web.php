@@ -7,7 +7,7 @@ use App\Http\Controllers\Landing\SettingsController;
 use App\Http\Controllers\Landing\LandingTemplateController;
 use App\Http\Controllers\Landing\GlobalProductController;
 use App\Http\Controllers\Landing\AdvantageController;
-use App\Http\Controllers\Landing\CollectionController;
+use App\Http\Controllers\Landing\ReviewsController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductDataController;
 use App\Http\Controllers\Product\ProductImageController;
@@ -98,6 +98,11 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
   )->name('api.globalProduct.update');
 
   Route::post(
+    '/api/landing/{landingId}/reviews',
+    [ReviewsController::class, 'update']
+  )->name('api.reviews.update');  
+
+  Route::post(
     '/api/landing/{landingId}/advantages',
     [AdvantageController::class, 'update']
   )->name('api.advantages.update');
@@ -135,12 +140,9 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
   Route::post(
     '/api/landing/{landingId}/product/{productId}/product_variants',
     [ProductVariantController::class, 'update']
-  )->name('api.productVariants.update');
+  )->name('api.productVariants.update');  
 
-  Route::post(
-    '/api/landing/{landingId}/collection',
-    [CollectionController::class, 'update']
-  )->name('api.collection.update');
+  
 });
 
 Route::get(

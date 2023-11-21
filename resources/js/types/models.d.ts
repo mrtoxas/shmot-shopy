@@ -40,8 +40,10 @@ declare namespace App.Models {
         global_product?: App.Models.GlobalProduct | null;
         advantage?: Array<App.Models.Advantage> | null;
         products?: Array<App.Models.Product> | null;
+        reviews?: Array<App.Models.Review> | null;
         advantage_count?: number | null;
         products_count?: number | null;
+        reviews_count?: number | null;
     }
 
     export interface LandingSettings {
@@ -127,6 +129,18 @@ declare namespace App.Models {
         created_at: string | null;
         updated_at: string | null;
         product?: App.Models.Product | null;
+    }
+
+    export interface Review {
+        id: number;
+        landing_id: number;
+        name: string;
+        img: string;
+        info: string;
+        review: string;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
     }
 
     export interface User {

@@ -36,6 +36,11 @@ const useLandingsStore = create<LandingsState>()((set) => ({
       landings: [...responseData, ...state.landings],
     }));
     return response;
+  },  
+
+  updateReviews: async (landingId, data) => {
+    const response = await window.axios.post(route('api.reviews.update', { landingId }), data);
+    return response;
   },
 
   updateLandingSettings: async (landingId, data) => {

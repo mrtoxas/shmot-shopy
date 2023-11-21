@@ -56,6 +56,11 @@ export interface LandingsState {
     data: FormData
   ) => Promise<AxiosResponse>,
 
+  updateReviews: (
+    landingId: App.Models.Landing["id"],    
+    data: Partial<App.Models.ProductVariant>[]
+  ) => Promise<AxiosResponse>,
+
   updateProductData: (
     landingId: App.Models.Landing["id"],
     productId: App.Models.Product["id"],
@@ -77,7 +82,7 @@ export interface LandingsState {
   updateProductVariants: (
     landingId: App.Models.Landing["id"],
     productId: App.Models.Product["id"],
-    data: Partial<App.Models.ProductVariants>[]
+    data: Partial<App.Models.ProductVariant>[]
   ) => Promise<AxiosResponse>,
 
   removeProduct: (
