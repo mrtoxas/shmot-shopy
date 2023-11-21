@@ -35,7 +35,15 @@ const FormSchema = z.object({
     message: 'Шаблон обов\'язковий'
   }),
   template_settings: z.string().nullable(),
-  use_global_product: z.boolean().default(true)
+  use_global_product: z.boolean().default(true),
+  collection_name: z.string().nullable(),
+  collection_description: z.string().nullable(),
+  title_1: z.string().nullable(),
+  title_2: z.string().nullable(),
+  title_3: z.string().nullable(),
+  title_4: z.string().nullable(),
+  title_5: z.string().nullable(),
+  title_6: z.string().nullable(),
 })
 
 export const LandingSettingsForm = () => {
@@ -61,7 +69,15 @@ export const LandingSettingsForm = () => {
       telegram_token: null,
       template_name: "",
       template_settings: null,
-      use_global_product: true
+      use_global_product: true,
+      collection_name: null,
+      collection_description: null,
+      title_1: null,
+      title_2: null,
+      title_3: null,
+      title_4: null,
+      title_5: null,
+      title_6: null,
     }
   });
 
@@ -82,7 +98,15 @@ export const LandingSettingsForm = () => {
       telegram_token: landing_settings.telegram_token,
       template_name: String(landing_settings.template_name),
       template_settings: landing_settings.template_settings ? JSON.stringify(JSON.parse(landing_settings.template_settings), undefined, 2) : "",
-      use_global_product: Boolean(landing_settings.use_global_product)
+      use_global_product: Boolean(landing_settings.use_global_product),
+      collection_name: landing_settings.collection_name,
+      collection_description: landing_settings.collection_description,
+      title_1: landing_settings.title_1,
+      title_2: landing_settings.title_2,
+      title_3: landing_settings.title_3,
+      title_4: landing_settings.title_4,
+      title_5: landing_settings.title_5,
+      title_6: landing_settings.title_6,      
     });
   }, [currentLanding]);
 
@@ -285,6 +309,101 @@ export const LandingSettingsForm = () => {
                     <FormDescription>
                       Редагування змінних стилів шаблону. Вкажіть css-змінні шаблону у форматі json.
                     </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div>
+              <FormField
+                control={form.control}
+                name="collection_description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Опис коллекції</FormLabel>
+                    <FormControl>
+                      <Textarea className="min-h-[100px] whitespace-pre-wrap" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 pb-4">
+              <FormField
+                control={form.control}
+                name="title_1"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 1</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title_2"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 2</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title_3"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 3</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title_4"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 4</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title_5"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 5</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title_6"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Заголовок 6</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

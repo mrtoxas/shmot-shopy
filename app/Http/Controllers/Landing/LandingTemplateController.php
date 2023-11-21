@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Landing;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Controller;
 
 class LandingTemplateController extends Controller
 {

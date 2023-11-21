@@ -9,7 +9,7 @@ import useAppStore from '@/store/appStore';
 import AuthenticatedLayout from '@/layouts/authenticatedLayout';
 import { PageHead } from '@/components/ui/pageHead';
 import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
-import { LandingGlobalProductForm } from '@/components/forms/landingGlobalProductForm';
+import { GlobalProductForm } from '@/components/forms/globalProductForm';
 import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm';
 import { LandingSetupForm } from '@/components/forms/landingSetupForm';
 import { ProductsTable } from '@/components/productsTable';
@@ -69,7 +69,8 @@ export default function Landing({ auth, flash }: PageProps) {
           <LandingSettingsForm />
           <Separator className='mt-8 mb-8' />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
-          <LandingGlobalProductForm />
+          <GlobalProductForm />
+          <Separator className='mt-8 mb-8' />                  
           <Separator className='mt-8 mb-8' />
           <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
           <LandingAdvantagesForm />

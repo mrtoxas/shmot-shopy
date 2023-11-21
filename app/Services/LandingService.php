@@ -16,96 +16,44 @@ class LandingService
   {
     try {
 
-      DB::beginTransaction();
+      DB::beginTransaction();      
 
-      $existingLanding = Landing::where('name', $clone)->first();
+      $landing = Landing::with(
+        'landingSettings', 
+        'globalProduct',        
+        'advantage',
+        'products',
+        'products.productData',
+        'products.productImages',
+        'products.productFeatures',
+        'products.productVariants',
+      )->where('name', $clone)->first();      
 
-      $newLanding = $existingLanding->replicate();
+      $newLanding = $landing->replicate();
       $newLanding->name = $name;
       $newLanding->save();
 
+      foreach (['landingSettings', 'globalProduct', 'advantage'] as $relation) {
+        $items = $landing->$relation()->get()->map(function ($item) use ($newLanding) {
+            return $item->replicate(['landing_id'])->setRelation('landing', $newLanding);
+        });
+    
+        $newLanding->$relation()->saveMany($items);
+      }      
 
-      // Clone Landing Settings
-      $existingSettings = $existingLanding->landingSettings()->first();
-      if ($existingSettings) {
-        $newSettings = $existingSettings->replicate();
-        $newSettings->landing_id = $newLanding->id;
-        $newSettings->save();
-      }
-
-      // Clone Global Product
-      $existingGlobalProduct = $existingLanding->globalProduct()->first();
-      if ($existingGlobalProduct) {
-        $newGlobalProduct = $existingGlobalProduct->replicate();
-        $newGlobalProduct->landing_id = $newLanding->id;
-        $newGlobalProduct->save();
-      }
-
-      // Clone Landing Collection
-      $existingLandingCollection = $existingLanding->landingCollection()->first();
-      if ($existingLandingCollection) {
-        $newLandingCollection = $existingLandingCollection->replicate();
-        $newLandingCollection->landing_id = $newLanding->id;
-        $newLandingCollection->save();
-      }
-
-      // Clone Advantages
-      $existingAdvantages = $existingLanding->advantage()->get();
-      if ($existingAdvantages->isNotEmpty()) {
-        foreach ($existingAdvantages as $existingAdvantage) {
-          $newAdvantage = $existingAdvantage->replicate();
-          $newAdvantage->landing_id = $newLanding->id;
-          $newAdvantage->save();
-        }
-      }
-
-      // Clone Products
-      $existingProducts = $existingLanding->products()->get();
-      if ($existingProducts->isNotEmpty()) {
-        foreach ($existingProducts as $existingProduct) {
-          $newProduct = $existingProduct->replicate();
-          $newProduct->landing_id = $newLanding->id;
-          $newProduct->save();
-
-          // Clone ProductData
-          $existingProductData = $existingProduct->productData()->get();
-          if ($existingProductData->isNotEmpty()) {
-            foreach ($existingProductData as $existingData) {
-                $newData = $existingData->replicate();
-                $newData->product_id = $newProduct->id;
-                $newData->save();
-            }
-          }
-
-          // Clone ProductImages
-          // $existingProductImages = $existingProduct->productImages()->get();
-          // if ($existingProductImages->isNotEmpty()) {
-          //   foreach ($existingProductImages as $existingImages) {
-          //       $newData = $existingImages->replicate();
-          //       $newData->product_id = $newProduct->id;
-          //       $newData->save();
-          //   }
-          // }
-
-          // Clone ProductFeatures
-          $existingProductFeatures = $existingProduct->productFeatures()->get();
-          if ($existingProductFeatures->isNotEmpty()) {
-            foreach ($existingProductFeatures as $existingFeatures) {
-                $newData = $existingFeatures->replicate();
-                $newData->product_id = $newProduct->id;
-                $newData->save();
-            }
-          }
-
-          // Clone ProductVariants
-          $existingProductVariants = $existingProduct->productVariants()->get();
-          if ($existingProductVariants->isNotEmpty()) {
-            foreach ($existingProductVariants as $existingVariants) {
-                $newData = $existingVariants->replicate();
-                $newData->product_id = $newProduct->id;
-                $newData->save();
-            }
-          }
+      foreach ($landing->products as $product) {
+        $newProduct = $product->replicate();
+        $newProduct->landing_id = $newLanding->id;
+        $newProduct->save();
+            
+        foreach (['productData', 'productImages', 'productFeatures', 'productVariants'] as $relation) {
+            $items = $product->$relation()->get()->map(function ($item) use ($newProduct) {
+                $newItem = $item->replicate(['product_id'])->setRelation('product', $newProduct);
+                $newItem->product_id = $newProduct->id;
+                return $newItem;
+            });
+    
+            $newProduct->$relation()->saveMany($items);
         }
       }
 

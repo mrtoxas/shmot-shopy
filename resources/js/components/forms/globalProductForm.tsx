@@ -26,7 +26,7 @@ const FormSchema = z.object({
   discounted_price: z.number().nullable(),
 })
 
-export const LandingGlobalProductForm = () => {
+export const GlobalProductForm = () => {
   const { landingId } = usePage().props;
 
   const { startLoading, stopLoading, isLoading } = useLoader();

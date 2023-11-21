@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Landing;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\LandingService;
 use App\Models\Landing;
+use App\Http\Controllers\Controller;
 
 class LandingController extends Controller
 {
@@ -42,8 +43,7 @@ class LandingController extends Controller
       $landing_data->load('globalProduct');
       $landing_data->load('landingSettings');
       $landing_data->load('advantage');
-      $landing_data->load('products');
-      $landing_data->load('landingCollection');
+      $landing_data->load('products');      
 
       return response()->json(['data' => $landing_data], 200);
 
@@ -71,7 +71,7 @@ class LandingController extends Controller
     ]);
 
     $name = $request->input('name');
-    $clone = $request->input('clone');
+    $clone = $request->input('clone');    
 
     try {
       if ($clone) {
@@ -130,8 +130,7 @@ class LandingController extends Controller
         'landingSettings',
         'globalProduct',
         'advantage',
-        'products',
-        'landingCollection'
+        'products',        
       ])->where('name', $landingName)->first();
 
 
@@ -146,8 +145,7 @@ class LandingController extends Controller
         'landingSettings' => $landing->landingSettings,
         'globalProduct' => $landing->globalProduct,
         'advantage' => $landing->advantage,
-        'products' => $landing->products,
-        'landingCollection' => $landing->landingCollection,
+        'products' => $landing->products,        
       ]);
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора!';

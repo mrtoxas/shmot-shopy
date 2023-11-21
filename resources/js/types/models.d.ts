@@ -57,6 +57,14 @@ declare namespace App.Models {
         telegram_token: string | null;
         template_name: string;
         template_settings: Array<any> | any | null;
+        collection_name: string | null;
+        collection_description: string | null;
+        title_1: string | null;
+        title_2: string | null;
+        title_3: string | null;
+        title_4: string | null;
+        title_5: string | null;
+        title_6: string | null;
         created_at: string | null;
         updated_at: string | null;
         landing?: App.Models.Landing | null;

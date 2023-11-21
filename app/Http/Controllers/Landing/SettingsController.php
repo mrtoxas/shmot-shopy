@@ -21,6 +21,14 @@ class SettingsController extends Controller
       'template_name' => 'string',
       'template_settings' => 'nullable|json',
       'use_global_product' => 'boolean',
+      'collection_name' => 'nullable|string',
+      'collection_description' => 'nullable|string',
+      'title_1' => 'nullable|string',
+      'title_2' => 'nullable|string',
+      'title_3' => 'nullable|string',
+      'title_4' => 'nullable|string',
+      'title_5' => 'nullable|string',
+      'title_6' => 'nullable|string',
     ]);    
 
     try {      
