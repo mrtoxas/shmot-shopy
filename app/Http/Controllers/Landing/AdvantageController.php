@@ -6,14 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Advantage;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\App;
 
 class AdvantageController extends Controller
 {
   public function update(Request $request, $id)
-  {
-
-    // TODO: сделать валидацию files
+  {    
     $request->validate([
       'caption.*' => 'required|string',
     ]);    

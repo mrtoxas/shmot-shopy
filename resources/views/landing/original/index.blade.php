@@ -24,35 +24,41 @@ $userVariables = $landingSettings->template_settings ?? [];
     </header>
     <main>
       @include("$template.sections.globalCarousel")
-      <section class="mt-6" aria-label="Цiна зi знижкою">
+      <section class="mt-12" aria-label="Цiна зi знижкою">
         @include("$template.sections.price")
       </section>
-      <section class="mt-6" aria-label="Переваги">
+      <section class="mt-12" aria-label="Переваги">
         @include("$template.sections.advantages")
       </section>
-      <section class="mt-6" aria-label="Термін дії акцiї">
+      <section class="mt-12" aria-label="Термін дії акцiї">
         @include("$template.sections.expiration")
       </section>
-      <section class="mt-6" aria-label="Термін дії акцiї">
+      <section class="mt-12" aria-label="Термін дії акцiї">
         @include("$template.sections.products")
       </section>
-      <section class="mt-6">
+      <section class="mt-12">
         @include("$template.sections.reviews")
       </section>
-      <section class="mt-6">
+      <section class="mt-12">
         @include("$template.sections.delivery")
       </section>
-      <section class="mt-6">
+      <section class="mt-12">
         @include("$template.sections.action")
       </section>
-      <section class="mt-6" aria-label="Форма замовлення">
-        @include("$template.sections.form")
+      <section class="mt-12" aria-label="Переваги">
+        @include("$template.sections.advantages")
       </section>
+      <section class="mt-12" aria-label="Термін дії акцiї">
+        @include("$template.sections.expiration")
+      </section>
+      <section class="mt-12" aria-label="Форма замовлення">
+        @include("$template.sections.form")
+      </section>      
       <section aria-label="Залишок товару">
         @include("$template.sections.rest")
       </section>
     </main>
-    <footer class="mt-6">
+    <footer>
       @include("$template.sections.footer")
     </footer>
     <div>

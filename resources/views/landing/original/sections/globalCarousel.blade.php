@@ -1,4 +1,7 @@
 @php
+
+if (!isset($products)) return;
+
 $imgNames = [];
 	foreach($products as $product){
 	  $images = $product->productImages;
@@ -6,6 +9,8 @@ $imgNames = [];
 	    $imgNames[] = $image->img_name;
 	}
 }
+
+if (empty($imgNames)) return;
 @endphp
 
 @include("$template.components.carousel", [
