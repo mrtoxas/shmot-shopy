@@ -22,6 +22,7 @@ class LandingService
         'landingSettings', 
         'globalProduct',        
         'advantage',
+        'reviews',
         'products',
         'products.productData',
         'products.productImages',
@@ -33,7 +34,7 @@ class LandingService
       $newLanding->name = $name;
       $newLanding->save();
 
-      foreach (['landingSettings', 'globalProduct', 'advantage'] as $relation) {
+      foreach (['landingSettings', 'globalProduct', 'advantage', 'reviews'] as $relation) {
         $items = $landing->$relation()->get()->map(function ($item) use ($newLanding) {
             return $item->replicate(['landing_id'])->setRelation('landing', $newLanding);
         });

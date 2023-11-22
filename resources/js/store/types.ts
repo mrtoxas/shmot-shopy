@@ -58,7 +58,10 @@ export interface LandingsState {
 
   updateReviews: (
     landingId: App.Models.Landing["id"],    
-    data: Partial<App.Models.ProductVariant>[]
+    data: {
+      reviews: Partial<App.Models.ProductVariant>[],
+      deleted: Partial<App.Models.ProductVariant>[],
+    }
   ) => Promise<AxiosResponse>,
 
   updateProductData: (

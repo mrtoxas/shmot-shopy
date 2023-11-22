@@ -3,7 +3,7 @@ import { useLoader } from "@/hooks/useLoading";
 import useLandingsStore from "@/store/landingsStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePage } from "@inertiajs/react";
-import { useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../shadcn/ui/use-toast";
@@ -40,19 +40,18 @@ export const ReviewsForm = () => {
   const { landingId } = usePage().props;
   const { startLoading, stopLoading, isLoading } = useLoader();
   const { currentLanding, updateReviews } = useLandingsStore();
+  const [deletingIds, setDeletingIds] = useState<Partial<App.Models.Review>[]>([]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
   });
 
-  const { handleSubmit, control, reset, formState: {errors} } = form;
+  const { handleSubmit, control, reset, getValues } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "reviews"
   });
-
-  useEffect(()=>{console.log(currentLanding)}, [currentLanding])
 
   useEffect(() => {
     if (!currentLanding?.reviews) return;
@@ -61,28 +60,36 @@ export const ReviewsForm = () => {
     });
   }, [currentLanding?.reviews]);
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = useCallback((data: z.infer<typeof FormSchema>) => {
     startLoading();
 
-    updateReviews(Number(landingId), data.reviews).then((res) => {
+    const preparedData = { ...data, deleted: deletingIds };    
+
+    updateReviews(Number(landingId), preparedData).then((res) => {
+      reset({ reviews: res.data.data });   
+      setDeletingIds([]);
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
     }).finally(() => stopLoading());
-  }
+  }, [deletingIds]);
 
   const handleAddItem = () => (append({ name: "", img: "", info: "", review: "" }));
 
-  const handleRemoveItem = (index: number) => {    
+  const handleRemoveItem = (index: number) => {
+    setDeletingIds(prevState => {      
+      const deletedItem = getValues("reviews")[index];      
+      return (deletedItem && deletedItem.id) ? [...prevState, getValues("reviews")[index]] : prevState;
+    })
     remove(index);
   };
 
   const preparedImageList = useMemo(() => {
-    return images.map((item, index) => {      
+    return images.map((item, index) => {
       return (
-        <SelectItem key={index} value={String(index+1)} className="p-0">
+        <SelectItem key={index} value={String(index + 1)} className="p-0">
           <img width={80} height={80} src={item} alt="Аватар відгука 1" className="w-[80px] h-[80px] object-cover" />
         </SelectItem>
       )
@@ -177,14 +184,14 @@ export const ReviewsForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {preparedItems}
         <div className="mt-4 flex gap-2">
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
-        </Button>
-        <Button variant="secondary" type="button" onClick={handleAddItem}>
-          <PlusIcon className="mr-2 h-4 w-4" /> Додати відгук
-        </Button>
-      </div>
-      </form>      
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
+          </Button>
+          <Button variant="secondary" type="button" onClick={handleAddItem}>
+            <PlusIcon className="mr-2 h-4 w-4" /> Додати відгук
+          </Button>
+        </div>
+      </form>
     </Form>
 
   )

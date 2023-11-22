@@ -12,34 +12,52 @@ class ReviewsController extends Controller
   public function update(Request $request, $landingId)
   {
     $request->validate([
-      '*.name' => 'required|string',
-      '*.img' => 'required|string',
-      '*.info' => 'required|string',
-      '*.review' => 'required|string',
+      'reviews.*.name' => 'required|string',
+      'reviews.*.img' => 'required|string',
+      'reviews.*.info' => 'required|string',
+      'reviews.*.review' => 'required|string',
+      'deleted.*.id' => 'required|integer',
     ], [
-      '*.name.required' => 'Ім\'я відгуку обов\'язкове!',
-      '*.img.required' => 'Зображення відгуку обов\'язкова!',
-      '*.info.required' => 'Інформация відгуку обов\'язкова!',
-      '*.review.required' => 'Текст відгуку обов\'язковий!',
+      'reviews.*.name.required' => 'Ім\'я відгуку обов\'язкове!',
+      'reviews.*.img.required' => 'Зображення відгуку обов\'язкова!',
+      'reviews.*.info.required' => 'Інформация відгуку обов\'язкова!',
+      'reviews.*.review.required' => 'Текст відгуку обов\'язковий!',
     ]);
 
-    $reviews = $request->all();    
+    $reviews = $request->reviews;
+    $deletedReviews = $request->deleted;
 
     try {
       DB::beginTransaction();
-      Review::whereNotIn('id', array_column($reviews, 'id'))->delete();
 
-      foreach ($reviews as $item) {
-        if (isset($item['id'])) {
-          Review::updateOrCreate(['id' => $item['id']], $item);
-        } else {
-          $item["landing_id"] = $landingId;
-          Review::create($item);
+      foreach ($deletedReviews as $deletedItem) {
+        $deletedId = $deletedItem['id'] ?? null;
+
+        if ($deletedId !== null) {
+          Review::where('id', $deletedId)->delete();
         }
       }
+
+      foreach ($reviews as $review) {
+        $reviewId = $review['id'] ?? null;
+
+        $reviewData = [
+          'name' => $review['name'],
+          'img' => $review['img'],
+          'info' => $review['info'],
+          'review' => $review['review'],
+          'landing_id' => $landingId,
+        ];
+
+        Review::updateOrCreate(['id' => $reviewId], $reviewData);
+      }
+
+      $allReviews = Review::where('landing_id', $landingId)->get();
+
       DB::commit();
 
       return response()->json([
+        'data' => $allReviews,
         'message' => 'Відгуки успішно збережені!'
       ], 200);
     } catch (\Exception $e) {
