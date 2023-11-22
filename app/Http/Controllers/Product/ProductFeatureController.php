@@ -12,41 +12,56 @@ class ProductFeatureController extends Controller
   public function update(Request $request, $landingId, $productId)
   {
     $request->validate([
-      '*.name' => 'required|string',
-      '*.value' => 'required|string',
+      'features.*.name' => 'required|string',
+      'features.*.value' => 'required|string',      
+      'deleted.*.id' => 'required|integer',
     ], [
-      '*.name.required' => 'Назва Характеристики обов\'язкова!',
-      '*.name.string' => 'Невірний формат данних, зверніться до админістратора!',
-      '*.value.required' => 'Значення Характеристики обов\'язкове!',
-      '*.value.string' => 'Невірний формат данних, зверніться до админістратора!',
+      'features.*.name.required' => 'Назва Характеристики обов\'язкова!',
+      'features.*.name.string' => 'Невірний формат данних, зверніться до админістратора!',
+      'features.*.value.required' => 'Значення Характеристики обов\'язкове!',
+      'features.*.value.string' => 'Невірний формат данних, зверніться до админістратора!',
     ]);
 
-    $features = $request->all();
+    $features = $request->features;
+    $deletedFeatures = $request->deleted;
 
-    $collection = collect($features);
-
-    if ($collection->duplicates('name')->isNotEmpty()) {
-      throw new \Exception('Кожна назва Характеристики повинна мати унікальна в межах продукту!');
-    }
+    $collection = collect($features);    
 
     try {
       DB::beginTransaction();
-      ProductFeature::whereNotIn('id', array_column($features, 'id'))->delete();
 
-      foreach ($features as $item) {
-        if (isset($item['id'])) {
-          ProductFeature::updateOrCreate(['id' => $item['id']], $item);
-        } else {
-          $item["product_id"] = $productId;
-          ProductFeature::create($item);
+      foreach ($deletedFeatures as $deletedItem) {        
+        $deletedId = $deletedItem['id'] ?? null;
+
+        if ($deletedId !== null) {
+          ProductFeature::where('id', $deletedId)->delete();
         }
       }
+
+      if ($collection->duplicates('name')->isNotEmpty()) {
+        throw new \Exception('Кожна назва Характеристики повинна мати унікальна в межах продукту!');
+      }
+
+      foreach ($features as $feature) {
+        $featureId = $feature['id'] ?? null;
+
+        $featureData = [
+          'name' => $feature['name'],
+          'value' => $feature['value'], 
+          'product_id' => $productId,
+        ];
+
+        ProductFeature::updateOrCreate(['id' => $featureId], $featureData);
+      }
+
+      $allFeatures = ProductFeature::where('product_id', $productId)->get();
+
       DB::commit();
 
-      return response()->json([       
+      return response()->json([
+        'data' => $allFeatures,
         'message' => 'Характеристики успішно змінені!'
       ], 200);
-     
     } catch (\Exception $e) {
       $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при оновлені характеристик, зверніться до адміністратора.';
       return response()->json([

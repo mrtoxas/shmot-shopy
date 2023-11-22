@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFieldArray, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod';
@@ -37,16 +37,15 @@ const FormSchema = z.object({
 
 export const ProductFeaturesForm = () => {
   const { landingId, productId } = usePage().props;
-
   const { currentProduct, updateProductFeatures } = useLandingsStore();
-
   const { startLoading, stopLoading, isLoading } = useLoader();
-
+  const [deletedItems, setDeletedItems] = useState<Partial<App.Models.ProductFeature>[]>([]);
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
   });
 
-  const { handleSubmit, control, reset } = form;
+  const { handleSubmit, control, reset, getValues } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -60,22 +59,39 @@ export const ProductFeaturesForm = () => {
     });
   }, [currentProduct?.product_features]);
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    startLoading();    
+  const onSubmit = useCallback((data: z.infer<typeof FormSchema>) => {
+    startLoading();
 
-    updateProductFeatures(Number(landingId), Number(productId), data.features).then((res) => {
+    const preparedData = { ...data, deleted: deletedItems };
+
+    updateProductFeatures(Number(landingId), Number(productId), preparedData).then((res) => {
+      reset({ features: res.data.data });
+      setDeletedItems([]);
       toast({
         className: "bg-green-600 text-white",
         title: "Успіх!",
         description: res.data.message,
       })
     }).finally(() => stopLoading());;
-  }
+  }, [deletedItems])
 
   const handleAddItem = () => (append({ name: "", value: "" }));
 
-  const handleRemoveItem = (index: number) => remove(index);
+  const handleRemoveItem = (index: number) => {    
+    const deletedItem = getValues("features")[index];
 
+    setDeletedItems(prevState => {              
+      return (deletedItem && deletedItem.id) ? [...prevState, deletedItem] : prevState;      
+    });    
+
+    remove(index)
+  };
+
+  useEffect(()=>{
+    console.log(deletedItems);
+  },[deletedItems])
+
+  
   const preparedItems = useMemo(() => {
     if (!fields.length) return (
       <TableRow className="hover:bg-transparent border-0">

@@ -57,10 +57,10 @@ export interface LandingsState {
   ) => Promise<AxiosResponse>,
 
   updateReviews: (
-    landingId: App.Models.Landing["id"],    
+    landingId: App.Models.Landing["id"],
     data: {
-      reviews: Partial<App.Models.ProductVariant>[],
-      deleted: Partial<App.Models.ProductVariant>[],
+      reviews: Partial<App.Models.Review>[],
+      deleted: Partial<App.Models.Review>[],
     }
   ) => Promise<AxiosResponse>,
 
@@ -79,13 +79,19 @@ export interface LandingsState {
   updateProductFeatures: (
     landingId: App.Models.Landing["id"],
     productId: App.Models.Product["id"],
-    data: Partial<App.Models.ProductFeature>[]
-  ) => Promise<AxiosResponse>,
+    data: {
+      features: Partial<App.Models.ProductFeature>[],
+      deleted: Partial<App.Models.ProductFeature>[],
+    }
+  ) => Promise<AxiosResponse>,  
 
   updateProductVariants: (
     landingId: App.Models.Landing["id"],
     productId: App.Models.Product["id"],
-    data: Partial<App.Models.ProductVariant>[]
+    data: {
+      variants: Partial<App.Models.ProductVariant>[],
+      deleted: Partial<App.Models.ProductVariant>[],
+    }
   ) => Promise<AxiosResponse>,
 
   removeProduct: (

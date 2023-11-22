@@ -79,10 +79,12 @@ export const ReviewsForm = () => {
   const handleAddItem = () => (append({ name: "", img: "", info: "", review: "" }));
 
   const handleRemoveItem = (index: number) => {
-    setDeletingIds(prevState => {      
-      const deletedItem = getValues("reviews")[index];      
-      return (deletedItem && deletedItem.id) ? [...prevState, getValues("reviews")[index]] : prevState;
-    })
+    const deletedItem = getValues("reviews")[index];   
+
+    setDeletingIds(prevState => {               
+      return (deletedItem && deletedItem.id) ? [...prevState, deletedItem] : prevState;
+    });
+
     remove(index);
   };
 
