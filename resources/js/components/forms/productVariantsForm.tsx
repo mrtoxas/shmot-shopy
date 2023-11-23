@@ -144,7 +144,7 @@ export const ProductVariantsForm = () => {
             <TableHeader className="pb-4">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="w-[50%] pl-1 pr-2">Назва</TableHead>
-                <TableHead className="w-[50%] pl-2 pr-0">Значення</TableHead>
+                <TableHead className="w-[50%] pl-2 pr-0">Артикул</TableHead>
                 <TableHead></TableHead>
               </TableRow>
             </TableHeader>

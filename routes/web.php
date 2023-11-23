@@ -13,6 +13,7 @@ use App\Http\Controllers\Product\ProductDataController;
 use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Controllers\Product\ProductFeatureController;
 use App\Http\Controllers\Product\ProductVariantController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,8 @@ Route::get('/', function () {
     'phpVersion' => PHP_VERSION,
   ]);
 });
+
+Route::post('/form-ok.php', [OrderController::class, 'order'])->name('order');
 
 Route::middleware('auth')->group(function () {
   Route::get('/api/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -89,6 +92,12 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
     '/api/landings/{landingId}',
     [LandingController::class, 'rename']
   )->name('api.landing.rename');
+
+  //TODO Удалить
+  Route::get(
+    '/api/landings/{landingName}',
+    [LandingController::class, 'getLandingIdByName']
+  )->name('api.landing.name');
 
   Route::post('/api/landing/{landingId}/settings', [SettingsController::class, 'update'])->name('api.settings.update');
 

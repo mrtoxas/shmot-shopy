@@ -9,7 +9,7 @@ if (!$reviews) {
   <div>
     <div class="grid grid-cols-[auto,1fr,auto] gap-8 items-center">
       <div>
-        <img src="templates/{{$templateName}}/images/review{{$review->img}}.jpg" class="rounded-full w-16" width="64" height="64" alt="review 1">
+        <img src="templates/{{$templateName}}/images/reviews/{{$review->img}}.jpg" class="rounded-full w-16" width="64" height="64" alt="review 1">
       </div>
       <div>
         <div>

@@ -19,12 +19,6 @@ import { Loader2Icon, PlusIcon, Trash2Icon } from "../ui/icons";
 import { Input } from "../shadcn/ui/input";
 import { Textarea } from "../shadcn/ui/textarea";
 
-const images = [
-  '/reviews/1.jpg',
-  '/reviews/2.jpg',
-  '/reviews/3.jpg',
-];
-
 const FormSchema = z.object({
   reviews: z.array(
     z.object({
@@ -89,14 +83,25 @@ export const ReviewsForm = () => {
   };
 
   const preparedImageList = useMemo(() => {
+    const template = currentLanding?.landing_settings?.template_name;
+
+    const images = Array.from({ length: 3 }, (_, index) => {
+      return `/templates/${template}/images/reviews/${index+1}.jpg`
+    });
+
     return images.map((item, index) => {
       return (
         <SelectItem key={index} value={String(index + 1)} className="p-0">
-          <img width={80} height={80} src={item} alt="Аватар відгука 1" className="w-[80px] h-[80px] object-cover" />
+          <img 
+            width={80} 
+            height={80} 
+            src={item} 
+            alt={`Аватар відгука ${index}`} 
+            className="w-[80px] h-[80px] object-cover" />
         </SelectItem>
       )
     })
-  }, [images]);
+  }, [currentLanding?.landing_settings?.template_name]);
 
   const preparedItems = useMemo(() => {
     if (!fields.length) return (
@@ -178,8 +183,6 @@ export const ReviewsForm = () => {
       )
     })
   }, [fields])
-
-
 
   return (
     <Form {...form}>

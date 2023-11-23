@@ -25,7 +25,6 @@ class LandingService
         'reviews',
         'products',
         'products.productData',
-        'products.productImages',
         'products.productFeatures',
         'products.productVariants',
       )->where('name', $clone)->first();      
@@ -47,7 +46,7 @@ class LandingService
         $newProduct->landing_id = $newLanding->id;
         $newProduct->save();
             
-        foreach (['productData', 'productImages', 'productFeatures', 'productVariants'] as $relation) {
+        foreach (['productData', 'productFeatures', 'productVariants'] as $relation) {
             $items = $product->$relation()->get()->map(function ($item) use ($newProduct) {
                 $newItem = $item->replicate(['product_id'])->setRelation('product', $newProduct);
                 $newItem->product_id = $newProduct->id;

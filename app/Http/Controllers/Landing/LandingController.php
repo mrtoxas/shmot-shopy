@@ -142,7 +142,7 @@ class LandingController extends Controller
 
       $templateName = $landing->landingSettings->template_name;      
 
-      return view('landing.' . $templateName . '.index', [
+      return view('landing.' . $templateName . '.landing', [
         'templateName' => $templateName,
         'landingSettings' => $landing->landingSettings,
         'globalProduct' => $landing->globalProduct,
@@ -178,4 +178,22 @@ class LandingController extends Controller
       ], 500);
     }
   }
+
+  public function getLandingIdByName($landingName, $tables=[])
+  {
+    try {
+      $landing = Landing::with($tables)->where('name', $landingName)->first();
+
+      if ($landing === null) {
+        throw new RecordNotFoundException('Запись не найдена');
+      } else {
+        return response()->json($landing, 200);
+      }
+    } catch (RecordNotFoundException $e) {
+      return response()->json([
+        'message' => 'Запись не найдена'
+      ], 404);
+    }
+  }
 }
+

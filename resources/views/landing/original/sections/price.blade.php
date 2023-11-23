@@ -7,13 +7,13 @@
     <div class="bg-secondary skew-x-[20deg] text-center h-full">
       <div class="skew-x-[-20deg] flex items-center justify-center flex-col h-full">
         <div class="text-sm">Звичайна ціна:</div>
-        <div class="font-bold text-3xl mt-1 line-through">{{$globalProduct->price}} грн.</div>
+        <div class="font-bold text-2xl mt-1 line-through">{{$globalProduct->price}} грн.</div>
       </div>
     </div>
     <div class="bg-primary skew-x-[20deg] text-center h-full relative left-[-1px]">
       <div class="skew-x-[-20deg] flex items-center justify-center flex-col h-full">
         <div class="text-sm">Ціна сьогодні:</div>
-        <div class="font-bold text-3xl mt-1">{{$globalProduct->discounted_price}} грн.</div>
+        <div class="font-bold text-2xl mt-1">{{$globalProduct->discounted_price}} грн.</div>
       </div>
     </div>
   </div>

@@ -275,6 +275,7 @@ export const LandingSettingsForm = () => {
                   <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                     <FormControl>
                       <Checkbox
+                        disabled
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
