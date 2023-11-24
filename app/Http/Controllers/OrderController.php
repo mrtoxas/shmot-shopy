@@ -111,7 +111,8 @@ class OrderController extends Controller
       'size'    => $size,
       'name'    => $name,
       'phone'     => $phone,
-      'fbPixelKey' => $fbPixelKey
+      'fbPixelKey' => $fbPixelKey,
+      'templateName' => $templateName
     ]);
   }
 }

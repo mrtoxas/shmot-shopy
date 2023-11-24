@@ -1,7 +1,11 @@
 @php
 $template = "landing.$templateName";
+if(!$template) {
+  echo('Error: Template not found');
+  exit();
+}
 @endphp
-@extends('landing.original.index')
+@extends($template . '.index')
 @section('template_head')
 <title>{{ $landingSettings->meta_title }}</title>
 <meta name="description" content="{{ $landingSettings->meta_description }}">
@@ -10,36 +14,36 @@ $template = "landing.$templateName";
 <header>
   @include("$template.sections.header")
 </header>
-<main>
+<main class="flex flex-col gap-12">
   @include("$template.sections.globalCarousel")
-  <section class="mt-12" aria-label="Цiна зi знижкою">
+  <section aria-label="Цiна зi знижкою">
     @include("$template.sections.price")
   </section>
-  <section class="mt-12" aria-label="Переваги">
+  <section aria-label="Переваги">
     @include("$template.sections.advantages")
   </section>
-  <section class="mt-12" aria-label="Термін дії акцiї">
+  <section aria-label="Термін дії акцiї">
     @include("$template.sections.expiration")
   </section>
-  <section class="mt-12" aria-label="Термін дії акцiї">
+  <section aria-label="Термін дії акцiї">
     @include("$template.sections.products")
   </section>
-  <section class="mt-12">
+  <section>
     @include("$template.sections.reviews")
   </section>
-  <section class="mt-12">
+  <section>
     @include("$template.sections.delivery")
   </section>
-  <section class="mt-12">
+  <section>
     @include("$template.sections.action")
   </section>
-  <section class="mt-12" aria-label="Переваги">
+  <section aria-label="Переваги">
     @include("$template.sections.advantages")
   </section>
-  <section class="mt-12" aria-label="Термін дії акцiї">
+  <section aria-label="Термін дії акцiї">
     @include("$template.sections.expiration")
   </section>
-  <section class="mt-12" aria-label="Форма замовлення">
+  <section aria-label="Форма замовлення">
     @include("$template.sections.form")
   </section>
   <section aria-label="Залишок товару">
@@ -49,7 +53,4 @@ $template = "landing.$templateName";
 <footer>
   @include("$template.sections.footer")
 </footer>
-<div>
-  {{-- @include("$template.sections.globalCarousel") --}}
-</div>
 @endsection

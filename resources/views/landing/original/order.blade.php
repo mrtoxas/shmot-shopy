@@ -1,4 +1,11 @@
-@extends('../index')
+@php
+if(!$templateName){
+  echo('Error: Template not found');
+  exit();
+}
+@endphp
+
+@extends('landing.' . $templateName . '.index')
 @section('template_head')
 <title>Вiтання!</title>
 @endsection
