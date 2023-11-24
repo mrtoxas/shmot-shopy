@@ -1,9 +1,12 @@
 @php
-$template = "landing.$templateName";
-if(!$template) {
-  echo('Error: Template not found');
-  exit();
-}
+  if(!$landingSettings->is_pub){
+    @abort(404);
+  }
+  $template = "landing.$templateName";
+  if(!$template) {
+    echo('Error: Template not found');
+    exit();
+  }
 @endphp
 @extends($template . '.index')
 @section('template_head')
