@@ -23,13 +23,16 @@ export default function Product({ auth, flash }: PageProps) {
 	const { isPagePending, setPagePending } = useAppStore();
 
 	const {
-    getProductWithData,     
+    getProductWithData,    
+    getLandingWithData 
   } = useLandingStore();
 
   useEffect(() => {
     setPagePending(true);
-    getProductWithData(Number(landingId), Number(productId))
-      .finally(() => setPagePending(false));
+    Promise.all([
+      getProductWithData(Number(landingId), Number(productId)),
+      getLandingWithData(Number(landingId))
+    ]).finally(() => setPagePending(false));
   }, []);
 
 	return (

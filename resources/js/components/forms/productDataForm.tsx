@@ -28,10 +28,9 @@ const FormSchema = z.object({
 
 export const ProductDataForm = () => {
   const { landingId, productId } = usePage().props;
-
-  const { currentProduct, updateProductData } = useLandingsStore();
-
+  const { currentProduct, currentLanding, updateProductData } = useLandingsStore();
   const { startLoading, stopLoading, isLoading } = useLoader();
+  const [formIsDisabled, setFormIsDisabled] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -45,6 +44,13 @@ export const ProductDataForm = () => {
   });
 
   const { getValues, setValue, register } = form;
+
+  useEffect(()=>{
+    if(!currentLanding) return;
+    const { landing_settings: { use_global_product }  } = currentLanding;
+    setFormIsDisabled(use_global_product);
+
+  },[currentLanding])
 
   useEffect(() => {
     if (!currentProduct?.product_data) return;
@@ -91,13 +97,13 @@ export const ProductDataForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} disabled>
         <div className="grid gap-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pb-4">
             <FormField
               control={form.control}
               name="sizes"
-              disabled={false}
+              disabled={formIsDisabled}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Розмiри (,)</FormLabel>
@@ -111,7 +117,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="price"
-              disabled={false}
+              disabled={formIsDisabled}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Цiна, грн.</FormLabel>
@@ -133,7 +139,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="discount"
-              disabled={false}
+              disabled={formIsDisabled}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Знижка, %</FormLabel>
@@ -154,6 +160,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="discounted_price"
+              disabled={formIsDisabled}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Цiна зі скидкою, грн.</FormLabel>
@@ -179,7 +186,7 @@ export const ProductDataForm = () => {
             <FormField
               control={form.control}
               name="rest"
-              disabled={false}
+              disabled={formIsDisabled}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Залишок, шт.</FormLabel>
@@ -198,9 +205,10 @@ export const ProductDataForm = () => {
               )}
             />
           </div>
-          {/* <p className="text-destructive text-sm m-0 font-medium">Наразі використовуються дані Глобального продукту!</p> */}
+          {formIsDisabled && <p className="text-destructive text-sm font-medium">Наразі використовуються дані Глобального продукту!</p>}
+          
           <div className="">
-            <Button disabled={isLoading} type="submit">
+            <Button disabled={isLoading || formIsDisabled} type="submit">
               {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
               Зберегти
             </Button>

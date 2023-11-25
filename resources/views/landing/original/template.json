@@ -1,4 +1,12 @@
 {
   "name": "original",
-  "title": "Original"  
+  "title": "Original",
+  "variables" : {
+    "color-primary": "#2c2cb5",
+    "color-secondary": "#595b61",
+    "color-backplate": "#f0f0f0",
+    "color-primary-lighter": "#b4c0d6",
+    "color-primary-darker": "#041e4d",
+    "size-carousel-height": "720px"
+  }
 }

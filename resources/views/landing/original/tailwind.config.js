@@ -12,7 +12,7 @@ module.exports = {
         'backplate': 'var(--color-backplate)', 
       },
       height: {
-        'carousel': 'var(--carousel-height)',
+        'carousel': 'var(--size-carousel-height)',
       },
     },
   },
