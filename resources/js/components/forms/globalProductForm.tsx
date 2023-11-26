@@ -44,7 +44,8 @@ export const GlobalProductForm = () => {
     }
   });
 
-  const { getValues, setValue, register } = form;
+  const { getValues, setValue, register, formState, reset } = form;
+  const {isDirty} = formState;
 
   useEffect(() => {
     if (!currentLanding?.global_product) return;
@@ -69,6 +70,7 @@ export const GlobalProductForm = () => {
   }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    if (!formState.isDirty) return;
     startLoading();
 
     const preparedData = {
@@ -83,7 +85,10 @@ export const GlobalProductForm = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading())
+    }).finally(() => {
+      reset(data);
+      stopLoading();
+    })
   }
 
   return (

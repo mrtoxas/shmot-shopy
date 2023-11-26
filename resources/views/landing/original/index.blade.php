@@ -7,13 +7,20 @@
 
   $templateName = $templateJson["name"];
   $templateVariables = $templateJson["variables"] ?? [];
-  $userVariables = $landingSettings->template_settings ?? [];
+  $userVariables = json_decode($landingSettings->template_settings);
 @endphp
 @extends('landing')
 @section('head')
   <meta name="viewport" content="width=546">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
   <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet">
+  <style>
+    :root{
+      @foreach($userVariables as $key => $value)
+        --{{$key}}: {{$value}};
+      @endforeach
+    }
+  </style>
   @yield('template_head')
 @endsection
 @section('content')

@@ -12,6 +12,7 @@ import { LandingSettingsForm } from '@/components/forms/landingSettingsForm';
 import { GlobalProductForm } from '@/components/forms/globalProductForm';
 import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm';
 import { LandingSetupForm } from '@/components/forms/landingSetupForm';
+import { ThemeVariablesForm } from '@/components/forms/themeVariablesForm';
 import { ProductsTable } from '@/components/productsTable';
 import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '@/components/shadcn/ui/button';
@@ -71,6 +72,11 @@ export default function Landing({ auth, flash }: PageProps) {
           <PageCard>            
             <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
             <LandingSettingsForm />
+          </PageCard>
+
+          <PageCard>
+            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування шаблону</h2>
+            <ThemeVariablesForm />
           </PageCard>
 
           <PageCard>            
