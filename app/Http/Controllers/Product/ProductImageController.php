@@ -27,9 +27,9 @@ class ProductImageController extends Controller
       if (!empty($newImages)){
         foreach ($newImages as $newImage) {
           $extension = $newImage->getClientOriginalExtension();
-          $uniqueImageName = 'product_'. $landingId . '_' . $productId . '_' . Uuid::uuid4()->toString() . '.' . $extension;
+          $uniqueImageName = Uuid::uuid4()->toString() . '.' . $extension;
 
-          $newImage->storeAs(env('IMG_DIR'), $uniqueImageName);
+          $newImage->storeAs('public/landings/' . $landingId . '/products/' . $productId . '/images' , $uniqueImageName);
 
           ProductImage::create(['product_id' => $productId, 'img_name' => $uniqueImageName]);
         }
@@ -39,7 +39,7 @@ class ProductImageController extends Controller
         $imagesToDelete = ProductImage::whereIn('id', $deleted)->get();
 
         foreach ($imagesToDelete as $image) {
-          Storage::delete(env('IMG_DIR') . '/' . $image->img_name);
+          Storage::disk('public')->delete('landings/' . $landingId . '/products/' . $productId . '/images/' . $image->img_name);          
         }
 
         ProductImage::destroy($deleted);

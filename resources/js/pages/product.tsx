@@ -63,9 +63,9 @@ export default function Product({ auth, flash }: PageProps) {
 
       <div className="py-6 bg-secondary">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
-          <PageCard title="Дані товару">
+          {/* <PageCard title="Дані товару">
             <ProductDataForm />
-          </PageCard>
+          </PageCard> */}
 
           <PageCard title="Характеристики">
             <ProductFeaturesForm />

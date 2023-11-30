@@ -78,13 +78,4 @@ class LandingService
       throw new Exception($e->getMessage());
     }
   }
-
-  public function removeAllLandingImages($landingId)
-  {
-    $productIds = Product::where('landing_id', $landingId)->pluck('id');
-    $imageNames = ProductImage::whereIn('product_id', $productIds)->pluck('img_name');
-    Storage::delete($imageNames->map(function ($imgName) {
-        return env('IMG_DIR') . '/' . $imgName;
-    })->all());
-  }
 }

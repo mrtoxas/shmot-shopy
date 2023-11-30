@@ -13,7 +13,7 @@ class AdvantageController extends Controller
   {    
     $request->validate([
       'caption.*' => 'required|string',
-    ]);    
+    ]);        
 
     try {
       $captions = $request->caption;
@@ -28,13 +28,13 @@ class AdvantageController extends Controller
 
         if (is_object($file) && $file->isValid()) {
           $extension = $file->getClientOriginalExtension();
-          $fileName = 'advantage' . $id . '_' . $index . '.' . $extension;
+          $fileName = $index . '.' . $extension;
 
-          if ($oldImgName) {
-            Storage::disk(env('IMG_DIR'))->delete($oldImgName);
+          if ($oldImgName) {    
+            Storage::disk('public')->delete('landings/' . $id . '/advantages/' . $oldImgName);       
           }
 
-          $file->storeAs(env('IMG_DIR'), $fileName);
+          $file->storeAs('public/landings/' . $id . '/advantages', $fileName);
           $fileNames[$index] = $fileName;
         } else {
           $fileNames[$index] = $oldImgName;
