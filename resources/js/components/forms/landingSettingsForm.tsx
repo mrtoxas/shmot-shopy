@@ -33,8 +33,7 @@ const FormSchema = z.object({
   telegram_token: z.string().nullable(),
   template_name: z.string().min(1, {
     message: 'Шаблон обов\'язковий'
-  }),
-  template_settings: z.string().nullable(),
+  }), 
   use_global_product: z.boolean().default(true),
   collection_name: z.string().nullable(),
   collection_description: z.string().nullable(),
@@ -67,8 +66,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: null,
       crm_api_key: null,
       telegram_token: null,
-      template_name: "",
-      template_settings: null,
+      template_name: "",   
       use_global_product: true,
       collection_name: null,
       collection_description: null,
@@ -96,8 +94,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: landing_settings.telegram_chat_id,
       crm_api_key: landing_settings.crm_api_key,
       telegram_token: landing_settings.telegram_token,
-      template_name: String(landing_settings.template_name),
-      template_settings: landing_settings.template_settings ? JSON.stringify(JSON.parse(landing_settings.template_settings), undefined, 2) : "",
+      template_name: String(landing_settings.template_name),      
       use_global_product: Boolean(landing_settings.use_global_product),
       collection_name: landing_settings.collection_name,
       collection_description: landing_settings.collection_description,
@@ -106,7 +103,7 @@ export const LandingSettingsForm = () => {
       title_3: landing_settings.title_3,
       title_4: landing_settings.title_4,
       title_5: landing_settings.title_5,
-      title_6: landing_settings.title_6,      
+      title_6: landing_settings.title_6,
     });
   }, [currentLanding]);
 
@@ -288,28 +285,6 @@ export const LandingSettingsForm = () => {
                         При використанні цієї опції всі товари будуть використовувати дані, зазначені у формі "Глобальний продукт"
                       </FormDescription>
                     </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className='mt-4'>
-              <FormField
-                control={form.control}
-                name="template_settings"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Налаштування теми</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        className="min-h-[100px] whitespace-pre-wrap"
-                        {...field}
-                        value={field.value ? String(field.value) : ""}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Редагування змінних стилів шаблону. Вкажіть css-змінні шаблону у форматі json.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

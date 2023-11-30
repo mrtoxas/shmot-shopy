@@ -69,42 +69,39 @@ export default function Landing({ auth, flash }: PageProps) {
       <div className="py-6 bg-secondary">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
 
-          <PageCard>            
-            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Загальнi налаштування</h2>
+          <PageCard title="Загальнi налаштування">
             <LandingSettingsForm />
           </PageCard>
 
-          <PageCard>
-            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування шаблону</h2>
-            <ThemeVariablesForm />
-          </PageCard>
-
-          <PageCard>            
-            <h2 className="text-lg font-semibold leading-none tracking-tight mb-6 ">Глобальний продукт</h2>
+          <PageCard title="Глобальний продукт">
             <GlobalProductForm />
           </PageCard>
 
-          <PageCard>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Переваги</h2>
-          <LandingAdvantagesForm />
+          <PageCard 
+            title="Товари" 
+            action={
+              <Button onClick={newProductDialogToggle}>
+                <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
+              </Button>
+            }>           
+            <ProductsTable />
           </PageCard>
-          <PageCard>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Відгуки</h2>
-          <ReviewsForm />
+
+          <PageCard title="Налаштування шаблону">          
+            <ThemeVariablesForm />
           </PageCard>
-          <PageCard>
-          <h2 className="flex items-center justify-between text-lg font-semibold leading-none tracking-tight mb-6">
-            Товари
-            <Button onClick={newProductDialogToggle}>
-              <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
-            </Button>
-          </h2>
-          <ProductsTable />
+
+          <PageCard title="Переваги">           
+            <LandingAdvantagesForm />
           </PageCard>
-          <PageCard>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Налаштування сайту</h2>
-          <LandingSetupForm />
-          </PageCard>                   
+
+          <PageCard title="Відгуки">          
+            <ReviewsForm />
+          </PageCard>
+
+          <PageCard title="Налаштування сайту">            
+            <LandingSetupForm />
+          </PageCard>
         </div>
       </div>
 

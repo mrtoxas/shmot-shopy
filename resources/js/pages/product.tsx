@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
@@ -14,17 +14,21 @@ import { ProductImagesForm } from '@/components/forms/productImagesForm';
 import { ProductFeaturesForm } from '@/components/forms/productFeaturesForm';
 import { ProductVariantsForm } from '@/components/forms/productVariantsForm';
 import { Separator } from '@/components/shadcn/ui/separator';
+import { PageCard } from '@/components/ui/pageCard';
+import useLandingsStore from '@/store/landingsStore';
 
 export default function Product({ auth, flash }: PageProps) {
-	useFlashToasts(flash);
+  useFlashToasts(flash);
 
-	const { landingId, productId } = usePage().props;
+  const { landingId, productId } = usePage().props;
 
-	const { isPagePending, setPagePending } = useAppStore();
+  const { isPagePending, setPagePending } = useAppStore();
 
-	const {
-    getProductWithData,    
-    getLandingWithData 
+  const { currentLanding, currentProduct } = useLandingsStore();
+
+  const {
+    getProductWithData,
+    getLandingWithData
   } = useLandingStore();
 
   useEffect(() => {
@@ -35,35 +39,45 @@ export default function Product({ auth, flash }: PageProps) {
     ]).finally(() => setPagePending(false));
   }, []);
 
-	return (
-			<AuthenticatedLayout
+  const head = useMemo(() => {  
+    return (currentLanding?.name || currentProduct?.name)
+      ? `${currentLanding?.name}.${window.location.hostname} - ${currentProduct?.name}`
+      : " "
+  }, [currentLanding?.name, currentProduct?.name]);
+
+  return (
+    <AuthenticatedLayout
       user={auth.user}
       header={
         <div >
-          <PageHead message={`Налаштування товару - ${productId}`} />
-          <Link 
-        		href={route('landing.admin', { landingId: String(landingId) })}
-        		className="flex items-center text-sm mt-4">
-        		<ArrowLeftIcon className="h-4 w-4 mr-2" /> Повернутись
-        	</Link>
+          <PageHead message={head} />
+          <Link
+            href={route('landing.admin', { landingId: String(landingId) })}
+            className="flex items-center text-sm mt-4">
+            <ArrowLeftIcon className="h-4 w-4 mr-2" /> Повернутись
+          </Link>
         </div>
       }
     >
       <Head title="Товар productId" />
 
-      <div className="py-12">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        	<h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Дані товару</h2>
-        	<ProductDataForm />
-          <Separator className='mt-8 mb-8'/>          
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Характеристики</h2>
-          <ProductFeaturesForm />
-          <Separator className='mt-8 mb-8'/>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Зображення</h2>
-          <ProductImagesForm />
-          <Separator className='mt-8 mb-8'/>
-          <h2 className="text-lg font-semibold leading-none tracking-tight mb-6">Варіанти</h2>
-          <ProductVariantsForm />
+      <div className="py-6 bg-secondary">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
+          <PageCard title="Дані товару">
+            <ProductDataForm />
+          </PageCard>
+
+          <PageCard title="Характеристики">
+            <ProductFeaturesForm />
+          </PageCard>
+
+          <PageCard title="Зображення">
+            <ProductImagesForm />
+          </PageCard>
+
+          <PageCard title="Варіанти">
+            <ProductVariantsForm />
+          </PageCard>
         </div>
       </div>
 
@@ -72,6 +86,6 @@ export default function Product({ auth, flash }: PageProps) {
           <Loader2Icon className="animate-spin h-[2rem] w-[2rem]" />
         </div>
       )}
-      </AuthenticatedLayout>
-		)
+    </AuthenticatedLayout>
+  )
 }

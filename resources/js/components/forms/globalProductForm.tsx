@@ -70,7 +70,7 @@ export const GlobalProductForm = () => {
   }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    if (!formState.isDirty) return;
+    if (!isDirty) return;
     startLoading();
 
     const preparedData = {

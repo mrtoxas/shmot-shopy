@@ -99,7 +99,7 @@ export const ProductDataForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} disabled>
         <div className="grid gap-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pb-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <FormField
               control={form.control}
               name="sizes"
@@ -205,7 +205,7 @@ export const ProductDataForm = () => {
               )}
             />
           </div>
-          {formIsDisabled && <p className="text-destructive text-sm font-medium">Наразі використовуються дані Глобального продукту!</p>}
+          {formIsDisabled && <p className="text-red-800 text-sm font-medium">Наразі використовуються дані Глобального продукту!</p>}
           
           <div className="">
             <Button disabled={isLoading || formIsDisabled} type="submit">

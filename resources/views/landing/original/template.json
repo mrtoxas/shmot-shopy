@@ -1,12 +1,42 @@
 {
   "name": "original",
   "title": "Original",
-  "variables" : {
-    "color-primary": "#2c2cb5",
-    "color-secondary": "#595b61",
-    "color-backplate": "#f0f0f0",
-    "color-primary-lighter": "#b4c0d6",
-    "color-primary-darker": "#041e4d",
-    "size-carousel-height": "720px"
-  }
+  "variables": [
+    {
+      "name": "primary",
+      "value": "#2c2cb5",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "secondary",
+      "value": "#595b61",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "backplate",
+      "value": "#f0f0f0",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "primary-lighter",
+      "value": "#b4c0d6",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "primary-darker",
+      "value": "#041e4d",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "carousel-height",
+      "value": "720px",
+      "title": "",
+      "type": "layout"
+    }
+  ]
 }

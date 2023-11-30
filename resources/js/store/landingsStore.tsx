@@ -36,7 +36,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
       landings: [...responseData, ...state.landings],
     }));
     return response;
-  },  
+  },
 
   updateReviews: async (landingId, data) => {
     const response = await window.axios.post(route('api.reviews.update', { landingId }), data);
@@ -55,6 +55,15 @@ const useLandingsStore = create<LandingsState>()((set) => ({
 
   updateAdvantages: async (landingId, formData) => {
     const response = await window.axios.post(route('api.advantages.update', { landingId }), formData);
+    return response;
+  },
+
+  updateTemplateVariables: async (landingId, data) => {
+    console.log(data);
+    console.log(typeof data);
+    const response = await window.axios.post(route('api.templateVariables.update', { landingId }), data, {
+      headers: { 'Content-Type': 'application/json' }
+    });
     return response;
   },
 
@@ -89,13 +98,13 @@ const useLandingsStore = create<LandingsState>()((set) => ({
       if (state.currentLanding && state.currentLanding.products) {
         return {
           currentLanding: {
-            ...state.currentLanding, 
+            ...state.currentLanding,
             products: [...state.currentLanding.products, resdata.data]
           }
-        };             
+        };
       }
       return state;
-    });  
+    });
 
     return response;
   },
@@ -107,13 +116,13 @@ const useLandingsStore = create<LandingsState>()((set) => ({
       if (state.currentLanding && state.currentLanding.products) {
         return {
           currentLanding: {
-            ...state.currentLanding, 
+            ...state.currentLanding,
             products: state.currentLanding.products.filter((e) => e.id !== productId)
           }
-        };             
+        };
       }
       return state;
-    });  
+    });
 
     return response;
   },
@@ -144,7 +153,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
     const response = await window.axios.post(route('api.productVariants.update', { landingId, productId }), data);
     return response;
   },
-  
+
 }));
 
 export default useLandingsStore;

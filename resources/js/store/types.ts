@@ -56,6 +56,11 @@ export interface LandingsState {
     data: FormData
   ) => Promise<AxiosResponse>,
 
+  updateTemplateVariables: (
+    landingId: App.Models.Landing["id"],
+    data: string
+  ) => Promise<AxiosResponse>,
+
   updateReviews: (
     landingId: App.Models.Landing["id"],
     data: {

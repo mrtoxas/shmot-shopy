@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Landing;
 use App\Models\LandingSettings;
 
 class SettingsController extends Controller
@@ -62,5 +63,28 @@ class SettingsController extends Controller
         'message' => $errorMessage,
       ], 500);
     }
+  }
+
+  public function updateThemeVariables(Request $request, $id)
+  {
+    try {
+      $json = $request->all();
+      $data = json_encode($json, true); 
+      $landingSettings = LandingSettings::where('landing_id', $id)->first();
+
+      if ($landingSettings) {
+          $landingSettings->template_settings = $data;
+          $landingSettings->save();
+      }
+      return response()->json([
+        'data' => $data,
+        'message' => 'Налаштування успішно збережено!'
+      ], 200);  
+    } catch (\Exception $e) {
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка при завантаженні Загальних налаштувань, зверніться до адміністратора.';
+      return response()->json([
+        'message' => $errorMessage,
+      ], 500);
+    }   
   }
 }

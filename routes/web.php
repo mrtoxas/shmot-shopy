@@ -151,6 +151,11 @@ Route::middleware(['auth', 'verified', 'check_landing_access'])->group(function 
     [ProductVariantController::class, 'update']
   )->name('api.productVariants.update');  
 
+  Route::post(
+    '/api/landing/{landingId}/theme_variables',
+    [SettingsController::class, 'updateThemeVariables']
+  )->name('api.templateVariables.update');  
+
   
 });
 
