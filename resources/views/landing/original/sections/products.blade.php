@@ -45,7 +45,7 @@
       <tbody>
         @foreach ($product->productFeatures as $feature)
           <tr class="odd:bg-backplate">
-            <th class="align-top px-2 py-3 align-top">
+            <th class="align-top px-2 py-3">
               <div class="whitespace-nowrap flex gap-2 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"

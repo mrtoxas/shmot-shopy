@@ -144,6 +144,7 @@ class LandingController extends Controller
       $templateName = $landing->landingSettings->template_name;      
 
       return view('landing.' . $templateName . '.landing', [
+        'landingId' => $landing["id"],
         'templateName' => $templateName,
         'landingSettings' => $landing->landingSettings,
         'globalProduct' => $landing->globalProduct,
