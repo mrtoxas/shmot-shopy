@@ -8,6 +8,9 @@
   $templateName = $templateJson["name"];
   $templateVariables = $templateJson["variables"] ?? [];
   $userVariables = json_decode($landingSettings->template_settings);
+  
+  $landingVariables = isset($userVariables) ? $userVariables : $templateVariables;  
+  
 @endphp
 @extends('landing')
 @section('head')
@@ -16,8 +19,8 @@
   <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet">
   <style>
     :root{
-      @foreach($userVariables as $key => $value)
-        --{{$key}}: {{$value}};
+      @foreach($landingVariables as $variable)
+        --{{$variable->name}}: {{$variable->value}};
       @endforeach
     }
   </style>

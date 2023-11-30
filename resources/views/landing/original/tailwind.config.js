@@ -5,14 +5,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': 'var(--color-primary)',
-        'primary-lighter': 'var(--color-primary-lighter)',
-        'primary-darker': 'var(--color-primary-darker)',
-        'secondary': 'var(--color-secondary)',     
-        'backplate': 'var(--color-backplate)', 
+        'primary': 'var(--primary)',
+        'primary-lighter': 'var(--primary-lighter)',
+        'primary-darker': 'var(--primary-darker)',
+        'secondary': 'var(--secondary)',     
+        'backplate': 'var(--backplate)', 
       },
       height: {
-        'carousel': 'var(--size-carousel-height)',
+        'carousel': 'var(--carousel-height)',
       },
     },
   },

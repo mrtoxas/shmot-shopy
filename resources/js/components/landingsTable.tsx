@@ -74,7 +74,7 @@ export const LandingsTable = (props: LandingsTableProps) => {
               </Link>
             </TableCell>
             <TableCell>
-              <a className="hover:text-blue-600" href={link}>{link}</a>
+              <a className="hover:text-blue-600" href={link} target="_blank">{link}</a>
             </TableCell>
             <TableCell>{date}</TableCell>
             <TableCell className="text-right">

@@ -791,7 +791,7 @@ select {
   height: 80px;
 }
 .h-carousel {
-  height: var(--size-carousel-height);
+  height: var(--carousel-height);
 }
 .h-full {
   height: 100%;
@@ -906,20 +906,20 @@ select {
   border-left-width: 4px;
 }
 .border-primary {
-  border-color: var(--color-primary);
+  border-color: var(--primary);
 }
 .bg-backplate {
-  background-color: var(--color-backplate);
+  background-color: var(--backplate);
 }
 .bg-primary {
-  background-color: var(--color-primary);
+  background-color: var(--primary);
 }
 .bg-red-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 .bg-secondary {
-  background-color: var(--color-secondary);
+  background-color: var(--secondary);
 }
 .bg-teal-300 {
   --tw-bg-opacity: 1;
@@ -1027,7 +1027,7 @@ select {
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 .text-primary {
-  color: var(--color-primary);
+  color: var(--primary);
 }
 .text-white {
   --tw-text-opacity: 1;
@@ -1053,11 +1053,11 @@ select {
 }
 
 .odd\:bg-backplate:nth-child(odd) {
-  background-color: var(--color-backplate);
+  background-color: var(--backplate);
 }
 
 .hover\:bg-primary-darker:hover {
-  background-color: var(--color-primary-darker);
+  background-color: var(--primary-darker);
 }
 
 .hover\:underline:hover {
