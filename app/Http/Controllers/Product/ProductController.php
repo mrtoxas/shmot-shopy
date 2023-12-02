@@ -51,7 +51,7 @@ class ProductController extends Controller
     }
   }
 
-  public function destroy($landingId, $productId, ProductService $productService)
+  public function destroy($landingId, $productId)
   {
     try {
       $landing = Landing::find($landingId);
@@ -65,7 +65,6 @@ class ProductController extends Controller
       if ($product) {
         Storage::disk('public')->deleteDirectory('landings/' . $landingId . '/products/' . $productId);
         $product->delete();
-        
       }
 
       return response()->json([

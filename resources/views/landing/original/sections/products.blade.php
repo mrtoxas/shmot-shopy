@@ -16,7 +16,7 @@
   @php
     $imgNames = [];
     foreach ($product->productImages as $image) {
-        $imgNames[] = $image->img_name;
+        $imgNames[] = 'public/landings/' . $landingId . '/products/' . $product->id . '/images/' . $image->img_name;
     }
   @endphp
 

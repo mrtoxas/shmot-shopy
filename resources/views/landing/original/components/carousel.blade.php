@@ -13,7 +13,7 @@
     <div class="swiper-wrapper">
       @foreach($images as $image)
       <div class="swiper-slide">
-        <img src="{{ Storage::url('public/images/' . $image) }}" alt="{{$image}}" class="w-full h-full object-cover">
+        <img src="{{ Storage::url($image) }}" alt="{{$image}}" class="w-full h-full object-cover">
       </div>
       @endforeach
     </div>

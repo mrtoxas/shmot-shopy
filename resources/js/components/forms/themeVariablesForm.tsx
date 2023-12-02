@@ -65,6 +65,8 @@ export const ThemeVariablesForm = () => {
   });
 
   const uploadFields = (data: Variable[]) => {
+    if (!data?.length) return;
+    
     reset({
       colors: data.filter(e => e.type === 'color'),
       layouts: data.filter(e => e.type === 'layout')

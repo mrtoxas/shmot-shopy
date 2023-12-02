@@ -10,7 +10,6 @@
   $userVariables = json_decode($landingSettings->template_settings);
   
   $landingVariables = isset($userVariables) ? $userVariables : $templateVariables;  
-  
 @endphp
 @extends('landing')
 @section('head')
@@ -20,7 +19,7 @@
   <style>
     :root{
       @foreach($landingVariables as $variable)
-        --{{$variable->name}}: {{$variable->value}};
+        --{{$variable["name"]}}: {{$variable["value"]}};
       @endforeach
     }
   </style>

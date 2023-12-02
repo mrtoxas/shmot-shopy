@@ -796,6 +796,12 @@ select {
 .h-full {
   height: 100%;
 }
+.h-44 {
+  height: 11rem;
+}
+.h-52 {
+  height: 13rem;
+}
 .w-16 {
   width: 4rem;
 }
@@ -990,6 +996,9 @@ select {
 }
 .pr-4 {
   padding-right: 1rem;
+}
+.pb-12 {
+  padding-bottom: 3rem;
 }
 .text-center {
   text-align: center;
