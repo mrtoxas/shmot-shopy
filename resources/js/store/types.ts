@@ -1,8 +1,15 @@
 import { AxiosResponse } from "axios"
+import { ThemeVariable } from "@/types";
+
+interface Template {
+  name: string,
+  title: string,
+  variables: ThemeVariable[]
+}
 
 export interface LandingsState {
   landings: App.Models.Landing[],
-  templates: App.Models.LandingTemplate[],
+  templates: Template[],
   currentLanding: App.Models.Landing | null,
   currentProduct: App.Models.Product | null,
 

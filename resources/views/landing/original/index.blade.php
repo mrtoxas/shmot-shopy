@@ -7,7 +7,7 @@
 
   $templateName = $templateJson["name"];
   $templateVariables = $templateJson["variables"] ?? [];
-  $userVariables = json_decode($landingSettings->template_settings);
+  $userVariables = json_decode($landingSettings->template_settings, true);
   
   $landingVariables = isset($userVariables) ? $userVariables : $templateVariables;  
 @endphp

@@ -17,6 +17,13 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     flash: FlashProps;
 };
 
+export interface ThemeVariable {
+  name: string,
+  value: string,
+  title?: string,
+  type: 'color' | 'layout'
+}
+
 // export interface LandingSettings {
 //     crm_api_key: string,
 //     fb_pixel_key: string,

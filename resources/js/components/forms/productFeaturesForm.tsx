@@ -86,11 +86,6 @@ export const ProductFeaturesForm = () => {
 
     remove(index)
   };
-
-  useEffect(()=>{
-    console.log(deletedItems);
-  },[deletedItems])
-
   
   const preparedItems = useMemo(() => {
     if (!fields.length) return (

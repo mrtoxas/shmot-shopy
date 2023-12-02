@@ -2,6 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "tsc": "tsc --noEmit",
         "dev": "vite",
         "build": "tsc && vite build",
         "watch:css:original": "tailwindcss -i resources/views/landing/original/app.css -o public/templates/original/css/app.css --watch",

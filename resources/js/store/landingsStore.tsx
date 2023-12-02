@@ -59,8 +59,6 @@ const useLandingsStore = create<LandingsState>()((set) => ({
   },
 
   updateTemplateVariables: async (landingId, data) => {
-    console.log(data);
-    console.log(typeof data);
     const response = await window.axios.post(route('api.templateVariables.update', { landingId }), data, {
       headers: { 'Content-Type': 'application/json' }
     });

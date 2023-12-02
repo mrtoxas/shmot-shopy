@@ -45,13 +45,6 @@ export const ProductDataForm = () => {
 
   const { getValues, setValue, register } = form;
 
-  useEffect(()=>{
-    if(!currentLanding) return;
-    const { landing_settings: { use_global_product }  } = currentLanding;
-    setFormIsDisabled(use_global_product);
-
-  },[currentLanding])
-
   useEffect(() => {
     if (!currentProduct?.product_data) return;
 
@@ -97,7 +90,7 @@ export const ProductDataForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} disabled>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid gap-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <FormField

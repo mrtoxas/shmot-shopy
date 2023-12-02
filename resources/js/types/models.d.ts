@@ -5,30 +5,6 @@
  */
 
 declare namespace App.Models {
-    export interface Advantage {
-        id: number;
-        landing_id: number;
-        img_name: string;
-        caption: string;
-        created_at: string | null;
-        updated_at: string | null;
-        landing?: App.Models.Landing | null;
-    }
-
-    export interface GlobalProduct {
-        id: number;
-        landing_id: number;
-        sizes: string | null;
-        price: number | null;
-        discount: number | null;
-        discounted_price: number | null;
-        description: number | null;
-        rest: number | null;
-        created_at: string | null;
-        updated_at: string | null;
-        landing?: App.Models.Landing | null;
-    }
-
     export interface Landing {
         id: number;
         created_at: string | null;
@@ -46,30 +22,28 @@ declare namespace App.Models {
         reviews_count?: number | null;
     }
 
-    export interface LandingSettings {
+    export interface ProductVariant {
         id: number;
-        landing_id: number;
-        meta_title: string | null;
-        meta_description: string | null;
-        is_pub: boolean;
-        use_global_product: boolean;
-        fb_pixel_key: string | null;
-        telegram_chat_id: string | null;
-        crm_api_key: string | null;
-        telegram_token: string | null;
-        template_name: string;
-        template_settings: Array<any> | any | null;
-        collection_name: string | null;
-        collection_description: string | null;
-        title_1: string | null;
-        title_2: string | null;
-        title_3: string | null;
-        title_4: string | null;
-        title_5: string | null;
-        title_6: string | null;
+        product_id: number;
+        name: string;
+        value: string;
         created_at: string | null;
         updated_at: string | null;
-        landing?: App.Models.Landing | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface User {
+        id: number;
+        name: string;
+        role: string;
+        email: string;
+        email_verified_at: string | null;
+        password: string;
+        remember_token: string | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landings?: Array<App.Models.Landing> | null;
+        landings_count?: number | null;
     }
 
     export interface Product {
@@ -102,35 +76,6 @@ declare namespace App.Models {
         product?: App.Models.Product | null;
     }
 
-    export interface ProductFeature {
-        id: number;
-        product_id: number;
-        name: string;
-        value: string;
-        created_at: string | null;
-        updated_at: string | null;
-        product?: App.Models.Product | null;
-    }
-
-    export interface ProductImage {
-        id: number;
-        product_id: number;
-        img_name: string;
-        created_at: string | null;
-        updated_at: string | null;
-        product?: App.Models.Product | null;
-    }
-
-    export interface ProductVariant {
-        id: number;
-        product_id: number;
-        name: string;
-        value: string;
-        created_at: string | null;
-        updated_at: string | null;
-        product?: App.Models.Product | null;
-    }
-
     export interface Review {
         id: number;
         landing_id: number;
@@ -143,18 +88,73 @@ declare namespace App.Models {
         landing?: App.Models.Landing | null;
     }
 
-    export interface User {
+    export interface Advantage {
         id: number;
-        name: string;
-        role: string;
-        email: string;
-        email_verified_at: string | null;
-        password: string;
-        remember_token: string | null;
+        landing_id: number;
+        img_name: string;
+        caption: string;
         created_at: string | null;
         updated_at: string | null;
-        landings?: Array<App.Models.Landing> | null;
-        landings_count?: number | null;
+        landing?: App.Models.Landing | null;
+    }
+
+    export interface ProductImage {
+        id: number;
+        product_id: number;
+        img_name: string;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface ProductFeature {
+        id: number;
+        product_id: number;
+        name: string;
+        value: string;
+        created_at: string | null;
+        updated_at: string | null;
+        product?: App.Models.Product | null;
+    }
+
+    export interface LandingSettings {
+        id: number;
+        landing_id: number;
+        meta_title: string | null;
+        meta_description: string | null;
+        is_pub: boolean;
+        use_global_product: boolean;
+        fb_pixel_key: string | null;
+        telegram_chat_id: string | null;
+        crm_api_key: string | null;
+        telegram_token: string | null;
+        template_name: string;
+        template_settings: Array<any> | any | null;
+        collection_name: string | null;
+        collection_description: string | null;
+        title_1: string | null;
+        title_2: string | null;
+        title_3: string | null;
+        title_4: string | null;
+        title_5: string | null;
+        title_6: string | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
+    }
+
+    export interface GlobalProduct {
+        id: number;
+        landing_id: number;
+        sizes: string | null;
+        price: number | null;
+        discount: number | null;
+        discounted_price: number | null;
+        description: number | null;
+        rest: number | null;
+        created_at: string | null;
+        updated_at: string | null;
+        landing?: App.Models.Landing | null;
     }
 
 }

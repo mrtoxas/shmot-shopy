@@ -17,13 +17,7 @@ import { Input } from '../shadcn/ui/input';
 import { Button } from '../shadcn/ui/button';
 import { Loader2Icon } from 'lucide-react';
 import { toast } from '../shadcn/ui/use-toast';
-
-interface Variable {
-  name: string,
-  value: string,
-  title?: string,
-  type: string
-}
+import { ThemeVariable } from "@/types";
 
 const FormSchema = z.object({
   colors: z.array(
@@ -46,7 +40,7 @@ export const ThemeVariablesForm = () => {
   const { landingId } = usePage().props;
   const { startLoading, stopLoading, isLoading } = useLoader();
   const { currentLanding, templates, updateTemplateVariables } = useLandingsStore();
-  const [templateVariables, setTemplateVariables] = useState<Variable[]>([]);
+  const [templateVariables, setTemplateVariables] = useState<ThemeVariable[]>([]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
@@ -64,7 +58,7 @@ export const ThemeVariablesForm = () => {
     name: 'layouts'
   });
 
-  const uploadFields = (data: Variable[]) => {
+  const uploadFields = (data: ThemeVariable[]) => {
     if (!data?.length) return;
     
     reset({
