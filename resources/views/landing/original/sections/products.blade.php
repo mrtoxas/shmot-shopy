@@ -16,7 +16,7 @@
   @php
     $imgNames = [];
     foreach ($product->productImages as $image) {
-        $imgNames[] = 'public/landings/' . $landingId . '/products/' . $product->id . '/images/' . $image->img_name;
+        $imgNames[] = '/images/landings/' . $landingId . '/products/' . $product->id . '/' . $image->img_name;
     }
   @endphp
 
@@ -63,6 +63,6 @@
     </table>
   @endisset
   <div class="text-center mt-8">
-    <button type="button" class="h-16 px-8 text-xl text-white bg-primary ring-4 focus:outline-none ring-primary/25 font-bold text-center me-2 my-2 rounded-full hover:bg-primary-darker">Залишити замовлення</button>
+    <button data-scroll-to="orderForm" type="button" class="h-16 px-8 text-xl text-white bg-primary ring-4 focus:outline-none ring-gray-300 font-bold text-center me-2 my-2 rounded-full hover:bg-primary-darker">Залишити замовлення</button>
   </div>
 @endforeach

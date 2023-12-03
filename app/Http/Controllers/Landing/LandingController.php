@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\LandingService;
 use App\Models\Landing;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class LandingController extends Controller
 {
@@ -108,8 +108,12 @@ class LandingController extends Controller
         throw new \Exception('Ви не можете видалити цей сайт', 403);
       }
 
-      Storage::disk('public')->deleteDirectory('landings/' . $id);
+      $directoryPath = public_path('images/landings');
 
+      if (File::exists($directoryPath)) {
+        File::deleteDirectory($directoryPath); 
+      }
+      
       $landing->delete();
 
       DB::commit();

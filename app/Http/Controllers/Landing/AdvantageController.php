@@ -24,22 +24,26 @@ class AdvantageController extends Controller
       $fileNames = [];
 
       foreach ($files as $index => $file) {
-        $oldImgName = $advantages[$index]->img_name ?? null;
+          $oldImgName = $advantages[$index]->img_name ?? null;
 
-        if (is_object($file) && $file->isValid()) {
-          $extension = $file->getClientOriginalExtension();
-          $fileName = $index . '.' . $extension;
+          if (is_object($file) && $file->isValid()) {
+              $extension = $file->getClientOriginalExtension();
+              $fileName = $index . '.' . $extension;
 
-          if ($oldImgName) {    
-            Storage::disk('public')->delete('landings/' . $id . '/advantages/' . $oldImgName);       
+              if ($oldImgName) {
+                  $oldImgPath = public_path('images/landings/' . $id . '/advantages/' . $oldImgName);
+                  if (file_exists($oldImgPath)) {
+                      unlink($oldImgPath);
+                  }
+              }
+
+              $file->move(public_path('images/landings/' . $id . '/advantages'), $fileName);
+              $fileNames[$index] = $fileName;
+          } else {
+              $fileNames[$index] = $oldImgName;
           }
-
-          $file->storeAs('public/landings/' . $id . '/advantages', $fileName);
-          $fileNames[$index] = $fileName;
-        } else {
-          $fileNames[$index] = $oldImgName;
-        }
       }
+
 
       if ($advantages->isEmpty()) {
         $data = [];

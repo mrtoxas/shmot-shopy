@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use App\Models\ProductImage;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\App;
 
 class ProductImageController extends Controller
@@ -24,25 +24,28 @@ class ProductImageController extends Controller
       $newImages = $request->file('images');
       $deleted = $request->deleted;
 
-      if (!empty($newImages)){
-        foreach ($newImages as $newImage) {
-          $extension = $newImage->getClientOriginalExtension();
-          $uniqueImageName = Uuid::uuid4()->toString() . '.' . $extension;
+      if (!empty($newImages)) {
+          foreach ($newImages as $newImage) {
+              $extension = $newImage->getClientOriginalExtension();
+              $uniqueImageName = Uuid::uuid4()->toString() . '.' . $extension;
 
-          $newImage->storeAs('public/landings/' . $landingId . '/products/' . $productId . '/images' , $uniqueImageName);
+              $newImage->move(public_path('images/landings/' . $landingId . '/products/' . $productId), $uniqueImageName);
 
-          ProductImage::create(['product_id' => $productId, 'img_name' => $uniqueImageName]);
-        }
+              ProductImage::create(['product_id' => $productId, 'img_name' => $uniqueImageName]);
+          }
       }
 
-      if (!empty($deleted)){
-        $imagesToDelete = ProductImage::whereIn('id', $deleted)->get();
+      if (!empty($deleted)) {
+          $imagesToDelete = ProductImage::whereIn('id', $deleted)->get();
 
-        foreach ($imagesToDelete as $image) {
-          Storage::disk('public')->delete('landings/' . $landingId . '/products/' . $productId . '/images/' . $image->img_name);          
-        }
+          foreach ($imagesToDelete as $image) {
+              $imagePath = public_path('images/landings/' . $landingId . '/products/' . $productId . $image->img_name);
+              if (File::exists($imagePath)) {
+                  File::delete($imagePath);
+              }
+          }
 
-        ProductImage::destroy($deleted);
+          ProductImage::destroy($deleted);
       }
 
       $productImages = ProductImage::where('product_id', $productId)->get();

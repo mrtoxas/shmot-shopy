@@ -75,7 +75,7 @@ export const LandingAdvantagesForm = () => {
             <img
               src={value.startsWith('data:image/') && value.includes(';base64,')
                 ? value
-                : `${window.location.protocol}//${window.location.hostname}/storage/landings/${landingId}/advantages/${value}`}
+                : `/images/landings/${landingId}/advantages/${value}`}
               alt={alt}
               className='block w-full h-full object-cover '
             />)

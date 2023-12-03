@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Product;
 use App\Models\Landing;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -62,10 +62,8 @@ class ProductController extends Controller
 
       $product = Product::find($productId);
 
-      if ($product) {
-        Storage::disk('public')->deleteDirectory('landings/' . $landingId . '/products/' . $productId);
-        $product->delete();
-      }
+      $directoryPath = public_path('images/landings/' . $landingId . '/products/' . $productId);
+      File::deleteDirectory($directoryPath); 
 
       return response()->json([
         'message' => 'Товар успішно видалено!'

@@ -87,7 +87,7 @@ export const ProductImagesForm = () => {
   const preparedImgList = useMemo(() => {
     return imgList?.map((el, index) => {
       const imgLink = el.id
-        ? `${window.location.protocol}//${window.location.hostname}/storage/landings/${landingId}/products/${productId}/images/${el.img_name}`
+        ? `/images/landings/${landingId}/products/${productId}/${el.img_name}`
         : el.img_name;
       return (
         <div key={index} className="w-32 h-32 relative">

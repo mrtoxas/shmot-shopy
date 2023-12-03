@@ -7,7 +7,8 @@ $imgNames = [];
 	foreach($products as $product){
 	  $images = $product->productImages;
 	  foreach($images as $image){
-	    $imgNames[] = 'public/landings/' . $landingId . '/products/' . $product->id . '/images/' . $image->img_name;
+	  	
+	    $imgNames[] = '/images/landings/' . $landingId . '/products/' . $product->id . '/' . $image->img_name;
 	}
 }
 
