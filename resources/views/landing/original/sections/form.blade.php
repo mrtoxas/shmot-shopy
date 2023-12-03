@@ -14,7 +14,7 @@
             ]
           );
         @endphp
-        <option value="{{$value}}">{{$variant->value}}</option>
+        <option value="{{$value}}">{{$variant->name}}</option>
       @endforeach
     @endforeach
   </select>
