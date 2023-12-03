@@ -4,7 +4,7 @@ if (!$reviews) {
 }
 @endphp
 <h2 class="text-center text-2xl font-bold">ВІДГУКИ <span class="text-primary">ПОКУПЦІВ</span></h2>
-<div class="grid pap-4 mt-6">
+<div class="grid pap-4 mt-6 px-4">
   @foreach ($reviews as $index => $review)  
   <div>
     <div class="grid grid-cols-[auto,1fr,auto] gap-8 items-center">
