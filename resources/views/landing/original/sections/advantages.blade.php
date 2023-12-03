@@ -1,5 +1,5 @@
 @if(isset($advantage))
-<div class="grid grid-cols-3 gap-6 px-2">
+<div class="grid grid-cols-3 gap-6 px-4">
   @foreach ($advantage as $index => $item)
   <div>
     <figure class="grid gap-2 text-center font-medium text-sm">
