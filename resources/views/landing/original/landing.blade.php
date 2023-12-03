@@ -56,4 +56,7 @@
 <footer>
   @include("$template.sections.footer")
 </footer>
+
+@include("$template.sections.loader") 
+
 @endsection
