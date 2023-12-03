@@ -17,7 +17,7 @@ jobs:
       - name: rsync deploy
         uses: burnett01/rsync-deployments@5.2.1
         with:
-          switches: "-avzr --delete --exclude='.env' --exclude='node_modules' --exclude='.git' --exclude='.github' --exclude='.htaccess' --exclude='public/.htaccess'"
+          switches: "-avzr --delete --exclude='.env' --exclude='node_modules' --exclude='.git' --exclude='.github' --exclude='.htaccess' --exclude='public/.htaccess' --exclude='public/images/landings'"
           path: .
           remote_host: ${{ secrets.REMOTE_HOST }}
           remote_user: ${{ secrets.REMOTE_USER }}

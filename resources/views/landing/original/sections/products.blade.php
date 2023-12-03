@@ -29,7 +29,7 @@
     </div>
   @endif
 
-  <div class="grid grid-cols-[1fr,auto] gap-1 items-start">
+  <div class="grid grid-cols-[1fr,auto] gap-1 items-start px-2">
     <h3 class="text-xl font-bold border-l-4 px-2 border-primary">{{ $product->name }}</h3>
     <div class="flex gap-3 items-end">
       <div class="bg-primary rounded-md inline-block py-1 px-2 text-white text-sm font-bold">-{{ $discount }}%
