@@ -4,15 +4,12 @@
 @endphp
 
 
-<div class="relative overflow-hidden h-full">
-  <div class="absolute p2 bg-red-600 text-white text-sm z-10 right-[-110px] top-10 w-80 text-center rotate-45">
-    Знижка -{{ $discount }}%
-  </div>
-  <div class="swiper max-w-[100%] h-full">
-    <div class="swiper-wrapper">
+<div class="relative overflow-hidden h-full"> 
+  <div class="swiper w-full h-full">
+    <div class="swiper-wrapper h-full ">
       @foreach($images as $image)
-      <div class="swiper-slide">
-        <img src="{{ Storage::url('public/images/' . $image) }}" alt="{{$image}}" class="w-full h-full object-cover">
+      <div class="swiper-slide h-full">
+        <img src="{{ $image }}" alt="{{$image}}" class="absolute left-0 top-0 display-block w-full h-full object-cover max-h-full">
       </div>
       @endforeach
     </div>

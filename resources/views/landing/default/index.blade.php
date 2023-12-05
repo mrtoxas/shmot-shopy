@@ -1,53 +1,47 @@
 @php
-$template = 'landing.default';
+  $templateJson = json_decode(
+    file_get_contents(
+    resource_path('views/landing/original/template.json')
+    ), true
+  );
+
+  $templateName = $templateJson["name"];
+  $templateVariables = $templateJson["variables"] ?? [];
+  $userVariables = json_decode($landingSettings->template_settings, true);
+  
+  $landingVariables = isset($userVariables) ? $userVariables : $templateVariables;  
 @endphp
 @extends('landing')
 @section('head')
-<title>{{ $landingSettings->meta_title }}</title>
-<meta name="description" content={{ $landingSettings->meta_description }}>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
-<link href="{{ asset('templates/default/css/swiper-bundle.min.css') }}" rel="stylesheet">
-<link href="{{ asset('templates/default/css/main.css') }}" rel="stylesheet">
+  <meta name="viewport" content="width=768">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
+  <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet">
+  <meta property="og:image" content="fav/apple-touch-icon.png">
+  <meta property="og:image:width" content="180">
+  <meta property="og:image:height" content="180">
+  <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+  <link rel="manifest" href="fav/site.webmanifest">
+  <link rel="mask-icon" href="fav/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="var(--primary)" />
+  <style>
+    :root{
+      @foreach($landingVariables as $variable)
+        --{{$variable["name"]}}: {{$variable["value"]}};
+      @endforeach
+    }
+  </style>
+  @yield('template_head')
 @endsection
 @section('content')
-<div class="bg-secondary h-full font-montserrat">
-    <div class="max-w-[422px] md:max-w-[768px] mx-auto px-4">
-        <div class="pt-4">
-            @include("$template.components.pageTags", [
-            'tags' => [
-            "КОЛЕКЦIЇ",
-            "РОЗПРОДАЖ",
-            "СПОРТИВНИЙ ОДЯГ"
-            ]
-            ])
-        </div>
-
-        @if($landingSettings->use_global_product)
-        <div class="pt-4">
-            @include("$template.components.globalProductCard")
-        </div>
-        @endif
-
-        <div class="pt-8">
-            {{-- @include("$template.components.productCards") --}}
-        </div>
+  <div class="bg-backplate min-h-screen font-montserrat">
+    <div class="md:max-w-[768px] mx-auto px-4 py-4">
+      @yield('template_content')
     </div>
-</div>
+  </div>
 @endsection
-
 @section('scripts')
-<script src="{{ asset('templates/default/js/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('templates/default/js/main.js') }}"></script>
+<script src='{{ asset("templates/$templateName/app.js") }}'></script>
 @endsection
-
-{{--
-@include("$template.components.globalProductCard", [
-'price' => $globalProduct->price,
-'discount' => $globalProduct->discount
-])
-@include("$template.components.productCards")
-@include("$template.components.header")
-@include("{$template}.components.carousel")
-@include("{$template}.components.formOrder")
-@include("$template.components.globalAdvantages")
---}}
