@@ -108,7 +108,7 @@ class LandingController extends Controller
         throw new \Exception('Ви не можете видалити цей сайт', 403);
       }
 
-      $directoryPath = public_path('images/landings');
+      $directoryPath = public_path('images/landings/' . $id);
 
       if (File::exists($directoryPath)) {
         File::deleteDirectory($directoryPath); 
