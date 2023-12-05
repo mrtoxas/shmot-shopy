@@ -35,6 +35,7 @@
     @include("$template.sections.expiration")
     @include("$template.sections.products")
     @include("$template.sections.reviews")
+    @include("$template.sections.howToOrder")    
     <div class="mt-1">
       @include("$template.sections.rest")
     </div>
