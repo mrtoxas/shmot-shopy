@@ -19,17 +19,7 @@
         <h3 class="font-bold">ДЗВІНОК</h3> 
         <p class="text-sm">Наш менеджер перетелефонує вам для уточнення деталей</p>
       </div>
-    </div>
-
-    <div class="bg-white p-4 flex gap-6 items-center z-10">
-      <div class="w-12 h-12 rounded-full flex justify-center items-center bg-primary-lighter font-bold text-xl text-white shrink-0">
-        3
-      </div>
-      <div>
-        <h3 class="font-bold">ВІДПРАВКА БЕЗ ПРЕДОПЛАТИ</h3> 
-        <p class="text-sm">Доставляємо ваш товар протягом 1-3 днів</p>
-      </div>
-    </div>
+    </div>   
 
     <div class="bg-white p-4 flex gap-6 items-center z-10">
       <div class="w-12 h-12 rounded-full flex justify-center items-center bg-primary-lighter font-bold text-xl text-white shrink-0">
@@ -39,7 +29,17 @@
         <h3 class="font-bold">ОТРИМАННЯ</h3> 
         <p class="text-sm">Оплачуєте при отриманні на Новій пошті</p>
       </div>
-    </div>   
+    </div>
+    
+    <div class="bg-white p-4 flex gap-6 items-center z-10">
+      <div class="w-12 h-12 rounded-full flex justify-center items-center bg-primary-lighter font-bold text-xl text-white shrink-0">
+        3
+      </div>
+      <div>
+        <h3 class="font-bold">ВІДПРАВКА БЕЗ ПРЕДОПЛАТИ</h3> 
+        <p class="text-sm">Доставляємо ваш товар протягом 1-3 днів</p>
+      </div>
+    </div>
     
     <div class="absolute border-2 border-l-0 border-primary-lighter w-[50%] h-[50%] self-center justify-self-center"></div>
   </div>
