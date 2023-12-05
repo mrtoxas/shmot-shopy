@@ -15,7 +15,7 @@
 @endphp
 
 <div class="grid grid-cols-2 bg-white rounded-sm py-6 min-h-carousel">
-	<div class="translate-x-[-2rem] rounded-sm shadow-xl h-full h-carousel">
+	<div class="translate-x-[-2rem] rounded-sm shadow-xl h-carousel">
     @include("$template.components.productCarousel", [
       'discount' => $globalProduct->dicsount,
       'images' => $imgNames

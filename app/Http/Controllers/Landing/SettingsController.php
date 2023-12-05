@@ -68,9 +68,9 @@ class SettingsController extends Controller
   public function updateThemeVariables(Request $request, $id)
   {
     try {
-      $json = $request->all();
+      $json = $request->except('_url'); 
       $data = json_encode($json, true); 
-      $landingSettings = LandingSettings::where('landing_id', $id)->first();
+      $landingSettings = LandingSettings::where('landing_id', $id)->first();     
 
       if ($landingSettings) {
           $landingSettings->template_settings = $data;
