@@ -1,7 +1,7 @@
 @php
   $templateJson = json_decode(
     file_get_contents(
-    resource_path('views/landing/original/template.json')
+    resource_path('views/landing/default/template.json')
     ), true
   );
 

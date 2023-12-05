@@ -1,4 +1,4 @@
-export const Loader = (elem) => {
+export const Loader = (elem) => {	
 	const element = document.getElementById(elem);
 	if (!element) return;
 

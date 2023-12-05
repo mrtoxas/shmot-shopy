@@ -44,6 +44,7 @@
       @include("$template.sections.footer")
     </div>
   </div>
+  @include("$template.sections.loader")
   
 
 @endsection
