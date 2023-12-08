@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { useFlashToasts } from '@/hooks/useFlashToasts';
@@ -26,6 +26,8 @@ export default function Product({ auth, flash }: PageProps) {
 
   const { currentLanding, currentProduct } = useLandingsStore();
 
+  const [productName, setProductName] = useState('');
+
   const {
     getProductWithData,
     getLandingWithData
@@ -40,6 +42,7 @@ export default function Product({ auth, flash }: PageProps) {
   }, []);
 
   const head = useMemo(() => {  
+    setProductName(currentProduct?.name);
     return (currentLanding?.name || currentProduct?.name)
       ? `${currentLanding?.name}.${window.location.hostname} - ${currentProduct?.name}`
       : " "
@@ -59,7 +62,7 @@ export default function Product({ auth, flash }: PageProps) {
         </div>
       }
     >
-      <Head title="Товар productId" />
+      <Head title={`${productName ?? ''}`} />
 
       <div className="py-6 bg-secondary">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
