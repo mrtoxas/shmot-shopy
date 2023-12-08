@@ -26,7 +26,7 @@ export default function Product({ auth, flash }: PageProps) {
 
   const { currentLanding, currentProduct } = useLandingsStore();
 
-  const [productName, setProductName] = useState('');
+  const [productName, setProductName] = useState<string | undefined>('');
 
   const {
     getProductWithData,
