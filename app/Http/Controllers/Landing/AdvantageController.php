@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Advantage;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AdvantageController extends Controller
 {
@@ -13,7 +13,7 @@ class AdvantageController extends Controller
   {    
     $request->validate([
       'caption.*' => 'required|string',
-    ]);        
+    ]); 
 
     try {
       $captions = $request->caption;
@@ -37,13 +37,19 @@ class AdvantageController extends Controller
                   }
               }
 
-              $file->move(public_path('images/landings/' . $id . '/advantages'), $fileName);
+              $image = Image::make($file);
+              $image->resize(400, 400, function ($constraint) {
+                  $constraint->aspectRatio();
+                  $constraint->upsize();
+              });
+              $destinationPath = public_path('images/landings/' . $id . '/advantages');
+              $image->save($destinationPath . '/' . $fileName);
+
               $fileNames[$index] = $fileName;
           } else {
               $fileNames[$index] = $oldImgName;
           }
       }
-
 
       if ($advantages->isEmpty()) {
         $data = [];
