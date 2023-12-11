@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Advantage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class AdvantageController extends Controller
 {
@@ -47,7 +48,7 @@ class AdvantageController extends Controller
               if (!File::exists($destinationPath)) {
                   File::makeDirectory($destinationPath, $mode = 0777, true, true);
               }
-              
+
               $image->save($destinationPath . '/' . $fileName);
 
               $fileNames[$index] = $fileName;

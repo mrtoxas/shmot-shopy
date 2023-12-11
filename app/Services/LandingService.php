@@ -78,4 +78,38 @@ class LandingService
       throw new Exception($e->getMessage());
     }
   }
+
+  public function getTemplateVariables($templateName, $userSettings){
+
+    try {
+
+      $userVariables = [];
+      $templateVariables = [];
+
+      $file_path = base_path('resources/views/landing/' . $templateName . '/template.json');
+      $templateJson = file_get_contents($file_path);
+      
+      if ($templateJson === false) {
+        throw new Exception("Помилка завантаження налаштувань шаблону");
+      }
+
+      $templateData = json_decode($templateJson, true);
+      $templateVariables = $templateData["variables"];
+
+      if ($userSettings){
+        $userVariables = json_decode($userSettings, true);
+      }
+
+      if(!count($userVariables) && !count($templateVariables)){
+        throw new \Exception('Налаштування шаблону не знайдено', 403);
+      }
+      
+      $landingThemeVariables = $userVariables ?: $templateVariables;
+
+      return $landingThemeVariables;
+
+    } catch (\Exception $e) {
+        throw $e;
+    }
+  }
 }

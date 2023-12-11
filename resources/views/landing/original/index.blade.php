@@ -1,16 +1,32 @@
 @php
-  $templateJson = json_decode(
-    file_get_contents(
-    resource_path('views/landing/original/template.json')
-    ), true
-  );
+  $templateName = $landingSettings->template_name;
+  if(!$templateName) exit('Помилка: Не обрано шаблон');
+@endphp
 
-  $templateName = $templateJson["name"];
-  $templateVariables = $templateJson["variables"] ?? [];
-  $userVariables = json_decode($landingSettings->template_settings, true);
-  
-  $landingVariables = isset($userVariables) ? $userVariables : $templateVariables;  
+@php
+  $file_path = base_path('resources/views/landing/' . $templateName . '/template.json');
+  $templateJson = file_get_contents($file_path);
+  $templateData = json_decode($templateJson, true);
 
+  $userVariables = [];
+  $templateVariables = [];
+
+  if ($landingSettings && $landingSettings->template_settings){
+    $userVariables = json_decode($landingSettings->template_settings, true);
+  }
+
+  if ($templateData && $templateData["variables"]){
+    $templateVariables = $templateData["variables"];
+  }
+
+  if(!count($userVariables) && !count($templateVariables)){
+    exit('Помилка: Змiннi шаблону не знайдено');
+  }
+
+  $landingVariables = $userVariables ?: $templateVariables;
+@endphp
+
+@php
   $current_url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 @endphp
 @extends('landing')
@@ -26,13 +42,15 @@
   <link rel="mask-icon" href="{{$current_url}}fav/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="var(--primary)" />
-  <style>
-    :root{
-      @foreach($landingVariables as $variable)
-        --{{$variable["name"]}}: {{$variable["value"]}};
-      @endforeach
-    }
-  </style>
+  @if(isset($landingVariables) && count($landingVariables))
+    <style>
+      :root{
+        @foreach($landingVariables as $variable)
+          --{{$variable["name"]}}: {{$variable["value"]}};
+        @endforeach
+      }
+    </style>
+  @endif
   @yield('template_head')
 @endsection
 @section('content')

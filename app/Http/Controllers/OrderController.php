@@ -36,6 +36,8 @@ class OrderController extends Controller
 
     $host = explode(".", $request->getHost())[0];
 
+
+
     $landing = app(LandingController::class)->getLandingIdByName( $host, [
       'landingSettings',
       'globalProduct'
@@ -105,7 +107,10 @@ class OrderController extends Controller
 
     // $sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
 
+    
+
     return view('landing.' . $templateName . '.order',[
+      'landingSettings' => $landingSettings,
       'productName' => $productName,
       'variantName' => $variantName,
       'size'    => $size,
