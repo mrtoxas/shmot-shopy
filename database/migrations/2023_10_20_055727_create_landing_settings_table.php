@@ -25,7 +25,7 @@ return new class extends Migration
       $table->string('template_name');
       $table->json('template_settings')->nullable();
       $table->string('collection_name')->nullable();
-      $table->string('collection_description')->nullable();
+      $table->string('collection_description', 1000)->nullable();
       $table->string('title_1')->nullable();
       $table->string('title_2')->nullable();
       $table->string('title_3')->nullable();

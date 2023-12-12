@@ -9,10 +9,11 @@ use App\Models\Product;
 use App\Models\Landing;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-  public function store(Request $request, $id)
+  public function store(Request $request, $id, ProductService $productService)
   {
     $request->validate([
       'name' => 'required|string',
@@ -31,13 +32,14 @@ class ProductController extends Controller
 
     $name = $request->input('name');
     $article = $request->input('article');
+    $clone = $request->input('clone');
 
     try {
-      $product = Product::create([
-        'landing_id' => $id,
-        'name' => $name,
-        'article' => $article
-      ]);
+      if ($clone) {
+        $product = $productService->cloneProduct($clone, $name, $article);
+      } else {
+        $product = $productService->createProduct($id, $name, $article);
+      }
 
       return response()->json([
         'data' => $product,
@@ -52,7 +54,7 @@ class ProductController extends Controller
   }
 
   public function destroy($landingId, $productId)
-  {
+  {    
     try {
       $landing = Landing::find($landingId);
 
@@ -60,7 +62,11 @@ class ProductController extends Controller
         throw new \Exception('Ви не можете видалити цей товар', 403);
       }
 
-      $product = Product::find($productId);
+      $product = Product::find($productId);      
+
+      if ($product) {
+        $product->delete();       
+      }
 
       $directoryPath = public_path('images/landings/' . $landingId . '/products/' . $productId);
       File::deleteDirectory($directoryPath); 

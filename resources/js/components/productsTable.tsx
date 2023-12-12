@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Link } from '@inertiajs/react';
 import { Button, buttonVariants } from "@/components/shadcn/ui/button";
 import { usePage } from "@inertiajs/react";
-import { Loader2Icon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
+import { CopyIcon, Loader2Icon, PencilIcon, Trash2Icon } from "@/components/ui/icons";
 import {
   Table,
   TableBody,
@@ -19,22 +19,26 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-  AlertDialogAction
+  AlertDialogTrigger
 } from "@/components/shadcn/ui/alert-dialog";
 import useLandingsStore from "@/store/landingsStore";
 import { formatDate } from "@/utils/formatDate";
 import { toast } from "@/components/shadcn/ui/use-toast"
 import { useLoader } from "@/hooks/useLoading";
+import useAppStore from "@/store/appStore";
 
-export const ProductsTable = () => {
+interface ProductsTableProps {
+  toggleNewProductDialog: () => void
+}
+
+export const ProductsTable = (props: ProductsTableProps) => {
   const { landingId } = usePage().props;
-
   const { currentLanding, removeProduct } = useLandingsStore();
+  const { startLoading, stopLoading, isLoading } = useLoader();  
+  const { setNewProductCloneId } = useAppStore();
+  const { toggleNewProductDialog } = props;
 
-  const { startLoading, stopLoading, isLoading } = useLoader();
-
-  const deleteProductHandler = async (id: App.Models.Product["id"]) => {
+  const deleteProductHandler = async (id: App.Models.Product["id"]) => {    
     startLoading();
 
     removeProduct(Number(landingId), id).then((res) => {
@@ -43,7 +47,12 @@ export const ProductsTable = () => {
         title: "Успіх!",
         description: res.data.message,
       })
-    }).finally(() => stopLoading());;
+    }).finally(() => stopLoading());
+  }
+
+  const cloneClickHandler = (cloneId: App.Models.Product["id"]) => {    
+    setNewProductCloneId(cloneId);
+    toggleNewProductDialog();
   }
 
   const preparedData = useMemo(() => {
@@ -65,6 +74,9 @@ export const ProductsTable = () => {
           <TableCell>{formatDate(String(el.created_at))}</TableCell>
           <TableCell className="text-right">
             <div className="flex gap-2 justify-end flex-nowrap">
+                <Button onClick={() => cloneClickHandler(el.id)} variant="outline" size="icon" className="hover:text-blue-600" title="Клонувати">
+                  <CopyIcon className="h-4 w-4" />
+                </Button>
               <Link
                 className={buttonVariants({ variant: "outline", size: 'icon', className: 'hover:text-green-600' })}
                 href={route('product.admin', { landingId: String(landingId), productId: el.id })}

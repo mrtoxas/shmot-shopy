@@ -19,8 +19,14 @@ export default function Landings({ auth, flash }: PageProps) {
   const { getLandings } = useLandingStore();
   const [isLandingLoaded, setIsLandingLoaded] = useState(true);
   const [isOpenNewLandingDialog, setIsOpenNewLandingDialog] = useState(false);
+  const { setNewLandingCloneName } = useAppStore();
 
   const newLandingDialogToggle = () => setIsOpenNewLandingDialog((prevState) => !prevState);
+
+  const addLandingHandler = () => {
+    setNewLandingCloneName("");
+    newLandingDialogToggle();
+  }
 
   useEffect(() => {
     getLandings().finally(() => setIsLandingLoaded(false));
@@ -32,7 +38,7 @@ export default function Landings({ auth, flash }: PageProps) {
       header={
         <div className="flex justify-between items-center">
           <PageHead message="Мої сайти" />
-          <Button onClick={newLandingDialogToggle}>
+          <Button onClick={addLandingHandler}>
             <PlusIcon className="mr-2 h-4 w-4" />Додати сайт
           </Button>
         </div>

@@ -9,10 +9,10 @@
 </head>
 
 <body class="min-h-screen flex justify-center items-center">
-  <div class="flex items-center flex-col">   
+  <div class="flex items-center flex-col md:max-w-[768px] mx-auto">   
     <h1 class="text-2xl font-bold text-red-600">ЙОЙ! СТАЛАСЯ ПОМИЛКА!</h1>
     <p class="font-bold my-4">"{{ $message }}"</p>
-    <p>Зверніться до адміністратора<p> 
+    <p class="text-sm">Зверніться до адміністратора<p> 
   </div>          
 </body>
 

@@ -86,7 +86,7 @@ export const ReviewsForm = () => {
     const template = currentLanding?.landing_settings?.template_name;
 
     const images = Array.from({ length: 3 }, (_, index) => {
-      return `/templates/${template}/images/reviews/${index+1}.jpg`
+      return `/images/reviews/${index+1}.jpg`
     });
 
     return images.map((item, index) => {

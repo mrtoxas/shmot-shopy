@@ -45,6 +45,11 @@ class ProductImageController extends Controller
               });
 
               $destinationPath = public_path('images/landings/' . $landingId . '/products/' . $productId);
+
+              if (!File::exists($destinationPath)) {
+                  File::makeDirectory($destinationPath, $mode = 0777, true, true);
+              }
+              
               $image->save($destinationPath . '/' . $uniqueImageName);
               $thumbImage->save($destinationPath . '/' . $uniqueImageThumbName);
 

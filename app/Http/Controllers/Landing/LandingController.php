@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Landing;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -97,7 +98,7 @@ class LandingController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy($id, LandingService $landingService)
+  public function destroy($id)
   {
     try {
       DB::beginTransaction();
@@ -129,7 +130,7 @@ class LandingController extends Controller
     }
   }
 
-  public function getForDomain(Request $request, $landingName)
+  public function getForDomain(Request $request, $landingName, LandingService $landingService)
   {
     try {
       $landing = Landing::with([
@@ -143,9 +144,14 @@ class LandingController extends Controller
 
       if ($landing === null) throw new \Exception('Лендiнг не знайдено', 404);
 
-      if (!isset($landing->landingSettings->template_name)) throw new \Exception('Шаблон не знайдено', 404);
+      //if (!isset($landing->landingSettings->template_name)) throw new \Exception('Шаблон не знайдено', 404);
 
-      $templateName = $landing->landingSettings->template_name;      
+      $templateName = $landing->landingSettings->template_name;    
+      $templateSettings = $landing->landingSettings->template_settings;
+
+      if (!$templateName) throw new Exception("Не обрано шаблон");
+
+      $templateVariables = $landingService->getTemplateVariables($templateName, $templateSettings);
 
       return view('landing.' . $templateName . '.landing', [
         'landingId' => $landing["id"],
@@ -155,9 +161,10 @@ class LandingController extends Controller
         'advantage' => $landing->advantage,
         'products' => $landing->products,        
         'reviews' => $landing->reviews,
+        'templateSettings' => $templateVariables
       ]);
     } catch (\Exception $e) {
-      $errorMessage = config('app.debug') ? $e->getMessage() : 'Виникла помилка, зверніться до адміністратора!';
+      $errorMessage = config('app.debug') ? $e->getMessage() : 'Помилка завантаженния даних!';
       return view('error', ['message' => $errorMessage]);     
     }
   }

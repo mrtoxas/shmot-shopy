@@ -17,6 +17,7 @@ import { Button } from "@/components/shadcn/ui/button";
 import { toast } from "@/components/shadcn/ui/use-toast";
 import { CalculatorIcon, Loader2Icon } from "@/components/ui/icons";
 import { useLoader } from "@/hooks/useLoading";
+import { Textarea } from '../shadcn/ui/textarea';
 
 const FormSchema = z.object({
   sizes: z.string().nullable(),
@@ -196,7 +197,21 @@ export const GlobalProductForm = () => {
                 </FormItem>
               )}
             />
-
+          </div>
+          <div>
+            <FormField
+                control={form.control}
+                name="collection_description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Опис</FormLabel>
+                    <FormControl>
+                      <Textarea className="min-h-[50px] whitespace-pre-wrap" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
           </div>
           <div>
             <Button disabled={isLoading} type="submit">
