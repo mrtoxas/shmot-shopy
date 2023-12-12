@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('img');
             $table->string('info');
-            $table->string('review');
+            $table->string('review', 1000);
             $table->timestamps();
 
             $table->foreign('landing_id')

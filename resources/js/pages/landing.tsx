@@ -14,7 +14,6 @@ import { LandingAdvantagesForm } from '@/components/forms/landingAdvantagesForm'
 import { LandingSetupForm } from '@/components/forms/landingSetupForm';
 import { ThemeVariablesForm } from '@/components/forms/themeVariablesForm';
 import { ProductsTable } from '@/components/productsTable';
-import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '@/components/shadcn/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { NewProductForm } from '@/components/forms/newProductForm';
@@ -26,7 +25,7 @@ export default function Landing({ auth, flash }: PageProps) {
 
   const [isOpenNewProductDialog, setIsOpenNewProductDialog] = useState(false);
 
-  const { isPagePending, setPagePending } = useAppStore();
+  const { isPagePending, setPagePending, setNewProductCloneId } = useAppStore();
 
   const {
     getLandingWithData,
@@ -45,6 +44,11 @@ export default function Landing({ auth, flash }: PageProps) {
   }, []);
 
   const newProductDialogToggle = () => setIsOpenNewProductDialog((prevState) => !prevState);
+
+  const newProductHandler = () => {
+    setNewProductCloneId(null);
+    newProductDialogToggle();
+  }
 
   const landingLink = useMemo(() => {
     return `${window.location.protocol}//${currentLanding?.name}.${window.location.hostname}`;
@@ -77,29 +81,29 @@ export default function Landing({ auth, flash }: PageProps) {
             <GlobalProductForm />
           </PageCard>
 
-          <PageCard 
-            title="Товари" 
+          <PageCard
+            title="Товари"
             action={
-              <Button onClick={newProductDialogToggle}>
+              <Button onClick={newProductHandler}>
                 <PlusIcon className="mr-2 h-4 w-4" /> Додати товар
               </Button>
-            }>           
-            <ProductsTable />
+            }>
+            <ProductsTable toggleNewProductDialog={newProductDialogToggle} />
           </PageCard>
 
-          <PageCard title="Налаштування шаблону">          
+          <PageCard title="Налаштування шаблону">
             <ThemeVariablesForm />
           </PageCard>
 
-          <PageCard title="Переваги">           
+          <PageCard title="Переваги">
             <LandingAdvantagesForm />
           </PageCard>
 
-          <PageCard title="Відгуки">          
+          <PageCard title="Відгуки">
             <ReviewsForm />
           </PageCard>
 
-          <PageCard title="Налаштування сайту">            
+          <PageCard title="Налаштування сайту">
             <LandingSetupForm />
           </PageCard>
         </div>

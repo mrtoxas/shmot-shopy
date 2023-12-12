@@ -90,7 +90,7 @@ const useLandingsStore = create<LandingsState>()((set) => ({
 
   createProduct: async (landingId, data) => {
     const response = await window.axios.post(route('api.products.store', { landingId: landingId }), data);
-    const { data: resdata } = response;
+    const { data: resdata } = response;    
 
     set((state) => {
       if (state.currentLanding && state.currentLanding.products) {
