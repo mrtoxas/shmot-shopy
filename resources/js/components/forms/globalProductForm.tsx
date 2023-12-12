@@ -197,22 +197,7 @@ export const GlobalProductForm = () => {
                 </FormItem>
               )}
             />
-          </div>
-          <div>
-            <FormField
-                control={form.control}
-                name="collection_description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Опис</FormLabel>
-                    <FormControl>
-                      <Textarea className="min-h-[50px] whitespace-pre-wrap" {...field} value={field.value || ""} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-          </div>
+          </div>          
           <div>
             <Button disabled={isLoading} type="submit">
               {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />} Зберегти
