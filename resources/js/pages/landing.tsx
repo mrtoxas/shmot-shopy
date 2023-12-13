@@ -19,6 +19,7 @@ import { Dialog } from '@/components/ui/dialog';
 import { NewProductForm } from '@/components/forms/newProductForm';
 import { ReviewsForm } from '@/components/forms/reviewsForm';
 import { PageCard } from '@/components/ui/pageCard';
+import { SuccessOrderInfoForm } from '@/components/forms/successOrderInfoForm';
 
 export default function Landing({ auth, flash }: PageProps) {
   useFlashToasts(flash);
@@ -71,7 +72,7 @@ export default function Landing({ auth, flash }: PageProps) {
       <Head title="Мої сайти" />
 
       <div className="py-6 bg-secondary">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex gap-4 flex-col">                      
 
           <PageCard title="Загальнi налаштування">
             <LandingSettingsForm />
@@ -101,6 +102,10 @@ export default function Landing({ auth, flash }: PageProps) {
 
           <PageCard title="Відгуки">
             <ReviewsForm />
+          </PageCard>
+
+          <PageCard title="Привітання">
+            <SuccessOrderInfoForm />
           </PageCard>
 
           <PageCard title="Налаштування сайту">

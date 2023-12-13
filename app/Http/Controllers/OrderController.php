@@ -105,7 +105,7 @@ class OrderController extends Controller
       $txt .= "<b>" . $key . "</b> " . $value . "%0A";
     };
 
-    $sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
+    //$sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
 
     
 
