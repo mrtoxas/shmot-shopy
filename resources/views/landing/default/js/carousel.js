@@ -6,6 +6,7 @@ export const Carousel = () => {
     modules: [Navigation, Pagination, Autoplay],
     loop: true,
     autoHeight: false,
+    spaceBetween: 10,
     pagination: {
       el: '.swiper-pagination',
     },
@@ -20,5 +21,13 @@ export const Carousel = () => {
     scrollbar: {
       el: '.swiper-scrollbar',
     },
+
+    slidesPerView: 'auto', 
+
+    breakpoints: {
+      768: {
+        slidesPerView: 1,
+      },
+    }
   });
 }

@@ -7,7 +7,7 @@
 @extends('landing')
 
 @section('head')
-  <meta name="viewport" content="width=768">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
   <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet">   
   <meta property="og:image" content="{{$current_url}}/images/ogg.jpg">
@@ -31,7 +31,7 @@
 @endsection
 @section('content')
   <div class="bg-backplate min-h-screen font-montserrat">
-    <div class="md:max-w-[768px] mx-auto px-4 py-4">
+    <div class="md:max-w-[768px] mx-auto py-4">
       @yield('template_content')
     </div>
   </div>

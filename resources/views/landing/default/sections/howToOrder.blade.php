@@ -1,6 +1,6 @@
 <section>
   <h2 class="text-center text-xl font-bold">ЯК ЗРОБИТИ <span class="text-primary">ЗАМОВЛЕННЯ</span></h2>
-  <div class="grid grid-cols-2 gap-6 mt-6 grid-rows-2 relative">
+  <div class="px-4 grid md:grid-cols-2 gap-4 md:gap-6 mt-6 grid-rows-2 relative">
     <div class="bg-white p-4 flex gap-6 items-center z-10">
       <div class="w-12 h-12 rounded-full flex justify-center items-center bg-primary-lighter font-bold text-xl text-white shrink-0">
         1

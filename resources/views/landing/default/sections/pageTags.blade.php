@@ -3,7 +3,7 @@
   $pageTags = ["КОЛЕКЦIЇ", "РОЗПРОДАЖ", $title_1];
 @endphp
 
-<div class="flex gap-2 flex-wrap">
+<div class="flex gap-2 flex-wrap px-4">
   @foreach($pageTags as $key => $tag)
     @php
       $classCondition = ($key === count($pageTags) - 1) ? 'bg-white text-gray-700' : 'text-white bg-black';

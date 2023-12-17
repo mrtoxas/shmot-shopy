@@ -14,18 +14,18 @@
   $end_date = date('d.m.Y', strtotime('+8 days'));
 @endphp
 
-<div class="grid grid-cols-2 bg-white rounded-sm py-6 min-h-carousel">
-	<div class="translate-x-[-2rem] rounded-sm shadow-xl h-carousel">
+<div class="md:grid md:grid-cols-2 bg-white rounded-sm py-2 md:py-6 min-h-carousel md:px-4">
+	<div class="md:translate-x-[-2rem] rounded-sm md:shadow-xl h-carousel">
     @include("$template.components.productCarousel", [
       'discount' => $globalProduct->dicsount,
       'images' => $imgNames
     ])   
 	</div>
-	<div class="pr-6 flex flex-col justify-between">
+	<div class="px-4 py-6 md:pr-6 flex flex-col justify-between">
     <div>
-      <div class="font-bold text-2xl">{{ $landingSettings->title_1 }}</div>
-      <div class="font-semibold text-md mt-2">{{ $landingSettings->title_2 }}</div>
-      <div class="mt-1">
+      <div class="font-bold text-xl md:text-2xl">{{ $landingSettings->title_1 }}</div>
+      <div class="font-semibold text-sm md:text-md mt-2">{{ $landingSettings->title_2 }}</div>
+      <div class="mt-4 md:mt-1">
         @include("{$template}.components.starRating", [
           'reviews' => 224
         ])

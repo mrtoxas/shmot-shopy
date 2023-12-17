@@ -26,10 +26,10 @@
   <meta name="description" content="{{ $landingSettings->meta_description }}">
 @endsection
 @section('template_content')
-  <div class="mt-4">
+  <div class="md:mt-4">
     @include("$template.sections.pageTags")
   </div>
-  <div class="flex flex-col gap-14 mt-6">    
+  <div class="flex flex-col gap-10 md:gap-14 mt-4 md:mt-6">    
     @include("$template.sections.globalProductCard")
     @include("$template.sections.advantages")
     @include("$template.sections.expiration")
