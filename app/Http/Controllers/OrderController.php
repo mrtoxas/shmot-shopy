@@ -36,8 +36,6 @@ class OrderController extends Controller
 
     $host = explode(".", $request->getHost())[0];
 
-
-
     $landing = app(LandingController::class)->getLandingIdByName( $host, [
       'landingSettings',
       'globalProduct'
@@ -76,18 +74,22 @@ class OrderController extends Controller
       'order_source'    => $_SERVER['HTTP_HOST']    // источник заказа (необязательно)
     );
 
-    // $curl = curl_init();
-    // $production_url = 'https://backend.mydrop.com.ua/dropshipper/api/orders';
-    // curl_setopt($curl, CURLOPT_URL, $production_url);
-    // curl_setopt($curl, CURLOPT_POST, true);
-    // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    // curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-    // curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-    //   'X-API-KEY: ' . $crmApiKey,
-    //   'Content-Type: application/json'
-    // ));
-    // $out = curl_exec($curl);
-    // curl_close($curl);
+    if($crmApiKey){
+      $curl = curl_init();
+      $production_url = 'https://backend.mydrop.com.ua/dropshipper/api/orders';
+      curl_setopt($curl, CURLOPT_URL, $production_url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+        'X-API-KEY: ' . $crmApiKey,
+        'Content-Type: application/json'
+      ));
+      $out = curl_exec($curl);
+      curl_close($curl);
+    }
+
+    
 
     $arr = array(
       'Домен:'        => $_SERVER['HTTP_HOST'],
@@ -105,9 +107,9 @@ class OrderController extends Controller
       $txt .= "<b>" . $key . "</b> " . $value . "%0A";
     };
 
-    $sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
-
-    
+    if($telegramToken && $telegramChatId){
+      $sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
+    }
 
     return view('landing.' . $templateName . '.order',[
       'landingSettings' => $landingSettings,
