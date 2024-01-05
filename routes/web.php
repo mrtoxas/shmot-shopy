@@ -14,6 +14,7 @@ use App\Http\Controllers\Product\ProductImageController;
 use App\Http\Controllers\Product\ProductFeatureController;
 use App\Http\Controllers\Product\ProductVariantController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PrivacyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,8 @@ Route::get('/', function () {
 });
 
 Route::post('/form-ok.php', [OrderController::class, 'order'])->name('order');
+
+Route::get('/privacy', [PrivacyController::class, 'privacy'])->name('privacy');
 
 Route::middleware('auth')->group(function () {
   Route::get('/api/profile', [ProfileController::class, 'edit'])->name('profile.edit');
