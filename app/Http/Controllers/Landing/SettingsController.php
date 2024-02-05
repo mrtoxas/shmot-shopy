@@ -19,6 +19,7 @@ class SettingsController extends Controller
       'telegram_chat_id' => 'nullable|string',
       'crm_api_key' => 'nullable|string',
       'telegram_token' => 'nullable|string',
+      'g_tag_id' => 'nullable|string',
       'template_name' => 'string',
       'template_settings' => 'nullable|json',
       'use_global_product' => 'boolean',

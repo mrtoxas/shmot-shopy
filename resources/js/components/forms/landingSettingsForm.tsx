@@ -31,6 +31,7 @@ const FormSchema = z.object({
   telegram_chat_id: z.string().nullable(),
   crm_api_key: z.string().nullable(),
   telegram_token: z.string().nullable(),
+  g_tag_id: z.string().nullable(),
   template_name: z.string().min(1, {
     message: 'Шаблон обов\'язковий'
   }), 
@@ -66,6 +67,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: null,
       crm_api_key: null,
       telegram_token: null,
+      g_tag_id: null,
       template_name: "",   
       use_global_product: true,
       collection_name: null,
@@ -94,6 +96,7 @@ export const LandingSettingsForm = () => {
       telegram_chat_id: landing_settings.telegram_chat_id,
       crm_api_key: landing_settings.crm_api_key,
       telegram_token: landing_settings.telegram_token,
+      g_tag_id: landing_settings.g_tag_id,
       template_name: String(landing_settings.template_name),      
       use_global_product: Boolean(landing_settings.use_global_product),
       collection_name: landing_settings.collection_name,
@@ -200,6 +203,19 @@ export const LandingSettingsForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Telegram токен</FormLabel>
+                    <FormControl>
+                      <Input className="w-full" {...field} value={field.value || ""} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="g_tag_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Google tag id</FormLabel>
                     <FormControl>
                       <Input className="w-full" {...field} value={field.value || ""} />
                     </FormControl>
