@@ -33,4 +33,4 @@ jobs:
       
       - name: Deploy to remote server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.REMOTE_KEY_PATH }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd ${{ secrets.REMOTE_PATH }} && ./migrate.sh"
+          ssh -o StrictHostKeyChecking=no -i "${{ secrets.REMOTE_KEY_PATH }}" "${{ secrets.REMOTE_USER }}"@"${{ secrets.REMOTE_HOST }}" "cd ${{ secrets.REMOTE_PATH }} && ./migrate.sh"
