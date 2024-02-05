@@ -21,6 +21,7 @@ class LandingSettings extends Model
     'telegram_chat_id',
     'crm_api_key',
     'telegram_token',
+    'g_tag_id',
     'template_name',
     'template_settings',
     'collection_name',

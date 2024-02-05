@@ -25,6 +25,8 @@ class OrderController extends Controller
 
     $variantData = json_decode($request->variant, true);
 
+    $production = env('APP_ENV') === 'production';
+
     $productArticle = $variantData['productArticle'];
     $productName = $variantData['productName'];
     $variantName = $variantData['variantName'];
@@ -74,7 +76,7 @@ class OrderController extends Controller
       'order_source'    => $_SERVER['HTTP_HOST']    // источник заказа (необязательно)
     );
 
-    if($crmApiKey){
+    if($crmApiKey && $production){
       $curl = curl_init();
       $production_url = 'https://backend.mydrop.com.ua/dropshipper/api/orders';
       curl_setopt($curl, CURLOPT_URL, $production_url);
@@ -88,8 +90,6 @@ class OrderController extends Controller
       $out = curl_exec($curl);
       curl_close($curl);
     }
-
-    
 
     $arr = array(
       'Домен:'        => $_SERVER['HTTP_HOST'],
@@ -107,7 +107,7 @@ class OrderController extends Controller
       $txt .= "<b>" . $key . "</b> " . $value . "%0A";
     };
 
-    if($telegramToken && $telegramChatId){
+    if($telegramToken && $telegramChatId && $production){
       $sendToTelegram = fopen("https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$telegramChatId}&parse_mode=html&text={$txt}", "r");
     }
 
