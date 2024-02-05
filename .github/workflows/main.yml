@@ -29,15 +29,8 @@ jobs:
           remote_host: ${{ secrets.REMOTE_HOST }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.REMOTE_KEY }}
-          remote_path: ${{ secrets.REMOTE_PATH }}    
-      
-      - name: Debug information
-        run: |
-          echo "REMOTE_HOST: ${{ secrets.REMOTE_HOST }}"
-          echo "REMOTE_USER: ${{ secrets.REMOTE_USER }}"
-          echo "REMOTE_KEY: ${{ secrets.REMOTE_KEY }}"
-          echo "REMOTE_PATH: ${{ secrets.REMOTE_PATH }}"  
+          remote_path: ${{ secrets.REMOTE_PATH }}           
       
       - name: Deploy to remote server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.REMOTE_KEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd ${{ secrets.REMOTE_PATH }} && ./migrate.sh"
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.REMOTE_KEY_PATH }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd ${{ secrets.REMOTE_PATH }} && ./migrate.sh"
