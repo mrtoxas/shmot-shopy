@@ -16,6 +16,9 @@ jobs:
 
       - name: Install PHP dependencies with Composer
         run: composer install --optimize-autoloader --no-dev
+
+      - name: Apply migrate
+        run: php artisan migrate
       
       - name: rsync deploy
         uses: burnett01/rsync-deployments@5.2.1
