@@ -33,7 +33,7 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script', 
     'https://connect.facebook.net/en_US/fbevents.js'); 
     fbq('init', '<?= $fbPixelKey ?>'); 
-    fbq('track', 'PageView'); 
+    fbq('track', 'PageView');
     fbq('track', 'Lead'); 
   </script> 
   <noscript><img height="1" width="1" style="display:none" 
@@ -45,7 +45,7 @@
 <title>Вiтання!</title>
 @endsection
 @section('template_content')
-<div class="py-6">
+<div class="py-6 px-4 text-sm">
   <div class="flex justify-center">
     <img src="templates/{{$templateName}}/images/party.png" alt="Поздравляем!" width="150" height="150">
   </div>
@@ -79,8 +79,6 @@
       </tr>
     </table>
     <div class="mt-6">
-      <p>Здійснивши замовлення на нашому сайті будь-якого товару, Ви погоджуєтесь отримати смс-повідомлення про доставку
-        купленого Вами товару у відповідне поштове відділення, згідно з вказаним Вами індексом.</p>
       <p class="py-4">
         <a class="text-blue-600 hover:underline" href="privacy.html" target="_blank" rel="noopener noreferrer">Політика конфіденційності</a>
       </p>

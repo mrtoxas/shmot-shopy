@@ -1,0 +1,42 @@
+{
+  "name": "default-mobile",
+  "title": "Default mobile",
+  "variables": [
+    {
+      "name": "primary",
+      "value": "#2c2cb5",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "secondary",
+      "value": "#595b61",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "backplate",
+      "value": "#f0f0f0",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "primary-lighter",
+      "value": "#b4c0d6",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "primary-darker",
+      "value": "#041e4d",
+      "title": "",
+      "type": "color"
+    },
+    {
+      "name": "carousel-height",
+      "value": "420px",
+      "title": "",
+      "type": "layout"
+    }
+  ]
+}
