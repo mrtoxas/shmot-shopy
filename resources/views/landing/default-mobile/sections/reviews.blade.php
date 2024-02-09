@@ -9,7 +9,7 @@ if (!$reviews) {
     @foreach ($reviews as $index => $review)  
     <div class="bg-white rounded-sm px-4 py-6 flex flex-col gap-4">
       <div class="flex justify-center">
-        <img src="images/reviews/{{$review->img}}.jpg" class="rounded-full w-20 h-20" width="82" height="82" alt="review 1">
+        <img src="images/reviews/{{$review->img}}.jpg" class="rounded-full w-20 h-20" width="82" height="82" alt="review 1" loading="lazy">
       </div>
       <div class="text-center">
         <div class="text-sm"><strong>{{$review->name}}</strong></div>

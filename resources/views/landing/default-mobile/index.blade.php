@@ -9,7 +9,7 @@
 @section('head')
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap" rel="stylesheet">
-  <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet" async>   
+  <link href='{{ asset("templates/$templateName/app.css") }}' rel="stylesheet" async>
   <meta property="og:image" content="{{$current_url}}/images/ogg.jpg">
   <link rel="apple-touch-icon" sizes="180x180" href="{{$current_url}}/fav/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="{{$current_url}}/fav/favicon-32x32.png">

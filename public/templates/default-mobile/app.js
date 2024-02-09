@@ -49,6 +49,8 @@ var Carousel = function Carousel() {
     loop: true,
     autoHeight: false,
     spaceBetween: 10,
+    preloadImages: false,
+    lazy: true,
     pagination: {
       el: '.swiper-pagination'
     },
@@ -74,6 +76,8 @@ var AdvantageCarousel = function AdvantageCarousel() {
   var swiper = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"]('.advantage-swiper', {
     modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_1__.Autoplay],
     loop: true,
+    preloadImages: false,
+    lazy: true,
     autoHeight: false,
     autoplay: {
       delay: 2000
@@ -131,7 +135,7 @@ var Loader = function Loader(elem) {
   var element = document.getElementById(elem);
   if (!element) return;
   window.addEventListener('load', function () {
-    element.classList.add('hidden');
+    element.style.display = "none";
   });
 };
 

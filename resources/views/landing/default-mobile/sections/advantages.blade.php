@@ -23,8 +23,9 @@ $title_5 = $landingSettings->title_5 ?? '';
       <div class="swiper-wrapper h-full">
         @foreach ($advantage as $index => $item)
         <div class="swiper-slide h-full">
+          <div class="swiper-lazy-preloader"></div>
           <figure class="grid gap-2 text-center font-medium text-sm">
-            <img src="images/landings/{{$landingId}}/advantages/{{$item->img_name}}" class='object-cover h-full w-full aspect-square display-block' alt="Product image">
+            <img src="images/landings/{{$landingId}}/advantages/{{$item->img_name}}" class='object-cover h-full w-full aspect-square display-block' alt="Product image" loading="lazy">
             <figcaption class="px-1">{{$item->caption}}</figcaption>
           </figure>
         </div>

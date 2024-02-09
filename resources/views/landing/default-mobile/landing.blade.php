@@ -62,6 +62,7 @@
   <meta name="description" content="{{ $landingSettings->meta_description }}">
 @endsection
 @section('template_content')
+  @include("$template.sections.loader")
   <div class="md:mt-4">
     @include("$template.sections.pageTags")
   </div>
@@ -81,7 +82,7 @@
       @include("$template.sections.footer")
     </div>
   </div>
-  @include("$template.sections.loader")
+  
   
 
 @endsection

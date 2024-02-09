@@ -3,6 +3,6 @@ export const Loader = (elem) => {
 	if (!element) return;
 
 	window.addEventListener('load', () => {
-		element.classList.add('hidden');
+		element.style.display = "none";
 	})
 }

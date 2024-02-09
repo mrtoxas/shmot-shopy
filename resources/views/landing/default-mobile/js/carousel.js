@@ -7,6 +7,8 @@ export const Carousel = () => {
     loop: true,
     autoHeight: false,
     spaceBetween: 10,
+    preloadImages: false,
+    lazy: true,
     pagination: {
       el: '.swiper-pagination',
     },
@@ -35,6 +37,8 @@ export const AdvantageCarousel = () => {
   const swiper = new Swiper('.advantage-swiper', {
     modules: [Autoplay],
     loop: true,
+    preloadImages: false,
+    lazy: true,
     autoHeight: false,
     autoplay: {
       delay: 2000,
